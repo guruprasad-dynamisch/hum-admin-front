@@ -1,0 +1,50 @@
+/* InputField.css */
+
+.input-field-wrapper {
+  margin-bottom: 0;
+  width: 100%;
+  max-width: 525px;
+}
+
+.input-field-label {
+  display: flex;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--text-white-70);
+}
+
+.input-field-error {
+  border-color: var(--error-red) !important;
+}
+
+.input-field-error-message {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--error-red);
+}
+
+.error-text {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--error-red);
+}
+
+.required {
+  color: var(--error-red);
+  font-size: 1rem;
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .input-field-label {
+    color: var(--text-white-70);
+  }
+}
+
+/* Material-UI theme integration */
+.input-field-wrapper[data-theme="dark"] .input-field-label {
+  color: var(--text-white-70);
+}

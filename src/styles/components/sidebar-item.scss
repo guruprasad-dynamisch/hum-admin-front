@@ -1,0 +1,96 @@
+@import '../variables';
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-xl;
+  margin-bottom: 0;
+  color: $text-secondary;
+  text-decoration: none;
+  border-radius: 0;
+  border-left: 3px solid transparent;
+  transition: $transition-fast;
+  cursor: pointer;
+  position: relative;
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  text-decoration: none !important;
+
+  &:hover {
+    background: rgba(226, 195, 106, 0.05);
+    color: $primary-gold;
+    border-left-color: $primary-gold;
+
+    .sidebar-nav-icon {
+      color: $primary-gold;
+    }
+  }
+
+  &.active {
+    background: rgba(226, 195, 106, 0.1);
+    color: $primary-gold;
+    border-left-color: $primary-gold;
+
+    .sidebar-nav-icon {
+      color: $primary-gold;
+    }
+  }
+
+  &.collapsed {
+    justify-content: center;
+    padding: $spacing-md;
+    border-left: none;
+
+    .sidebar-nav-label {
+      display: none;
+    }
+
+    .sidebar-nav-icon {
+      margin: 0;
+    }
+  }
+}
+
+.sidebar-nav-icon {
+  font-size: 20px;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: $transition-fast;
+
+  svg {
+    font-size: 20px;
+  }
+}
+
+.sidebar-nav-label {
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Bootstrap tooltip customization for sidebar
+.tooltip {
+  &.sidebar-tooltip {
+    .tooltip-inner {
+      background: $bg-secondary;
+      color: $text-primary;
+      border: 1px solid $border-default;
+      font-size: $font-size-sm;
+      padding: $spacing-sm $spacing-md;
+    }
+
+    .tooltip-arrow::before {
+      border-right-color: $border-default;
+    }
+  }
+}

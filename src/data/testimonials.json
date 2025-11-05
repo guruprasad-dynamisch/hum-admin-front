@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Elena Marquez",
+        "role": "Project Manager",
+        "company": "Google",
+        "avatar": "https://randomuser.me/api/portraits/women/44.jpg",
+        "text": "We spotted where things were slowing down, cleared up confusion between teams, and started following through with more trust. It feels like we're working with each other, not against the system."
+    },
+    {
+        "id": 2,
+        "name": "Marcus Chen",
+        "role": "Team Lead",
+        "company": "Microsoft",
+        "avatar": "https://randomuser.me/api/portraits/men/32.jpg",
+        "text": "The clarity this platform provides has transformed how our team operates. We've reduced misunderstandings by 70% and increased productivity significantly."
+    },
+    {
+        "id": 3,
+        "name": "Sarah Johnson",
+        "role": "Product Manager",
+        "company": "Amazon",
+        "avatar": "https://randomuser.me/api/portraits/women/68.jpg",
+        "text": "Finally, a tool that helps us see the bigger picture while managing day-to-day tasks. Our sprint retrospectives have never been more insightful."
+    },
+    {
+        "id": 4,
+        "name": "David Kim",
+        "role": "Engineering Director",
+        "company": "Meta",
+        "avatar": "https://randomuser.me/api/portraits/men/86.jpg",
+        "text": "This has revolutionized our cross-functional collaboration. The transparency and clarity have eliminated bottlenecks we didn't even know existed."
+    },
+    {
+        "id": 5,
+        "name": "Lisa Rodriguez",
+        "role": "VP of Operations",
+        "company": "Netflix",
+        "avatar": "https://randomuser.me/api/portraits/women/28.jpg",
+        "text": "The insights we've gained have been game-changing. We've optimized our workflows and improved team satisfaction across all departments."
+    }
+]

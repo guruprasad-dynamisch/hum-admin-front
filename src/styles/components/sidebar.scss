@@ -1,0 +1,148 @@
+@import '../variables';
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  background: $sidebar-bg;
+  border-right: 1px solid $sidebar-border;
+  z-index: $z-index-sidebar;
+  transition: $transition-default;
+  display: flex;
+  flex-direction: column;
+
+  &.expanded {
+    width: $sidebar-width;
+  }
+
+  &.collapsed {
+    width: $sidebar-collapsed-width;
+  }
+
+  &.mobile-open {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-logo-section {
+  padding: $spacing-xl 0 $spacing-xxl;
+  border-bottom: 1px solid $border-default;
+}
+
+.sidebar-logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: 0 $spacing-xl;
+  transition: $transition-fast;
+  
+  .sidebar.collapsed & {
+    padding: 0 $spacing-sm;
+  }
+}
+
+.sidebar-logo-icon {
+  font-size: 32px;
+  color: $primary-gold;
+  text-align: center;
+}
+
+.sidebar-logo-text {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $primary-gold;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.sidebar-logo-image {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.sidebar-collapse-button {
+  background: none;
+  border: none;
+  color: $text-secondary;
+  cursor: pointer;
+  padding: $spacing-sm;
+  border-radius: $border-radius-sm;
+  transition: $transition-fast;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  &:hover {
+    background: $bg-hover;
+    color: $text-primary;
+  }
+
+  svg {
+    font-size: $font-size-xl;
+  }
+}
+
+.sidebar-nav-menu {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: $spacing-xl 0;
+
+  &.expanded {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &.collapsed {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $bg-tertiary;
+    border-radius: 3px;
+
+    &:hover {
+      background: $border-default;
+    }
+  }
+}
+
+.sidebar-bottom-nav {
+  padding: $spacing-xl;
+  border-top: 1px solid $border-default;
+
+  &.collapsed {
+    padding-left: $spacing-sm;
+    padding-right: $spacing-sm;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-$sidebar-width);
+
+    &.mobile-open {
+      transform: translateX(0);
+    }
+
+    &.collapsed {
+      transform: translateX(-$sidebar-collapsed-width);
+    }
+  }
+}

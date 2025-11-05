@@ -1,0 +1,106 @@
+/* SignupPage.css */
+
+.signup-container {
+  min-height: 100vh;
+}
+
+.signup-left-panel {
+  background-color: var(--bg-dark-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.signup-overlay {
+  height: 100%;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-image: url("/assets/left-panel-img.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.signup-hero-title {
+  color: var(--text-white);
+}
+
+.signup-hero-title h4 {
+  margin-bottom: 1rem;
+}
+
+.signup-testimonial {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: var(--bg-overlay);
+  border-radius: 0.25rem;
+  box-shadow: var(--shadow-default);
+}
+
+.signup-testimonial-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.signup-testimonial-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.signup-testimonial-text {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.signup-right-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--text-white);
+  background-color: var(--bg-dark-primary);
+}
+
+.signup-form-container {
+  width: 100%;
+  max-width: 28rem;
+}
+
+.signup-form-title {
+  margin-bottom: 1.5rem;
+}
+
+.signup-create-button {
+  width: 100%;
+  max-width: 525px !important;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.signup-login-link {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.signup-login-link-text {
+  color: var(--link-blue);
+  cursor: pointer;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .signup-left-panel {
+    min-height: 50vh;
+  }
+
+  .signup-right-panel {
+    min-height: 50vh;
+  }
+}

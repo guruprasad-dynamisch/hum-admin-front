@@ -1,0 +1,41 @@
+@import '../variables';
+
+.protected-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: $bg-primary;
+  color: $text-primary;
+}
+
+.main-content {
+  margin-left: $sidebar-width;
+  margin-top: 70px;
+  padding: 0;
+  flex: 1;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: $transition-default;
+
+  &.sidebar-collapsed {
+    margin-left: $sidebar-collapsed-width;
+  }
+
+  &.full-width {
+    margin-left: 0;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    margin-left: 0;
+  }
+}

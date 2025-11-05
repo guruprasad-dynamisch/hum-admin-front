@@ -1,0 +1,6 @@
+[
+  { "id": "visitors", "title": "Visitors", "metric": "12,341", "trend": "+5.2% WoW" },
+  { "id": "sales", "title": "Sales", "metric": "$83,210", "trend": "+2.1% WoW" },
+  { "id": "conversion", "title": "Conversion", "metric": "3.7%", "trend": "-0.3% WoW" },
+  { "id": "tickets", "title": "Open Tickets", "metric": "42", "trend": "+12.0% WoW" }
+]

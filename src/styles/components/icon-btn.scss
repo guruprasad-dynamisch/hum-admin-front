@@ -1,0 +1,140 @@
+@import '../variables';
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: $text-secondary;
+  cursor: pointer;
+  padding: $spacing-sm;
+  border-radius: $border-radius-sm;
+  transition: $transition-fast;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: inherit;
+  min-width: 48px;
+
+  &:hover {
+    color: $text-primary;
+    background: $bg-hover;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary-gold;
+    outline-offset: 2px;
+  }
+
+  // Sizes
+  &.icon-btn-sm {
+    padding: $spacing-xs;
+    font-size: 18px;
+  }
+
+  &.icon-btn-md {
+    padding: $spacing-sm;
+    font-size: 20px;
+  }
+
+  &.icon-btn-lg {
+    padding: $spacing-md;
+    font-size: 24px;
+  }
+
+  // Variants
+  &.icon-btn-primary {
+    background: $primary-gold;
+    color: $bg-primary;
+
+    &:hover {
+      background: $primary-gold-dark;
+      color: $bg-primary;
+    }
+
+    &:disabled {
+      background: $primary-gold-light;
+      opacity: 0.6;
+    }
+  }
+
+  &.icon-btn-secondary {
+    background: $bg-tertiary;
+    color: $text-primary;
+
+    &:hover {
+      background: $border-default;
+      color: $primary-gold;
+    }
+  }
+
+  &.icon-btn-danger {
+    color: $status-error;
+
+    &:hover {
+      background: rgba(255, 68, 68, 0.1);
+      color: $status-error;
+    }
+  }
+
+  &.icon-btn-success {
+    color: $status-success;
+
+    &:hover {
+      background: rgba(0, 255, 0, 0.1);
+      color: $status-success;
+    }
+  }
+
+  &.icon-btn-gold {
+    color: $primary-gold !important;
+
+    &:hover {
+      background: $primary-gold-hover;
+      color: $primary-gold;
+    }
+  }
+
+  // Badge support
+  .icon-btn-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: $status-error;
+    color: $text-primary;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 10px;
+    font-weight: $font-weight-bold;
+    line-height: 1;
+    min-width: 16px;
+    text-align: center;
+  }
+
+  // Icon wrapper
+  svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+  }
+}
+
+// Button group
+.icon-btn-group {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+
+  .icon-btn {
+    margin: 0;
+  }
+}

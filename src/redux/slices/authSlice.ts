@@ -1,0 +1,101 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { loginUser, logoutUser } from '../thunks';
+import { getErrorMessage } from '@constants/errorHandling';
+import { Role } from '@constants/roles';
+import type { RootState } from '../store';
+
+// Types
+export interface User {
+  id: string;
+  name: string;
+  username?: string;
+  email?: string;
+  userType?: Role;
+}
+
+/**
+ * SECURITY NOTE: Tokens are stored in httpOnly cookies by the backend.
+ * The auth state only tracks user profile data and authentication status.
+ * Actual token validation happens server-side on each API request.
+ */
+export interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+}
+
+// Helper functions for state updates
+const setLoading = (state: AuthState, loading: boolean) => {
+  state.isLoading = loading;
+  if (loading) state.error = null;
+};
+
+const setAuthSuccess = (state: AuthState, user: User) => {
+  state.user = user;
+  state.isAuthenticated = true;
+  state.isLoading = false;
+  state.error = null;
+};
+
+const setAuthFailure = (state: AuthState, error: string) => {
+  state.user = null;
+  state.isAuthenticated = false;
+  state.isLoading = false;
+  state.error = error;
+};
+
+const clearAuth = (state: AuthState) => {
+  state.user = null;
+  state.isAuthenticated = false;
+  state.error = null;
+};
+
+// Auth slice
+const initialState: AuthState = {
+  user: {
+    "id": "hfjhdaksjdh78678ade7823",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "userType": Role.ADMIN,
+  },
+  isAuthenticated: true,
+  isLoading: false,
+  error: null,
+};
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    clearError: (state) => {
+      state.error = null;
+    },
+    setAuthState: (state, action: PayloadAction<{ user: User }>) => {
+      setAuthSuccess(state, action.payload.user);
+    },
+    clearAuthState: (state) => {
+      clearAuth(state);
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      // Login cases
+      .addCase(loginUser.pending, (state) => setLoading(state, true))
+      .addCase(loginUser.fulfilled, (state, action) => { setAuthSuccess(state, action.payload.user); })
+      .addCase(loginUser.rejected, (state, action) => { setAuthFailure(state, getErrorMessage(action.payload)); })
+      // Logout cases
+      .addCase(logoutUser.pending, (state) => setLoading(state, true))
+      .addCase(logoutUser.fulfilled, (state) => { clearAuth(state); state.isLoading = false; })
+      .addCase(logoutUser.rejected, (state, action) => { setAuthFailure(state, getErrorMessage(action.payload)); });
+  },
+});
+
+export const { clearError, setAuthState, clearAuthState } = authSlice.actions;
+export const selectAuth = (state: RootState) => state.auth;
+export const selectUser = (state: RootState) => state.auth.user;
+export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
+export const selectAuthLoading = (state: RootState) => state.auth.isLoading;
+export const selectAuthError = (state: RootState) => state.auth.error;
+
+export default authSlice.reducer;
