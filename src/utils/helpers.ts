@@ -45,10 +45,11 @@ export function flattenRoutes<T extends { children?: T[] }>(routes: T[]): T[] {
 
 /**
  * Retrieves a route path by its key from the combined public and protected routes.
- * Supports nested children routes and dynamic parameter replacement in route paths.
+ * Supports nested children routes, dynamic parameter replacement, and query parameters.
  * 
  * @param {string} value - The route key to look up (e.g., 'login', 'discoveries', 'discoveriesId')
- * @param {Record<string, string>} [params] - Optional parameters to replace in the route path
+ * @param {Record<string, string>} [params] - Optional path parameters to replace in the route path
+ * @param {Record<string, string>} [queryParams] - Optional query parameters to append to the URL
  * @returns {string} The resolved route path with leading slash, or '/' if route not found
  * 
  * @example
@@ -56,18 +57,26 @@ export function flattenRoutes<T extends { children?: T[] }>(routes: T[]): T[] {
  * getRouteByKey('login'); // Returns '/login'
  * 
  * @example
- * // Route with parameters
+ * // Route with path parameters
  * getRouteByKey('discoveriesId', { id: '123' }); // Returns '/discovery/123'
  * 
  * @example
- * // Route with multiple parameters
- * getRouteByKey('discoveriesIdTab', { id: '123', tab: 'details' }); // Returns '/discovery/123/details'
+ * // Route with query parameters
+ * getRouteByKey('users', {}, { tab: 'active', page: '2' }); // Returns '/users?tab=active&page=2'
+ * 
+ * @example
+ * // Route with both path and query parameters
+ * getRouteByKey('discoveriesId', { id: '123' }, { tab: 'details' }); // Returns '/discovery/123?tab=details'
  * 
  * @example
  * // Remove optional parameters
  * getRouteByKey('user-profile', {}); // Returns '/user' (removes /:id)
  */
-export function getRouteByKey(value: string, params?: Record<string, string>): string {
+export function getRouteByKey(
+    value: string, 
+    params?: Record<string, string>, 
+    queryParams?: Record<string, string>
+): string {
     // Flatten all routes including nested children
     const allRoutes = [...flattenRoutes(publicRoutes as any[]), ...flattenRoutes(protectedRoutes as any[])] as any[];
     const item = findByKey(allRoutes, "key", value);
@@ -76,6 +85,7 @@ export function getRouteByKey(value: string, params?: Record<string, string>): s
 
     let path = item.path as string;
 
+    // Handle path parameters
     if (params && Object.keys(params).length > 0) {
         Object.entries(params).forEach(([key, val]) => {
             path = path.replace(`:${key}`, val);
@@ -84,7 +94,16 @@ export function getRouteByKey(value: string, params?: Record<string, string>): s
         path = path.replace(/\/:[^/]+/g, '');
     }
 
-    return path.startsWith("/") ? path : `/${path}`;
+    // Ensure path starts with /
+    path = path.startsWith("/") ? path : `/${path}`;
+
+    // Handle query parameters
+    if (queryParams && Object.keys(queryParams).length > 0) {
+        const queryString = new URLSearchParams(queryParams).toString();
+        path = `${path}?${queryString}`;
+    }
+
+    return path;
 }
 
 export function ucFirstLetter(str:string) {
@@ -124,12 +143,5 @@ export function getUserInitials(name?: string, fallback: string = 'AU'): string 
         return fallback;
     }
 
-    return name
-        .trim()
-        .split(' ')
-        .filter(n => n.length > 0)
-        .map(n => n[0])
-        .join('')
-        .toUpperCase()
-        .slice(0, 2);
+    return name.trim().split(' ').filter(n => n.length > 0).map(n => n[0]).join('').toUpperCase().slice(0, 2);
 }
