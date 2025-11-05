@@ -37,7 +37,7 @@ export default function Dashboard() {
             key={action.id}
             title={action.title}
             icon={action.icon}
-            path={action.path}
+            pathId={action.pathId}
           />
         ))}
       </div>

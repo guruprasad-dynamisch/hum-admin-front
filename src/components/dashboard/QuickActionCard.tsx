@@ -1,23 +1,24 @@
 import { useNavigate } from 'react-router-dom'
 import { cn } from '@utils/classNames'
 import '@styles/components/quick-action-card.scss'
+import { getRouteByKey } from '@utils/helpers'
 
 interface QuickActionCardProps {
   title: string
   icon: string
-  path: string
+  pathId: string
   className?: string
 }
 
-export default function QuickActionCard({ title, icon, path, className }: QuickActionCardProps) {
+export default function QuickActionCard({ title, icon, pathId, className }: QuickActionCardProps) {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate(path)
+    navigate(getRouteByKey(pathId))
   }
 
   return (
-    <div 
+    <div
       className={cn('action-card', className)}
       onClick={handleClick}
       role="button"
