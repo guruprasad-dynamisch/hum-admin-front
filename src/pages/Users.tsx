@@ -1,16 +1,21 @@
+import PageHeader from '@components/common/PageHeader'
+
 export default function Users() {
   return (
-    <div style={{ padding: '24px' }}>
-      <h2 style={{ color: 'var(--primary-gold)', marginBottom: '8px', fontSize: '32px' }}>
-        User Management
-      </h2>
-      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '30px' }}>
-        Home / <span style={{ color: 'var(--primary-gold)' }}>User Management</span>
-      </div>
+    <>
+      <PageHeader
+        title="User Management"
+        breadcrumbs={[
+          { label: 'Home', path: '/' },
+          { label: 'User Management', active: true }
+        ]}
+      />
       
-      <div style={{ color: 'var(--text-secondary)' }}>
-        User management content goes here...
+      <div style={{ padding: '24px' }}>
+        <div style={{ color: 'var(--text-secondary)' }}>
+          User management content goes here...
+        </div>
       </div>
-    </div>
+    </>
   )
 }

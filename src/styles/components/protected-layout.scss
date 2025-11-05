@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables' as *;
 
 .protected-layout {
   display: flex;
@@ -19,7 +19,7 @@
   transition: $transition-default;
 
   &.sidebar-collapsed {
-    margin-left: $sidebar-collapsed-width;
+    margin-left: 0;
   }
 
   &.full-width {

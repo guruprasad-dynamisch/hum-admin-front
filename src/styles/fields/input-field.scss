@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables' as *;
 
 .input-field-wrapper {
   margin-bottom: $spacing-lg;
@@ -75,7 +75,7 @@
 
       &:focus {
         border-color: $status-error;
-        box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.1);
+        box-shadow: 0 0 0 2px $status-error-light;
       }
     }
 

@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables' as *;
 
 .sidebar-nav-item {
   display: flex;
@@ -22,7 +22,7 @@
   text-decoration: none !important;
 
   &:hover {
-    background: rgba(226, 195, 106, 0.05);
+    background: $bg-hover;
     color: $primary-gold;
     border-left-color: $primary-gold;
 
@@ -32,7 +32,7 @@
   }
 
   &.active {
-    background: rgba(226, 195, 106, 0.1);
+    background: $bg-active;
     color: $primary-gold;
     border-left-color: $primary-gold;
 

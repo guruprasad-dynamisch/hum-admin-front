@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables' as *;
 
 .topbar {
   position: fixed;
@@ -20,7 +20,7 @@
   }
 
   &.sidebar-collapsed {
-    left: $sidebar-collapsed-width;
+    left: 0;
   }
 }
 

@@ -4,6 +4,8 @@ $primary-gold: #e2c36a;
 $primary-gold-dark: #c9a556;
 $primary-gold-light: rgba(226, 195, 106, 0.1);
 $primary-gold-hover: rgba(226, 195, 106, 0.05);
+$primary-gold-medium: rgba(226, 195, 106, 0.3);
+$primary-gold-semi: rgba(226, 195, 106, 0.5);
 
 // Background Colors
 $bg-primary: #0a0a0a;
@@ -25,9 +27,13 @@ $border-active: #e2c36a;
 
 // Status Colors
 $status-success: #00ff00;
+$status-success-light: rgba(0, 255, 0, 0.1);
 $status-error: #ff4444;
+$status-error-light: rgba(255, 68, 68, 0.1);
 $status-warning: #ffaa00;
+$status-warning-light: rgba(255, 170, 0, 0.1);
 $status-info: #00aaff;
+$status-info-light: rgba(0, 170, 255, 0.1);
 
 // Sidebar Specific
 $sidebar-width: 250px;

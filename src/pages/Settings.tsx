@@ -1,16 +1,21 @@
+import PageHeader from '@components/common/PageHeader'
+
 export default function Settings() {
   return (
-    <div style={{ padding: '24px' }}>
-      <h2 style={{ color: 'var(--primary-gold)', marginBottom: '8px', fontSize: '32px' }}>
-        Settings
-      </h2>
-      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '30px' }}>
-        Home / <span style={{ color: 'var(--primary-gold)' }}>Settings</span>
-      </div>
+    <>
+      <PageHeader
+        title="Settings"
+        breadcrumbs={[
+          { label: 'Home', path: '/' },
+          { label: 'Settings', active: true }
+        ]}
+      />
       
-      <div style={{ color: 'var(--text-secondary)' }}>
-        Settings content goes here...
+      <div style={{ padding: '24px' }}>
+        <div style={{ color: 'var(--text-secondary)' }}>
+          Settings content goes here...
+        </div>
       </div>
-    </div>
+    </>
   )
 }

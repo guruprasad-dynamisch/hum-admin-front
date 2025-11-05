@@ -1,0 +1,31 @@
+@use '../variables' as *;
+
+.custom-breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-size: $font-size-sm;
+
+  .breadcrumb-item {
+    color: $text-secondary;
+
+    &.active {
+      color: $primary-gold;
+    }
+
+    a {
+      color: $text-secondary;
+      text-decoration: none;
+      transition: $transition-fast;
+
+      &:hover {
+        color: $primary-gold;
+      }
+    }
+
+    + .breadcrumb-item::before {
+      content: '/';
+      color: $text-secondary;
+    }
+  }
+}

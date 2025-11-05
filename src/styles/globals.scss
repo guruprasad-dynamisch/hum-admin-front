@@ -1,5 +1,5 @@
 /* Global Styles - Import SCSS variables and base styles */
-@import './variables';
+@use './variables' as *;
 
 /* Global reset and base styles */
 * {
@@ -127,11 +127,11 @@ input:autofill {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(226, 195, 106, 0.3);
+    background: $primary-gold-medium;
     border-radius: 2px;
 
     &:hover {
-      background: rgba(226, 195, 106, 0.5);
+      background: $primary-gold-semi;
     }
   }
 }

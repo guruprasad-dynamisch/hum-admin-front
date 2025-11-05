@@ -1,16 +1,46 @@
+import PageHeader from '@components/common/PageHeader'
+import StatCard from '@components/dashboard/StatCard'
+import QuickActionCard from '@components/dashboard/QuickActionCard'
+import { DASHBOARD_STATS } from '@constants/dashboard-stats'
+import { QUICK_ACTIONS } from '@constants/quick-actions'
+import '@styles/components/stat-card.scss'
+import '@styles/components/quick-action-card.scss'
+
 export default function Dashboard() {
   return (
-    <div style={{ padding: '24px' }}>
-      <h2 style={{ color: 'var(--primary-gold)', marginBottom: '8px', fontSize: '32px' }}>
-        Dashboard
-      </h2>
-      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '30px' }}>
-        Home / <span style={{ color: 'var(--primary-gold)' }}>Dashboard</span>
-      </div>
+    <>
+      <PageHeader
+        title="Dashboard"
+        breadcrumbs={[
+          { label: 'Home', path: '/' },
+          { label: 'Dashboard', active: true }
+        ]}
+      />
       
-      <div style={{ color: 'var(--text-secondary)' }}>
-        Dashboard content goes here...
+      {/* Stats Grid */}
+      <div className="stats-grid">
+        {DASHBOARD_STATS.map((stat) => (
+          <StatCard
+            key={stat.id}
+            title={stat.title}
+            value={stat.value}
+            change={stat.change}
+            icon={stat.icon}
+          />
+        ))}
       </div>
-    </div>
+
+      {/* Quick Actions */}
+      <div className="quick-actions">
+        {QUICK_ACTIONS.map((action) => (
+          <QuickActionCard
+            key={action.id}
+            title={action.title}
+            icon={action.icon}
+            path={action.path}
+          />
+        ))}
+      </div>
+    </>
   )
 }

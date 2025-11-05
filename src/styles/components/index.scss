@@ -1,9 +1,12 @@
 // Import all component styles
-@import './sidebar';
-@import './sidebar-item';
-@import './sidebar-section';
-@import './topbar';
-@import './protected-layout';
-@import './icon-btn';
-@import './page-header';
-@import './user-menu';
+@use './sidebar';
+@use './sidebar-item';
+@use './sidebar-section';
+@use './topbar';
+@use './protected-layout';
+@use './icon-btn';
+@use './page-header';
+@use './user-menu';
+@use './breadcrumb';
+@use './stat-card';
+@use './quick-action-card';

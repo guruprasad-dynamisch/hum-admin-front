@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useAppSelector } from '@redux/store'
 import { selectUser } from '@redux/slices/authSlice'
 import { Role } from '@constants/roles'
@@ -16,10 +16,23 @@ interface SidebarProps {
 
 export default function Sidebar({ open: controlledOpen, onToggle, mobileOpen = false }: SidebarProps) {
   const [internalOpen, setInternalOpen] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
   const user = useAppSelector(selectUser)
 
   // Use controlled or internal state
   const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Get user role, default to USER if not set
   const userRole = (user?.userType as Role) || Role.USER
@@ -28,6 +41,13 @@ export default function Sidebar({ open: controlledOpen, onToggle, mobileOpen = f
   const { top: topNavItems, bottom: bottomNavItems } = useMemo(() => {
     return getAllNavigationForRole(userRole)
   }, [userRole])
+
+  // Handle nav item click on mobile - close sidebar
+  const handleNavItemClick = () => {
+    if (isMobile && onToggle) {
+      onToggle(false)
+    }
+  }
 
   return (
     <nav className={cn('sidebar', {
@@ -57,6 +77,7 @@ export default function Sidebar({ open: controlledOpen, onToggle, mobileOpen = f
               icon={item.icon}
               collapsed={!isOpen}
               popupComponent={item.popupComponent}
+              onNavClick={handleNavItemClick}
             />
           ))}
         </SidebarSection>

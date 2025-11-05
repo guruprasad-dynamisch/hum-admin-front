@@ -12,9 +12,10 @@ interface SidebarItemProps {
   onClick?: (event?: React.MouseEvent<HTMLElement>) => void
   collapsed?: boolean
   popupComponent?: React.ComponentType<any>
+  onNavClick?: () => void
 }
 
-export default function SidebarItem({ label, path, icon, onClick, collapsed = false, popupComponent: PopupComponent }: SidebarItemProps) {
+export default function SidebarItem({ label, path, icon, onClick, collapsed = false, popupComponent: PopupComponent, onNavClick }: SidebarItemProps) {
   const popup = usePopup()
   const [showTooltip, setShowTooltip] = useState(false)
 
@@ -24,6 +25,7 @@ export default function SidebarItem({ label, path, icon, onClick, collapsed = fa
       popup.open(event)
     }
     onClick?.(event)
+    onNavClick?.()
   }
 
   const renderTooltip = (props: any) => (

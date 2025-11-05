@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables' as *;
 
 .icon-btn {
   background: none;
@@ -81,7 +81,7 @@
     color: $status-error;
 
     &:hover {
-      background: rgba(255, 68, 68, 0.1);
+      background: $status-error-light;
       color: $status-error;
     }
   }
@@ -90,7 +90,7 @@
     color: $status-success;
 
     &:hover {
-      background: rgba(0, 255, 0, 0.1);
+      background: $status-success-light;
       color: $status-success;
     }
   }

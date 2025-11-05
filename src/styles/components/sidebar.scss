@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables' as *;
 
 .sidebar {
   position: fixed;
@@ -17,7 +17,8 @@
   }
 
   &.collapsed {
-    width: $sidebar-collapsed-width;
+    width: 0;
+    border-right: none;
   }
 
   &.mobile-open {
@@ -135,6 +136,7 @@
 // Responsive
 @media (max-width: 768px) {
   .sidebar {
+    width: $sidebar-width;
     transform: translateX(-$sidebar-width);
 
     &.mobile-open {
@@ -142,7 +144,8 @@
     }
 
     &.collapsed {
-      transform: translateX(-$sidebar-collapsed-width);
+      width: $sidebar-width;
+      transform: translateX(-$sidebar-width);
     }
   }
 }

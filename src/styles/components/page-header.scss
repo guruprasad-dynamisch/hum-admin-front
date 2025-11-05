@@ -1,19 +1,19 @@
-@import '../variables';
+@use '../variables' as *;
 
 .page-header {
-  background: $bg-secondary;
-  border-bottom: 1px solid $border-default;
-  padding: $spacing-xxl;
+  padding: $spacing-xxl $spacing-xxl $spacing-xl;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: $spacing-xl;
-  min-height: 100px;
 }
 
 .page-header-content {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
 }
 
 .page-breadcrumbs {
@@ -51,10 +51,10 @@
 }
 
 .page-title {
-  font-size: $font-size-xl * 1.5;
+  font-size: 32px;
   font-weight: $font-weight-bold;
-  color: $text-primary;
-  margin: 0;
+  color: $primary-gold;
+  margin: 0 0 $spacing-xs 0;
   line-height: 1.2;
 }
 
