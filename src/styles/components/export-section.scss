@@ -1,0 +1,72 @@
+@use '../variables' as *;
+
+.export-section {
+  background: $bg-secondary;
+  border: 1px solid $border-default;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xxl;
+
+  .export-title {
+    color: $primary-gold;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-lg;
+  }
+
+  .export-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: $spacing-lg;
+  }
+
+  .export-card {
+    background: $bg-primary;
+    border: 1px solid $border-input;
+    border-radius: $border-radius-md;
+    padding: $spacing-lg;
+    text-align: center;
+    cursor: pointer;
+    transition: $transition-default;
+
+    &:hover {
+      border-color: $primary-gold;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(226, 195, 106, 0.1);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .export-icon {
+    font-size: 32px;
+    margin-bottom: $spacing-sm;
+  }
+
+  .export-label {
+    color: $primary-gold;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-sm;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .export-section {
+    padding: $spacing-lg;
+
+    .export-options {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-md;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .export-section {
+    .export-options {
+      grid-template-columns: 1fr;
+    }
+  }
+}

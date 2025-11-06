@@ -1,0 +1,64 @@
+@use '../variables' as *;
+
+.cost-stat-card {
+  background: $bg-secondary;
+  border: 1px solid $border-default;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xxl;
+  transition: $transition-default;
+
+  &:hover {
+    border-color: $primary-gold;
+    transform: translateY(-2px);
+  }
+
+  .stat-icon {
+    font-size: 32px;
+    margin-bottom: $spacing-md;
+  }
+
+  .stat-label {
+    color: $text-secondary;
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-sm;
+  }
+
+  .stat-value {
+    color: $primary-gold;
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+    line-height: 1.2;
+  }
+
+  .stat-change {
+    font-size: $font-size-sm;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &.positive {
+      color: $status-success;
+    }
+
+    &.negative {
+      color: $status-error;
+    }
+  }
+
+  .stat-subtitle {
+    color: $text-secondary;
+    font-size: $font-size-sm;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .cost-stat-card {
+    padding: $spacing-lg;
+
+    .stat-value {
+      font-size: 28px;
+    }
+  }
+}

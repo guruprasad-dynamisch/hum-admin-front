@@ -3,23 +3,25 @@
 .settings-page {
   background: $bg-primary;
   min-height: calc(100vh - 70px);
-  padding: $spacing-xxl;
 
   .settings-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 0 $spacing-xxl;
   }
 }
 
 // Responsive
 @media (max-width: 768px) {
   .settings-page {
-    padding: $spacing-lg;
+    .settings-container {
+      padding: 0 $spacing-lg;
+    }
   }
 }
 
 @media (max-width: 480px) {
   .settings-page {
-    padding: $spacing-md;
+    .settings-container {
+      padding: 0 $spacing-md;
+    }
   }
 }
