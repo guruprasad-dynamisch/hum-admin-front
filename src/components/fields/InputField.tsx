@@ -1,5 +1,6 @@
 import React, { forwardRef, useState } from 'react'
 import { useController } from 'react-hook-form'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { cn } from '@utils/classNames'
 import IconBtn from '@components/buttons/IconBtn'
 import '@styles/fields/input-field.scss'
@@ -152,7 +153,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               aria-label="Toggle password visibility"
               className="password-toggle-btn"
             >
-              {showPassword ? '👁️' : '👁️‍🗨️'}
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
             </IconBtn>
           )}
         </div>

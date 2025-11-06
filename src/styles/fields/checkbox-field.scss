@@ -81,11 +81,14 @@
 .login-page,
 .register-page {
   .checkbox-field-wrapper {
+    margin-bottom: 0; // Remove bottom margin for inline layout
+    
     .checkbox-field-container {
       .form-check {
         .form-check-input {
           background-color: $bg-primary;
           border: 1px solid #333;
+          margin-top: 2px; // Align with text baseline
 
           &:checked {
             background-color: $primary-gold;
@@ -101,6 +104,7 @@
         .form-check-label {
           color: #ccc;
           font-size: 13px;
+          line-height: 1.5; // Better vertical alignment
 
           a {
             color: $primary-gold;
