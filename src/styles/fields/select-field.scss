@@ -80,3 +80,39 @@
     color: $status-error;
   }
 }
+
+// Override for login/register pages to match gold theme
+.login-page,
+.register-page {
+  .select-field-wrapper {
+    .select-field-label {
+      color: $primary-gold;
+    }
+
+    .custom-select {
+      background: $bg-primary;
+      border: 1px solid #333;
+      border-radius: $border-radius-sm;
+
+      &:focus {
+        border-color: $primary-gold;
+        box-shadow: 0 0 0 3px $primary-gold-light;
+        background: $bg-primary;
+      }
+
+      &.has-error {
+        border-color: $status-error;
+
+        &:focus {
+          border-color: $status-error;
+          box-shadow: 0 0 0 3px $status-error-light;
+        }
+      }
+
+      option {
+        background: $bg-secondary;
+        color: $text-primary;
+      }
+    }
+  }
+}

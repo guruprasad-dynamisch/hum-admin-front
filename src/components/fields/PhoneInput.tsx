@@ -3,7 +3,7 @@ import { useController } from 'react-hook-form';
 import PhoneInput from 'react-phone-number-input';
 import { E164Number } from 'libphonenumber-js/core';
 import 'react-phone-number-input/style.css';
-import "@styles/fields/PhoneInput.css"
+import "@styles/fields/phone-input.scss"
 
 const noop = () => {};
 interface PhoneInputProps {
@@ -74,18 +74,6 @@ const CustomPhoneInput = forwardRef<any, PhoneInputProps>(
             error = fieldError;
         }
 
-        const defaultStyle: React.CSSProperties = {
-            width: '100%',
-            padding: '16.5px 14px',
-            border: error ? '2px solid var(--error-red)' : '1px solid var(--border-default)',
-            borderRadius: '8px',
-            fontSize: '16px',
-            fontFamily: 'inherit',
-            backgroundColor: 'var(--bg-input)',
-            color: 'var(--text-white)',
-            ...style,
-        };
-
         // Compute phone input props based on mode
         const phoneInputProps = {
             ...props,
@@ -93,7 +81,6 @@ const CustomPhoneInput = forwardRef<any, PhoneInputProps>(
             placeholder: placeholder || countryPlaceholder,
             defaultCountry: defaultCountry as any,
             disabled: disabled,
-            style: defaultStyle,
             international: international,
             initialValueFormat: initialValueFormat,
             className: `phone-input-field ${error ? 'phone-input-error' : ''}`,
@@ -106,7 +93,7 @@ const CustomPhoneInput = forwardRef<any, PhoneInputProps>(
         };
 
         return (
-            <div className={`phone-input-wrapper ${className}`}>
+            <div className={`phone-input-wrapper ${className || ''}`}>
                 {label && (
                     <label htmlFor={name} className="phone-input-label">
                         {label}{required ? <span className='required'>*</span> : ""}

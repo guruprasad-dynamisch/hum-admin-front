@@ -1,19 +1,20 @@
-import { Checkbox, FormControlLabel, FormHelperText, Box } from '@mui/material';
+import React from 'react';
+import { Form } from 'react-bootstrap';
 import { useController, Control, FieldValues, Path } from 'react-hook-form';
+import { cn } from '@utils/classNames';
+import '@styles/fields/checkbox-field.scss';
 
 interface CheckboxFieldProps<T extends FieldValues = FieldValues> {
-  /** Label text for the checkbox */
-  label?: string;
+  /** Label text or React node for the checkbox */
+  label?: React.ReactNode;
   /** Whether the checkbox is checked (standalone mode) */
   checked?: boolean;
   /** Change handler (standalone mode) */
   onChange?: (checked: boolean) => void;
   /** Whether the checkbox is disabled */
   disabled?: boolean;
-  /** Custom styling for the container */
-  sx?: object;
-  /** Custom styling for the checkbox */
-  checkboxSx?: object;
+  /** Custom className for the wrapper */
+  className?: string;
   /** React Hook Form mode */
   mode?: 'standalone' | 'react-hook-form';
   /** React Hook Form control */
@@ -22,12 +23,10 @@ interface CheckboxFieldProps<T extends FieldValues = FieldValues> {
   name?: Path<T>;
   /** React Hook Form rules */
   rules?: any;
-  /** Size of the checkbox */
-  size?: 'small' | 'medium';
-  /** Custom icon for unchecked state */
-  icon?: React.ReactNode;
-  /** Custom icon for checked state */
-  checkedIcon?: React.ReactNode;
+  /** Checkbox ID */
+  id?: string;
+  /** Whether field is required */
+  required?: boolean;
 }
 
 function CheckboxField<T extends FieldValues = FieldValues>({
@@ -35,15 +34,13 @@ function CheckboxField<T extends FieldValues = FieldValues>({
   checked,
   onChange,
   disabled = false,
-  sx = {},
-  checkboxSx = {},
+  className = '',
   mode = 'standalone',
   control,
   name,
   rules,
-  size = 'medium',
-  icon,
-  checkedIcon,
+  id,
+  required = false,
 }: CheckboxFieldProps<T>) {
   // React Hook Form integration
   const isReactHookForm = mode === 'react-hook-form' && control && name;
@@ -78,67 +75,30 @@ function CheckboxField<T extends FieldValues = FieldValues>({
     }
   };
 
-  const checkboxElement = (
-    <Checkbox
-      checked={isReactHookForm ? fieldProps.checked : checked}
-      onChange={handleChange}
-      disabled={disabled}
-      size={size}
-      icon={icon}
-      checkedIcon={checkedIcon}
-      sx={{
-        color: 'var(--border-default)',
-        '&.Mui-checked': {
-          color: 'var(--primary-orange)',
-        },
-        '&:hover': {
-          backgroundColor: 'var(--bg-hover)',
-        },
-        '&.Mui-disabled': {
-          color: 'var(--text-muted)',
-        },
-        ...checkboxSx,
-      }}
-      {...(isReactHookForm ? { inputRef: fieldProps.ref, onBlur: fieldProps.onBlur } : {})}
-    />
-  );
-
-  if (label) {
-    return (
-      <Box sx={sx}>
-        <FormControlLabel
-          control={checkboxElement}
-          label={label}
-          disabled={disabled}
-          sx={{
-            color: 'var(--text-white)',
-            '& .MuiFormControlLabel-label': {
-              fontSize: '14px',
-              color: 'var(--text-white)',
-            },
-            '& .MuiFormControlLabel-label.Mui-disabled': {
-              color: 'var(--text-muted)',
-            },
-          }}
-        />
-        {error && (
-          <FormHelperText sx={{ color: 'var(--error-red)', ml: 2 }}>
-            {error.message}
-          </FormHelperText>
-        )}
-      </Box>
-    );
-  }
+  // Standalone mode props
+  const standaloneProps = !isReactHookForm ? {
+    checked: checked || false,
+    onChange: handleChange,
+  } : {};
 
   return (
-    <Box sx={sx}>
-      {checkboxElement}
+    <div className={cn('checkbox-field-wrapper', className)}>
+      <div className="checkbox-field-container">
+        <Form.Check
+          type="checkbox"
+          id={id || name}
+          disabled={disabled}
+          isInvalid={!!error}
+          label={label}
+          {...(isReactHookForm ? fieldProps : standaloneProps)}
+        />
+      </div>
       {error && (
-        <FormHelperText sx={{ color: 'var(--error-red)' }}>
+        <span className="error-feedback">
           {error.message}
-        </FormHelperText>
+        </span>
       )}
-    </Box>
+    </div>
   );
 }
 

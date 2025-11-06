@@ -1,0 +1,143 @@
+@use '../variables' as *;
+
+// Phone Input Component Styles
+.phone-input-wrapper {
+  margin-bottom: $spacing-lg;
+  width: 100%;
+
+  .phone-input-label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+
+    .required {
+      color: $status-error;
+      margin-left: 2px;
+    }
+  }
+
+  .phone-input-field {
+    width: 100%;
+    padding: 0 10px !important;
+    background-color: $bg-input;
+    border: 1px solid $border-default;
+    border-radius: $border-radius-md;
+    transition: $transition-fast;
+
+    .PhoneInputInput {
+      min-height: 45px !important;
+      background: transparent !important;
+      color: $text-primary !important;
+      outline: none !important;
+      border: none !important;
+      font-size: $font-size-sm !important;
+      font-family: inherit;
+
+      &::placeholder {
+        color: $text-tertiary;
+      }
+    }
+
+    .PhoneInputCountry {
+      margin-right: $spacing-sm;
+    }
+
+    .PhoneInputCountryIcon {
+      width: 20px;
+      height: 15px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .PhoneInputCountrySelect {
+      background: transparent;
+      border: none;
+      color: $text-primary;
+      cursor: pointer;
+      
+      &:focus {
+        outline: none;
+      }
+
+      option {
+        background: $bg-secondary;
+        color: $text-primary;
+        padding: 8px;
+        font-size: $font-size-sm;
+      }
+    }
+
+    .PhoneInputCountrySelectArrow {
+      color: $text-secondary;
+      opacity: 0.7;
+      width: 0.3em;
+      height: 0.3em;
+      border-style: solid;
+      border-color: $text-secondary;
+      border-top-width: 0;
+      border-bottom-width: 1px;
+      border-left-width: 0;
+      border-right-width: 1px;
+      transform: rotate(45deg);
+      margin-left: 0.35em;
+    }
+
+    &:focus-within {
+      border-color: $primary-gold;
+      box-shadow: 0 0 0 3px $primary-gold-light;
+    }
+
+    &:disabled {
+      background-color: $bg-tertiary;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    &.phone-input-error {
+      border-color: $status-error;
+
+      &:focus-within {
+        border-color: $status-error;
+        box-shadow: 0 0 0 3px $status-error-light;
+      }
+    }
+  }
+
+  .error-text {
+    display: block;
+    margin-top: $spacing-xs;
+    font-size: $font-size-xs;
+    color: $status-error;
+  }
+}
+
+// Override for login/register pages to match gold theme
+.login-page,
+.register-page {
+  .phone-input-wrapper {
+    .phone-input-label {
+      color: $primary-gold;
+    }
+
+    .phone-input-field {
+      background: $bg-primary;
+      border: 1px solid #333;
+      border-radius: $border-radius-sm;
+
+      &:focus-within {
+        border-color: $primary-gold;
+        box-shadow: 0 0 0 3px $primary-gold-light;
+      }
+
+      &.phone-input-error {
+        border-color: $status-error;
+
+        &:focus-within {
+          border-color: $status-error;
+          box-shadow: 0 0 0 3px $status-error-light;
+        }
+      }
+    }
+  }
+}

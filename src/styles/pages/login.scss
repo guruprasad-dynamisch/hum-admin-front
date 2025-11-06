@@ -1,0 +1,334 @@
+@use '../variables' as *;
+
+// Login Page Styles - Based on login1.html design
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $bg-primary;
+  padding: $spacing-xl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  .login-container {
+    max-width: 500px;
+    width: 100%;
+  }
+
+  // Logo Section
+  .logo-section {
+    text-align: center;
+    margin-bottom: 40px;
+
+    .logo-icon {
+      font-size: 48px;
+      color: $primary-gold;
+      margin-bottom: 10px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: $font-weight-bold;
+      color: $primary-gold;
+    }
+  }
+
+  // Card Container
+  .login-card {
+    background: $bg-secondary;
+    border-radius: $border-radius-lg;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(226, 195, 106, 0.1);
+    border: 1px solid $border-default;
+
+    .card-title {
+      color: $primary-gold;
+      font-size: 28px;
+      margin-bottom: 10px;
+      font-weight: $font-weight-bold;
+    }
+
+    .card-subtitle {
+      color: $text-secondary;
+      margin-bottom: 30px;
+      font-size: $font-size-sm;
+    }
+  }
+
+  // Form Groups - Override InputField styles for login page
+  .form-group {
+    margin-bottom: $spacing-xl;
+
+    // Override InputField label color
+    .input-field-label {
+      color: $primary-gold;
+    }
+
+    // Override InputField input styles
+    .custom-input {
+      background: $bg-primary;
+      border: 1px solid #333;
+      border-radius: $border-radius-sm;
+
+      &:focus {
+        border-color: $primary-gold;
+        box-shadow: 0 0 0 3px $primary-gold-light;
+        background: $bg-primary;
+      }
+
+      &.has-error {
+        border-color: $status-error;
+
+        &:focus {
+          border-color: $status-error;
+          box-shadow: 0 0 0 3px $status-error-light;
+        }
+      }
+    }
+
+    // Override password toggle button color
+    .password-toggle-btn {
+      &:hover {
+        color: $primary-gold;
+      }
+    }
+  }
+
+  // Form Options (Remember Me & Forgot Password)
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: nowrap;
+    gap: $spacing-md;
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      padding-left: 0;
+      margin-bottom: 0;
+
+      .form-check-input {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        margin-right: $spacing-sm;
+        cursor: pointer;
+        background-color: $bg-primary;
+        border: 1px solid #333;
+        border-radius: 3px;
+        float: none;
+
+        &:checked {
+          background-color: $primary-gold;
+          border-color: $primary-gold;
+        }
+
+        &:focus {
+          border-color: $primary-gold;
+          box-shadow: 0 0 0 0.25rem $primary-gold-light;
+        }
+      }
+
+      .form-check-label {
+        margin: 0;
+        padding-left: 0;
+        font-weight: $font-weight-normal;
+        color: #ccc;
+        font-size: 13px;
+        cursor: pointer;
+      }
+    }
+
+    .forgot-link {
+      color: $primary-gold;
+      text-decoration: none;
+      font-size: 13px;
+      transition: $transition-fast;
+      white-space: nowrap;
+      flex-shrink: 0;
+
+      &:hover {
+        text-decoration: underline;
+        color: $primary-gold-dark;
+      }
+    }
+  }
+
+  // Login Button - Override PrimaryBtn styles
+  .login-btn {
+    width: 100%;
+    padding: 14px !important;
+    background: $primary-gold !important;
+    color: $bg-primary !important;
+    border: none;
+    border-radius: $border-radius-sm !important;
+    font-size: 16px;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    transition: $transition-default;
+
+    &:hover:not(:disabled) {
+      background: $primary-gold-dark !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px $primary-gold-medium !important;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &.Mui-disabled,
+    &:disabled {
+      background: #444 !important;
+      color: $text-secondary !important;
+      cursor: not-allowed;
+      transform: none;
+      opacity: 1 !important;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px $primary-gold-light !important;
+    }
+  }
+
+  // Divider
+  .divider {
+    text-align: center;
+    margin: 30px 0;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #333;
+    }
+
+    span {
+      background: $bg-secondary;
+      padding: 0 15px;
+      position: relative;
+      color: $text-secondary;
+      font-size: $font-size-sm;
+    }
+  }
+
+  // Social Login Buttons
+  .social-login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: $spacing-xl;
+
+    .social-btn {
+      padding: 12px;
+      background: $bg-primary;
+      border: 1px solid #333;
+      border-radius: $border-radius-sm;
+      color: $text-primary;
+      cursor: pointer;
+      transition: $transition-default;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $spacing-sm;
+      font-size: $font-size-sm;
+
+      &:hover {
+        background: $bg-tertiary;
+        border-color: $primary-gold;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px $primary-gold-light;
+      }
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  // Signup Link
+  .signup-link {
+    text-align: center;
+    margin-top: 24px;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+
+    a {
+      color: $primary-gold;
+      text-decoration: none;
+      font-weight: $font-weight-semibold;
+      transition: $transition-fast;
+
+      &:hover {
+        text-decoration: underline;
+        color: $primary-gold-dark;
+      }
+    }
+  }
+
+  // Alert Messages
+  .alert {
+    padding: 12px 16px;
+    border-radius: $border-radius-sm;
+    margin-bottom: $spacing-xl;
+    font-size: $font-size-sm;
+
+    &.alert-danger {
+      background: $status-error-light;
+      border: 1px solid rgba(255, 68, 68, 0.3);
+      color: $status-error;
+    }
+
+    &.alert-success {
+      background: $status-success-light;
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      color: $status-success;
+    }
+  }
+
+  // Shake Animation for Errors
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+
+  .shake {
+    animation: shake 0.3s;
+  }
+
+  // Responsive Design
+  @media (max-width: 600px) {
+    padding: $spacing-md;
+
+    .login-card {
+      padding: 30px 20px;
+
+      .card-title {
+        font-size: 24px;
+      }
+    }
+
+    .social-login {
+      grid-template-columns: 1fr;
+    }
+
+    .form-options {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+  }
+}

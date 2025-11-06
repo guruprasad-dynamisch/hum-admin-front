@@ -1,0 +1,116 @@
+@use '../variables' as *;
+
+// Checkbox Field Component Styles
+.checkbox-field-wrapper {
+  margin-bottom: $spacing-lg;
+  width: 100%;
+
+  .checkbox-field-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding-left: 0;
+      margin-bottom: 0;
+
+      .form-check-input {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        margin-top: 4px;
+        margin-right: 10px;
+        cursor: pointer;
+        background-color: $bg-input;
+        border: 1px solid $border-default;
+        border-radius: 3px;
+        float: none;
+        transition: $transition-fast;
+
+        &:checked {
+          background-color: $primary-gold;
+          border-color: $primary-gold;
+        }
+
+        &:focus {
+          border-color: $primary-gold;
+          box-shadow: 0 0 0 0.25rem $primary-gold-light;
+        }
+
+        &:disabled {
+          background-color: $bg-tertiary;
+          cursor: not-allowed;
+          opacity: 0.6;
+        }
+      }
+
+      .form-check-label {
+        margin: 0;
+        padding-left: 0;
+        font-weight: $font-weight-normal;
+        color: $text-primary;
+        font-size: $font-size-sm;
+        cursor: pointer;
+
+        a {
+          color: $primary-gold;
+          text-decoration: none;
+          transition: $transition-fast;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .error-feedback {
+    display: block;
+    margin-top: $spacing-xs;
+    margin-left: 28px;
+    font-size: $font-size-xs;
+    color: $status-error;
+  }
+}
+
+// Override for login/register pages to match gold theme
+.login-page,
+.register-page {
+  .checkbox-field-wrapper {
+    .checkbox-field-container {
+      .form-check {
+        .form-check-input {
+          background-color: $bg-primary;
+          border: 1px solid #333;
+
+          &:checked {
+            background-color: $primary-gold;
+            border-color: $primary-gold;
+          }
+
+          &:focus {
+            border-color: $primary-gold;
+            box-shadow: 0 0 0 0.25rem $primary-gold-light;
+          }
+        }
+
+        .form-check-label {
+          color: #ccc;
+          font-size: 13px;
+
+          a {
+            color: $primary-gold;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}
