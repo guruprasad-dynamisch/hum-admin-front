@@ -175,6 +175,226 @@ export const MOCK_USERS: User[] = [
     organization: 'Delta Systems',
     lastLogin: '8h ago',
     status: 'active'
+  },
+  {
+    id: 16,
+    firstName: 'Peter',
+    lastName: 'Parker',
+    email: 'peter@acme.com',
+    phone: '+1-234-5693',
+    role: 'user',
+    organization: 'Acme Inc',
+    lastLogin: '10m ago',
+    status: 'active'
+  },
+  {
+    id: 17,
+    firstName: 'Quinn',
+    lastName: 'Quinn',
+    email: 'quinn@beta.com',
+    phone: '+1-234-5694',
+    role: 'admin',
+    organization: 'Beta Corp',
+    lastLogin: '45m ago',
+    status: 'active'
+  },
+  {
+    id: 18,
+    firstName: 'Rachel',
+    lastName: 'Roberts',
+    email: 'rachel@gamma.com',
+    phone: '+1-234-5695',
+    role: 'user',
+    organization: 'Gamma LLC',
+    lastLogin: '2h ago',
+    status: 'active'
+  },
+  {
+    id: 19,
+    firstName: 'Sam',
+    lastName: 'Smith',
+    email: 'sam@delta.com',
+    phone: '+1-234-5696',
+    role: 'user',
+    organization: 'Delta Systems',
+    lastLogin: '5d ago',
+    status: 'inactive'
+  },
+  {
+    id: 20,
+    firstName: 'Tina',
+    lastName: 'Turner',
+    email: 'tina@acme.com',
+    phone: '+1-234-5697',
+    role: 'admin',
+    organization: 'Acme Inc',
+    lastLogin: '1h ago',
+    status: 'active'
+  },
+  {
+    id: 21,
+    firstName: 'Uma',
+    lastName: 'Underwood',
+    email: 'uma@beta.com',
+    phone: '+1-234-5698',
+    role: 'user',
+    organization: 'Beta Corp',
+    lastLogin: '3h ago',
+    status: 'active'
+  },
+  {
+    id: 22,
+    firstName: 'Victor',
+    lastName: 'Vance',
+    email: 'victor@gamma.com',
+    phone: '+1-234-5699',
+    role: 'admin',
+    organization: 'Gamma LLC',
+    lastLogin: '4h ago',
+    status: 'active'
+  },
+  {
+    id: 23,
+    firstName: 'Wendy',
+    lastName: 'White',
+    email: 'wendy@delta.com',
+    phone: '+1-234-5700',
+    role: 'user',
+    organization: 'Delta Systems',
+    lastLogin: '6h ago',
+    status: 'active'
+  },
+  {
+    id: 24,
+    firstName: 'Xavier',
+    lastName: 'Xavier',
+    email: 'xavier@acme.com',
+    phone: '+1-234-5701',
+    role: 'user',
+    organization: 'Acme Inc',
+    lastLogin: '7h ago',
+    status: 'active'
+  },
+  {
+    id: 25,
+    firstName: 'Yara',
+    lastName: 'Young',
+    email: 'yara@beta.com',
+    phone: '+1-234-5702',
+    role: 'admin',
+    organization: 'Beta Corp',
+    lastLogin: '9h ago',
+    status: 'active'
+  },
+  {
+    id: 26,
+    firstName: 'Zack',
+    lastName: 'Zhang',
+    email: 'zack@gamma.com',
+    phone: '+1-234-5703',
+    role: 'user',
+    organization: 'Gamma LLC',
+    lastLogin: '10h ago',
+    status: 'active'
+  },
+  {
+    id: 27,
+    firstName: 'Amy',
+    lastName: 'Anderson',
+    email: 'amy@delta.com',
+    phone: '+1-234-5704',
+    role: 'user',
+    organization: 'Delta Systems',
+    lastLogin: '11h ago',
+    status: 'active'
+  },
+  {
+    id: 28,
+    firstName: 'Brian',
+    lastName: 'Baker',
+    email: 'brian@acme.com',
+    phone: '+1-234-5705',
+    role: 'admin',
+    organization: 'Acme Inc',
+    lastLogin: '12h ago',
+    status: 'active'
+  },
+  {
+    id: 29,
+    firstName: 'Chloe',
+    lastName: 'Carter',
+    email: 'chloe@beta.com',
+    phone: '+1-234-5706',
+    role: 'user',
+    organization: 'Beta Corp',
+    lastLogin: '1d ago',
+    status: 'inactive'
+  },
+  {
+    id: 30,
+    firstName: 'Daniel',
+    lastName: 'Diaz',
+    email: 'daniel@gamma.com',
+    phone: '+1-234-5707',
+    role: 'user',
+    organization: 'Gamma LLC',
+    lastLogin: '2d ago',
+    status: 'active'
+  },
+  {
+    id: 31,
+    firstName: 'Emma',
+    lastName: 'Edwards',
+    email: 'emma@delta.com',
+    phone: '+1-234-5708',
+    role: 'admin',
+    organization: 'Delta Systems',
+    lastLogin: '3d ago',
+    status: 'active'
+  },
+  {
+    id: 32,
+    firstName: 'Felix',
+    lastName: 'Fisher',
+    email: 'felix@acme.com',
+    phone: '+1-234-5709',
+    role: 'user',
+    organization: 'Acme Inc',
+    lastLogin: '4d ago',
+    status: 'inactive'
+  },
+  {
+    id: 33,
+    firstName: 'Gina',
+    lastName: 'Garcia',
+    email: 'gina@beta.com',
+    phone: '+1-234-5710',
+    role: 'user',
+    organization: 'Beta Corp',
+    lastLogin: '5d ago',
+    status: 'active'
+  },
+  {
+    id: 34,
+    firstName: 'Harry',
+    lastName: 'Harris',
+    email: 'harry@gamma.com',
+    phone: '+1-234-5711',
+    role: 'admin',
+    organization: 'Gamma LLC',
+    lastLogin: '6d ago',
+    status: 'active'
+  },
+  {
+    id: 35,
+    firstName: 'Ivy',
+    lastName: 'Ingram',
+    email: 'ivy@delta.com',
+    phone: '+1-234-5712',
+    role: 'user',
+    organization: 'Delta Systems',
+    lastLogin: '7d ago',
+    status: 'active'
   }
 ]
 
