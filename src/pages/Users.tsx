@@ -39,7 +39,7 @@ export default function Users() {
 
   // Filter data based on search and filters
   const filteredData = useMemo(() => {
-    return MOCK_USERS.filter((user) => {
+    const filtered = MOCK_USERS.filter((user) => {
       const matchesSearch =
         searchQuery === '' ||
         user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -51,6 +51,14 @@ export default function Users() {
 
       return matchesSearch && matchesRole && matchesStatus
     })
+    
+    console.log('📊 Pagination Debug:', {
+      totalUsers: filtered.length,
+      pageSize: 10,
+      expectedPages: Math.ceil(filtered.length / 10)
+    })
+    
+    return filtered
   }, [searchQuery, roleFilter, statusFilter])
 
   // Define table columns with handlers
