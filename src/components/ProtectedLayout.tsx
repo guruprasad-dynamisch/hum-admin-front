@@ -16,7 +16,7 @@ export default function ProtectedLayout() {
   useEffect(() => {
     const mobile = window.innerWidth <= 768
     setIsMobile(mobile)
-    
+
     // Collapse sidebar initially if on mobile
     if (mobile) {
       dispatch(setSidebarOpen(false))
@@ -28,9 +28,9 @@ export default function ProtectedLayout() {
     const checkMobile = () => {
       const mobile = window.innerWidth <= 768
       const wasMobile = isMobile
-      
+
       setIsMobile(mobile)
-      
+
       // Auto-close sidebar when transitioning from desktop to mobile
       if (mobile && !wasMobile && sidebarOpen) {
         dispatch(setSidebarOpen(false))
@@ -40,9 +40,9 @@ export default function ProtectedLayout() {
         dispatch(setSidebarOpen(true))
       }
     }
-    
+
     window.addEventListener('resize', checkMobile)
-    
+
     return () => window.removeEventListener('resize', checkMobile)
   }, [isMobile, sidebarOpen, dispatch])
 
@@ -53,14 +53,11 @@ export default function ProtectedLayout() {
   return (
     <div className="protected-layout">
       {/* Fixed Sidebar */}
-      <Sidebar 
+      <Sidebar
         open={sidebarOpen}
         onToggle={handleToggleSidebar}
         mobileOpen={isMobile && sidebarOpen}
       />
-
-      {/* Top Bar */}
-      <DashboardHeader />
 
       {/* Scrollable Main Content Area */}
       <main className={cn('main-content', {

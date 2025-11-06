@@ -11,6 +11,7 @@ import '@styles/components/stat-card.scss'
 import '@styles/components/quick-action-card.scss'
 import '@styles/components/dashboard-chart.scss'
 import '@styles/components/recent-activity.scss'
+import DashboardHeader from '@components/dashboard/DashboardHeader'
 
 export default function Dashboard() {
   // Transform chart data for the component
@@ -31,6 +32,10 @@ export default function Dashboard() {
 
   return (
     <>
+      {/* Top Bar */}
+      <DashboardHeader />
+
+      {/*Page Header*/}
       <PageHeader
         title="Dashboard"
         breadcrumbs={[
