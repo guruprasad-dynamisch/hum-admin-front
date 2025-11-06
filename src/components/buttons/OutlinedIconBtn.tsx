@@ -1,12 +1,13 @@
-import { Button } from "@mui/material";
-import React from 'react';
+import React from 'react'
+import { cn } from '@utils/classNames'
+import '@styles/components/buttons.scss'
 
 interface OutlinedIconBtnProps {
   onClick: () => void;
   label: string;
   icon?: React.ReactNode;
   disabled?: boolean;
-  sx?: object;
+  className?: string;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
 }
@@ -16,37 +17,27 @@ const OutlinedIconBtn = ({
   label,
   icon,
   disabled = false,
-  sx = {},
+  className = '',
   startIcon,
   endIcon,
 }: OutlinedIconBtnProps) => {
   return (
-    <Button
+    <button
+      type="button"
+      className={cn('btn', 'btn-outlined-icon', className)}
       onClick={onClick}
       disabled={disabled}
-      startIcon={startIcon || icon}
-      endIcon={endIcon}
-      sx={{
-        color: 'var(--text-secondary)',
-        fontSize: '14px',
-        fontWeight: 400,
-        padding: '8px 16px',
-        textTransform: 'none',
-        borderRadius: '20px',
-        gap: '8px',
-        '&:hover': {
-          color: 'var(--text-white-70)',
-          backgroundColor: 'var(--bg-hover)',
-        },
-        '&.Mui-disabled': {
-          opacity: 0.5,
-          color: 'var(--text-secondary)',
-        },
-        ...sx,
-      }}
     >
-      {label}
-    </Button>
+      <div className="btn-content">
+        {(startIcon || icon) && (
+          <span className="btn-icon-start">{startIcon || icon}</span>
+        )}
+        {label}
+        {endIcon && (
+          <span className="btn-icon-end">{endIcon}</span>
+        )}
+      </div>
+    </button>
   );
 };
 

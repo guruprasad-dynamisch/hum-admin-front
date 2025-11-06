@@ -1,0 +1,102 @@
+@use '../variables' as *;
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.activity-item {
+  display: flex;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  background: $bg-primary;
+  border-radius: $border-radius-md;
+  transition: $transition-fast;
+
+  &:hover {
+    background: $bg-hover;
+  }
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: $border-radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-lg;
+  flex-shrink: 0;
+  font-weight: $font-weight-bold;
+
+  &.create {
+    background: $status-success-light;
+    color: $status-success;
+  }
+
+  &.update {
+    background: $primary-gold-light;
+    color: $primary-gold;
+  }
+
+  &.delete {
+    background: $status-error-light;
+    color: $status-error;
+  }
+}
+
+.activity-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-title {
+  color: $text-primary;
+  font-size: $font-size-sm;
+  margin-bottom: 4px;
+  font-weight: $font-weight-medium;
+}
+
+.activity-meta {
+  color: $text-secondary;
+  font-size: $font-size-xs;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .activity-item {
+    padding: $spacing-md;
+  }
+
+  .activity-icon {
+    width: 36px;
+    height: 36px;
+    font-size: $font-size-md;
+  }
+
+  .activity-title {
+    font-size: $font-size-xs;
+  }
+
+  .activity-meta {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .activity-list {
+    gap: $spacing-md;
+  }
+
+  .activity-item {
+    padding: $spacing-sm;
+    gap: $spacing-sm;
+  }
+
+  .activity-icon {
+    width: 32px;
+    height: 32px;
+    font-size: $font-size-sm;
+  }
+}

@@ -1,10 +1,10 @@
-import { Button, CircularProgress, Box } from "@mui/material";
-import React from 'react';
+import React from 'react'
+import { cn } from '@utils/classNames'
+import '@styles/components/buttons.scss'
 
 interface TextBtnProps {
     children: React.ReactNode;
     onClick?: () => void;
-    sx?: object;
     disabled?: boolean;
     type?: "button" | "submit" | "reset";
     className?: string;
@@ -17,7 +17,6 @@ interface TextBtnProps {
 const TextBtn = ({
     children,
     onClick,
-    sx = {},
     disabled = false,
     type = "button",
     className = "",
@@ -26,87 +25,42 @@ const TextBtn = ({
     icon,
     iconPosition = "start"
 }: TextBtnProps) => {
-    const getColorStyles = () => {
+    const getColorClass = () => {
         switch (color) {
-            case "primary":
-                return {
-                    color: 'var(--primary-orange)',
-                    '&:hover': {
-                        backgroundColor: 'var(--bg-light-orange) !important',
-                    },
-                };
             case "secondary":
-                return {
-                    color: 'var(--text-secondary)',
-                    '&:hover': {
-                        backgroundColor: 'var(--bg-hover)',
-                    },
-                };
+                return 'btn-text-secondary';
             case "error":
-                return {
-                    color: 'var(--error-red)',
-                    '&:hover': {
-                        backgroundColor: 'var(--error-red-light)',
-                    },
-                };
+                return 'btn-text-error';
             case "warning":
-                return {
-                    color: 'var(--warning-yellow)',
-                    '&:hover': {
-                        backgroundColor: 'rgba(255, 152, 0, 0.1)',
-                    },
-                };
+                return 'btn-text-warning';
             default:
-                return {
-                    color: 'var(--primary-orange)',
-                    '&:hover': {
-                        backgroundColor: 'var(--bg-light-orange)',
-                    },
-                };
+                return '';
         }
     };
 
     return (
-        <Button
-            variant="text"
-            sx={{
-                fontSize: '14px',
-                fontWeight: 500,
-                padding: '8px 16px',
-                textTransform: 'none',
-                ...getColorStyles(),
-                '&.Mui-disabled': {
-                    opacity: 0.5,
-                },
-                ...sx
-            }}
-            className={className}
+        <button
+            type={type}
+            className={cn(
+                'btn',
+                'btn-text',
+                getColorClass(),
+                className
+            )}
             onClick={onClick}
             disabled={disabled || loading}
-            type={type}
         >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                {loading && (
-                    <CircularProgress
-                        size={16}
-                        sx={{
-                            color: 'currentColor',
-                        }}
-                    />
-                )}
+            <div className="btn-content">
+                {loading && <span className="btn-spinner" />}
                 {!loading && icon && iconPosition === 'start' && (
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        {icon}
-                    </Box>
+                    <span className="btn-icon-start">{icon}</span>
                 )}
                 {children}
                 {!loading && icon && iconPosition === 'end' && (
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        {icon}
-                    </Box>
+                    <span className="btn-icon-end">{icon}</span>
                 )}
-            </Box>
-        </Button>
+            </div>
+        </button>
     );
 };
 

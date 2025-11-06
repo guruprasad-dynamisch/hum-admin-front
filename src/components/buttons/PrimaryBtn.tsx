@@ -1,71 +1,53 @@
-import { Button, CircularProgress, Box } from "@mui/material";
+import React from 'react'
+import { cn } from '@utils/classNames'
+import '@styles/components/buttons.scss'
 
 interface PrimaryBtnProps {
     children: React.ReactNode;
     onClick?: () => void;
-    variant?: "contained" | "outlined" | "text";
-    color?: "primary" | "secondary" | "warning" | "error" | "info" | "success";
-    sx?: object;
     disabled?: boolean;
     type?: "button" | "submit" | "reset";
     fullWidth?: boolean;
     className?: string;
     loading?: boolean;
+    icon?: React.ReactNode;
+    iconPosition?: "start" | "end";
 }
 
 const PrimaryBtn = ({
     children,
     onClick,
-    variant = "contained",
-    color = "warning",
-    sx = {},
     disabled = false,
     type = "button",
     fullWidth = true,
     className = "",
-    loading = false
+    loading = false,
+    icon,
+    iconPosition = "start"
 }: PrimaryBtnProps) => {
     return (
-        <Button
-            sx={{
-                width: fullWidth ? '100%' : 'auto',
-                padding: fullWidth ? '8px' : '10px 24px',
-                borderRadius: '8px',
-                minWidth: fullWidth ? 'auto' : '100px',
-                backgroundColor: 'var(--primary-orange)',
-                color: 'var(--text-black)',
-                '&:hover': {
-                    backgroundColor: 'var(--primary-gold)',
-                },
-                '&:active': {
-                    backgroundColor: 'var(--link-visited)',
-                },
-                '&.Mui-disabled': {
-                    opacity: 0.5,
-                    backgroundColor: 'var(--primary-orange)',
-                    color: 'var(--text-black)',
-                },
-                ...sx
-            }}
-            className={className}
-            variant={variant}
-            color={color}
+        <button
+            type={type}
+            className={cn(
+                'btn',
+                'btn-primary',
+                { 'btn-full-width': fullWidth },
+                className
+            )}
             onClick={onClick}
             disabled={disabled || loading}
-            type={type}
         >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                {loading && (
-                    <CircularProgress
-                        size={16}
-                        sx={{
-                            color: 'currentColor',
-                        }}
-                    />
+            <div className="btn-content">
+                {loading && <span className="btn-spinner" />}
+                {!loading && icon && iconPosition === 'start' && (
+                    <span className="btn-icon-start">{icon}</span>
                 )}
                 {children}
-            </Box>
-        </Button>
+                {!loading && icon && iconPosition === 'end' && (
+                    <span className="btn-icon-end">{icon}</span>
+                )}
+            </div>
+        </button>
     );
 };
 

@@ -27,10 +27,10 @@ export default function Sidebar({ open: controlledOpen, onToggle, mobileOpen = f
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
-    
+
     checkMobile()
     window.addEventListener('resize', checkMobile)
-    
+
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
@@ -58,8 +58,11 @@ export default function Sidebar({ open: controlledOpen, onToggle, mobileOpen = f
       {/* Logo Section */}
       <div className="sidebar-logo-section">
         <div className="sidebar-logo-container">
-          <div className="sidebar-logo-icon">🤖</div>
-          {isOpen && <div className="sidebar-logo-text">Humanistic AI</div>}
+          {isOpen && <img
+            src="/assets/humanistics_logo_transparent.webp"
+            alt="Humanistics AI"
+            className="sidebar-logo-image"
+          />}
         </div>
       </div>
 

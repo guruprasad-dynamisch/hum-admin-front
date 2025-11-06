@@ -1,0 +1,201 @@
+@use '../variables' as *;
+
+// Base button styles
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: 10px 24px;
+  border-radius: $border-radius-md;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  font-family: inherit;
+  cursor: pointer;
+  transition: $transition-fast;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+
+  &:focus-visible {
+    outline: 2px solid $primary-gold;
+    outline-offset: 2px;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Full width variant
+  &.btn-full-width {
+    width: 100%;
+    padding: 8px;
+  }
+}
+
+// Primary Button (Contained style)
+.btn-primary {
+  background-color: $primary-gold;
+  color: $bg-primary;
+  border: 1px solid $primary-gold;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-gold-dark;
+    border-color: $primary-gold-dark;
+  }
+
+  &:active:not(:disabled) {
+    background-color: $primary-gold-dark;
+  }
+
+  &:disabled {
+    background-color: $primary-gold;
+    color: $bg-primary;
+  }
+}
+
+// Secondary Button (Outlined style)
+.btn-secondary {
+  background-color: transparent;
+  color: $text-secondary;
+  border: 1px solid $border-default;
+
+  &:hover:not(:disabled) {
+    border-color: $border-hover;
+    background-color: $bg-hover;
+    color: $text-primary;
+  }
+
+  &:active:not(:disabled) {
+    background-color: $bg-active;
+  }
+
+  &:disabled {
+    border-color: $border-default;
+    color: $text-secondary;
+  }
+}
+
+// Text Button (No background)
+.btn-text {
+  background-color: transparent;
+  color: $primary-gold;
+  border: none;
+  padding: 8px 16px;
+
+  &:hover:not(:disabled) {
+    background-color: $primary-gold-hover;
+  }
+
+  &:active:not(:disabled) {
+    background-color: $primary-gold-light;
+  }
+
+  // Color variants for text buttons
+  &.btn-text-secondary {
+    color: $text-secondary;
+
+    &:hover:not(:disabled) {
+      background-color: $bg-hover;
+    }
+  }
+
+  &.btn-text-error {
+    color: $status-error;
+
+    &:hover:not(:disabled) {
+      background-color: $status-error-light;
+    }
+  }
+
+  &.btn-text-warning {
+    color: $status-warning;
+
+    &:hover:not(:disabled) {
+      background-color: $status-warning-light;
+    }
+  }
+
+  &.btn-text-success {
+    color: $status-success;
+
+    &:hover:not(:disabled) {
+      background-color: $status-success-light;
+    }
+  }
+}
+
+// Outlined Icon Button
+.btn-outlined-icon {
+  background-color: transparent;
+  color: $text-secondary;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+
+  &:hover:not(:disabled) {
+    color: $text-primary;
+    background-color: $bg-hover;
+  }
+
+  &:disabled {
+    color: $text-secondary;
+  }
+}
+
+// Loading spinner
+.btn-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: btn-spin 0.6s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Button content wrapper
+.btn-content {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+// Icon positioning
+.btn-icon-start {
+  display: flex;
+  align-items: center;
+}
+
+.btn-icon-end {
+  display: flex;
+  align-items: center;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .btn {
+    padding: 8px 16px;
+    font-size: $font-size-sm;
+  }
+
+  .btn-text {
+    padding: 6px 12px;
+  }
+}
