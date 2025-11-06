@@ -1,0 +1,18 @@
+@use '../variables' as *;
+
+/* Page Loader Styles */
+.page-loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: $bg-primary;
+
+  .page-loader-spinner {
+    width: 80px;
+    height: 80px;
+    border: 8px solid $bg-secondary;
+    border-top: 8px solid $primary-gold;
+    border-radius: 50%;
+  }
+}

@@ -1,0 +1,86 @@
+@use '../variables' as *;
+
+.textarea-field-wrapper {
+  margin-bottom: $spacing-sm;
+  width: 100%;
+
+  .textarea-field-label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+    color: $primary-gold;
+
+    .required {
+      color: $status-error;
+      margin-left: 2px;
+    }
+  }
+
+  .textarea-field-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .custom-textarea {
+    background-color: $bg-input;
+    border: 1px solid $border-input;
+    border-radius: $border-radius-sm;
+    color: $text-primary;
+    padding: 12px 16px;
+    font-size: $font-size-md;
+    transition: $transition-default;
+    width: 100%;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+
+    &::placeholder {
+      color: $text-tertiary;
+    }
+
+    &:focus {
+      background-color: $bg-input;
+      color: $text-primary;
+      outline: none;
+      border-color: $primary-gold;
+      box-shadow: 0 0 0 3px $primary-gold-light;
+    }
+
+    &:disabled {
+      background-color: $bg-tertiary;
+      color: $text-tertiary;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    &.has-error {
+      border-color: $status-error;
+
+      &:focus {
+        border-color: $status-error;
+        box-shadow: 0 0 0 2px $status-error-light;
+      }
+    }
+  }
+
+  .helper-text {
+    font-size: 12px;
+    color: $text-secondary;
+    margin-top: 6px;
+  }
+
+  .error-feedback {
+    display: block;
+    margin-top: $spacing-xs;
+    font-size: $font-size-xs;
+    color: $status-error;
+  }
+
+  .character-count {
+    text-align: right;
+    font-size: $font-size-xs;
+    color: $text-tertiary;
+    margin-top: $spacing-xs;
+  }
+}

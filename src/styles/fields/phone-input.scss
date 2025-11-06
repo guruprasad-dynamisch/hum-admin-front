@@ -22,9 +22,9 @@
     width: 100%;
     padding: 0 10px !important;
     background-color: $bg-input;
-    border: 1px solid $border-default;
-    border-radius: $border-radius-md;
-    transition: $transition-fast;
+    border: 1px solid $border-input;
+    border-radius: $border-radius-sm;
+    transition: $transition-default;
 
     .PhoneInputInput {
       min-height: 45px !important;

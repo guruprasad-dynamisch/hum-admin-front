@@ -40,6 +40,8 @@ interface InputFieldProps {
   icon?: React.ReactNode
   /** Icon position: 'start' or 'end' (default: 'start') */
   iconPosition?: 'start' | 'end'
+  /** Helper text to display below the input */
+  helperText?: string
   /** Additional HTML input props */
   [key: string]: any
 }
@@ -64,6 +66,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       onBlur,
       icon,
       iconPosition = 'start',
+      helperText,
       ...props
     },
     ref
@@ -157,6 +160,10 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             </IconBtn>
           )}
         </div>
+        
+        {helperText && !error && (
+          <div className="helper-text">{helperText}</div>
+        )}
         
         {error && (
           <span className="error-feedback">

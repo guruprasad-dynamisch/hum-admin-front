@@ -1,0 +1,18 @@
+@use '../variables' as *;
+
+.logo-footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.logo-brand {
+  font-size: 1rem;
+  font-weight: $font-weight-bold !important;
+  color: $text-primary;
+}
+
+.logo-brand-highlight {
+  color: $primary-gold;
+  margin-left: 0.25rem;
+}

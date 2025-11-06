@@ -1,32 +1,16 @@
-import { Box } from '@mui/material';
-import CircularProgress, { circularProgressClasses, CircularProgressProps } from '@mui/material/CircularProgress';
-import '@styles/PageLoader.css';
-
-function CustomCircularProgress(props: CircularProgressProps) {
-  return (
-    <CircularProgress
-      variant="indeterminate"
-      disableShrink
-      sx={(theme) => ({
-        color: 'var(--primary-orange)',
-        animationDuration: '550ms',
-        [`& .${circularProgressClasses.circle}`]: {
-          strokeLinecap: 'round',
-        },
-      })}
-      size={60}
-      thickness={4}
-      {...props}
-    />
-  );
-}
+import { Spinner } from 'react-bootstrap';
+import '@styles/components/page-loader.scss';
 
 const PageLoader = () => {
   return (
-    <Box className="page-loader-container">
-      <CustomCircularProgress />
-    </Box>
-  )
+    <div className="page-loader-container">
+      <Spinner
+        animation="border"
+        variant="primary"
+        className='page-loader-spinner'
+      />
+    </div>
+  );
 }
 
-export default PageLoader
+export default PageLoader;

@@ -6,6 +6,7 @@ import { cn } from '@utils/classNames'
 import InputField from '../fields/InputField'
 import PhoneInput from '../fields/PhoneInput'
 import SelectField from '../fields/SelectField'
+import TextAreaField from '../fields/TextAreaField'
 import PrimaryBtn from '../buttons/PrimaryBtn'
 import SecondaryBtn from '../buttons/SecondaryBtn'
 import '@styles/components/dynamic-form.scss'
@@ -22,6 +23,7 @@ export type FieldType =
   | 'url' 
   | 'search'
   | 'phone'
+  | 'textarea'
   | 'checkbox'
   | 'select'
   | 'dropdown'
@@ -39,6 +41,7 @@ export interface BaseFieldConfig {
   disabled?: boolean;
   className?: string;
   defaultValue?: any;
+  helperText?: string;
   /** Grid column span (1-12). Can be a number or an object with breakpoint-specific values. Default: 12 (full width) */
   colSpan?: number | { xs?: number; sm?: number; md?: number; lg?: number; xl?: number };
 }
@@ -56,6 +59,16 @@ export interface TextFieldConfig extends BaseFieldConfig {
 export interface PhoneFieldConfig extends BaseFieldConfig {
   type: 'phone';
   defaultCountry?: string;
+}
+
+/**
+ * TextArea field configuration
+ */
+export interface TextAreaFieldConfig extends BaseFieldConfig {
+  type: 'textarea';
+  rows?: number;
+  maxLength?: number;
+  helperText?: string;
 }
 
 /**
@@ -98,6 +111,7 @@ export interface GroupFieldConfig extends BaseFieldConfig {
 export type FieldConfig = 
   | TextFieldConfig 
   | PhoneFieldConfig 
+  | TextAreaFieldConfig
   | CheckboxFieldConfig 
   | SelectFieldConfig 
   | DateFieldConfig 
@@ -191,6 +205,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
     required: field.required,
     disabled: field.disabled,
     className: field.className,
+    helperText: field.helperText,
     mode,
   };
 
@@ -223,6 +238,20 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
           value={mode === 'standalone' ? value : undefined}
           onChange={mode === 'standalone' ? onChange : undefined}
           onBlur={mode === 'standalone' ? onBlur : undefined}
+        />
+      );
+
+    case 'textarea':
+      return (
+        <TextAreaField
+          {...commonProps}
+          rows={field.rows}
+          maxLength={field.maxLength}
+          helperText={field.helperText}
+          value={mode === 'standalone' ? value : undefined}
+          onChange={mode === 'standalone' ? onChange : undefined}
+          onBlur={mode === 'standalone' ? onBlur : undefined}
+          error={error}
         />
       );
 

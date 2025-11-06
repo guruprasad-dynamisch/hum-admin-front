@@ -1,0 +1,132 @@
+@use '../variables' as *;
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: $bg-primary;
+  text-align: center;
+  padding: $spacing-xxl;
+}
+
+.not-found-content {
+  max-width: 600px;
+  width: 100%;
+}
+
+.not-found-illustration {
+  position: relative;
+  margin-bottom: $spacing-xxl;
+}
+
+.not-found-404 {
+  font-size: 180px;
+  font-weight: 700;
+  color: $primary-gold;
+  opacity: 0.1;
+  line-height: 1;
+  user-select: none;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 120px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 80px;
+  }
+}
+
+.not-found-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  color: $primary-gold;
+
+  @media (max-width: 768px) {
+    font-size: 70px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 50px;
+  }
+}
+
+.not-found-title {
+  color: $primary-gold;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 $spacing-md 0;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
+}
+
+.not-found-description {
+  color: $text-secondary;
+  font-size: $font-size-md;
+  line-height: 1.6;
+  margin: 0 0 $spacing-xxl 0;
+
+  @media (max-width: 480px) {
+    font-size: $font-size-sm;
+  }
+}
+
+.not-found-actions {
+  display: flex;
+  gap: $spacing-md;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.not-found-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 12px 24px;
+  background: $primary-gold;
+  color: $bg-primary;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background: #d4b560;
+    transform: translateY(-2px);
+  }
+
+  &.secondary {
+    background: transparent;
+    border: 1px solid $primary-gold;
+    color: $primary-gold;
+
+    &:hover {
+      background: rgba(226, 195, 106, 0.1);
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    justify-content: center;
+  }
+}

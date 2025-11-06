@@ -86,6 +86,24 @@
   }
 }
 
+// Danger Button (for destructive actions)
+.btn-danger {
+  background-color: transparent !important;
+  color: $danger-color !important;
+  border: 1px solid $danger-color !important;
+
+  &:hover:not(:disabled) {
+    background-color: $danger-bg-hover !important;
+    border-color: $danger-color !important;
+    color: $danger-color !important;
+    transform: none !important;
+  }
+
+  &:active:not(:disabled) {
+    background-color: $danger-bg-active !important;
+  }
+}
+
 // Text Button (No background)
 .hum-btn-text {
   background-color: transparent;

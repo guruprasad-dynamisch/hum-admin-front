@@ -10,6 +10,7 @@ export type {
   BaseFieldConfig,
   TextFieldConfig,
   PhoneFieldConfig,
+  TextAreaFieldConfig,
   CheckboxFieldConfig,
   SelectFieldConfig,
   DateFieldConfig,

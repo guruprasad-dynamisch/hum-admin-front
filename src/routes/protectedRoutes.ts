@@ -1,4 +1,3 @@
-import Profile from '@pages/Profile'
 import Logout from '@pages/Logout'
 import Dashboard from '@pages/Dashboard'
 import Users from '@pages/Users'
@@ -44,12 +43,6 @@ export const protectedRoutes: ProtectedRouteConfig[] = [
     key: 'settings',
     path: 'settings',
     element: Settings,
-    allowedRoles: [Role.USER, Role.ADMIN],
-  },
-  {
-    key: 'profile',
-    path: 'profile',
-    element: Profile,
     allowedRoles: [Role.USER, Role.ADMIN],
   },
   {

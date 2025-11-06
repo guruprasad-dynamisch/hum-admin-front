@@ -1,0 +1,149 @@
+@use '../variables' as *;
+
+.sessions-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.sessions-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead th {
+    text-align: left;
+    padding: 12px;
+    color: $primary-gold;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid $border-default;
+  }
+
+  tbody td {
+    padding: 16px 12px;
+    color: $text-secondary;
+    font-size: 14px;
+    border-bottom: 1px solid $bg-secondary;
+  }
+
+  tbody tr:hover {
+    background: rgba(226, 195, 106, 0.05);
+  }
+}
+
+.device-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.device-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.device-name {
+  color: $text-primary;
+  font-weight: 500;
+}
+
+.device-details {
+  font-size: 12px;
+  color: $text-secondary;
+  margin-top: 2px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+
+  &.active {
+    background: rgba(0, 255, 0, 0.1);
+    color: #00ff00;
+  }
+
+  &.expired {
+    background: rgba(136, 136, 136, 0.1);
+    color: $text-secondary;
+  }
+}
+
+.revoke-btn {
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid $danger-color;
+  color: $danger-color;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+
+  &:hover {
+    background: $danger-bg-hover;
+  }
+
+  &:active {
+    background: $danger-bg-active;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .sessions-table {
+    thead th,
+    tbody td {
+      padding: 10px 8px;
+      font-size: 13px;
+    }
+  }
+
+  .device-icon {
+    font-size: 20px;
+  }
+
+  .device-info {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sessions-table {
+    thead {
+      display: none;
+    }
+
+    tbody tr {
+      display: block;
+      margin-bottom: 16px;
+      border: 1px solid $border-default;
+      border-radius: $border-radius-md;
+      padding: 12px;
+    }
+
+    tbody td {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: none;
+
+      &::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: $primary-gold;
+        margin-right: 8px;
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@use '../variables' as *;
+
+.settings-page {
+  background: $bg-primary;
+  min-height: calc(100vh - 70px);
+  padding: $spacing-xxl;
+
+  .settings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .settings-page {
+    padding: $spacing-lg;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-page {
+    padding: $spacing-md;
+  }
+}
