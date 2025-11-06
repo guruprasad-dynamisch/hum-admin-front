@@ -19,15 +19,7 @@ export const otpSchema = z.object({
  * Registration form schema with production-level validations
  */
 export const registerSchema = z.object({
-    firstName: stringValidations.required('First name')
-        .min(2, 'First name must be at least 2 characters')
-        .max(50, 'First name must not exceed 50 characters')
-        .regex(/^[\p{L}\s'-\.]+$/u, 'First name can only contain letters, spaces, hyphens, and apostrophes'),
-    
-    lastName: stringValidations.required('Last name')
-        .min(2, 'Last name must be at least 2 characters')
-        .max(50, 'Last name must not exceed 50 characters')
-        .regex(/^[\p{L}\s'-\.]+$/u, 'Last name can only contain letters, spaces, hyphens, and apostrophes'),
+    fullName: stringValidations.fullName('Full name'),
     
     email: stringValidations.email('Email'),
     
@@ -37,9 +29,16 @@ export const registerSchema = z.object({
     
     role: z.string().optional(),
     
+    password: stringValidations.password('Password'),
+    
+    confirmPassword: z.string().min(1, 'Please confirm your password'),
+    
     terms: z.boolean().refine((val) => val === true, {
         message: "You must accept the terms and conditions to continue",
     }),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
 });
 
 // Type inference for TypeScript

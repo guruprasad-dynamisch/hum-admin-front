@@ -99,7 +99,7 @@ export default function Login() {
                   className="forgot-link"
                   onClick={(e) => {
                     e.preventDefault();
-                    navigate(getRouteByKey("forgot-password"));
+                    navigate(getRouteByKey("forgotPassword"));
                   }}
                 >
                   Forgot password?

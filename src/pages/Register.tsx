@@ -36,12 +36,13 @@ const Register: React.FC = () => {
     resolver: zodResolver(registerSchema),
     mode: 'onSubmit',
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      fullName: "",
       email: "",
       phone: "",
       organization: "",
       role: "user",
+      password: "",
+      confirmPassword: "",
       terms: false,
     },
   });
@@ -149,27 +150,14 @@ const Register: React.FC = () => {
                 <p className="card-subtitle">Sign up to get started with Humanistic AI</p>
 
                 <Form onSubmit={handleSubmit(onSubmit)}>
-                  {/* First Name */}
+                  {/* Full Name */}
                   <div className="form-group">
                     <InputField
-                      name="firstName"
-                      label="First Name"
+                      name="fullName"
+                      label="Full Name"
                       type="text"
                       mode="react-hook-form"
-                      placeholder="John"
-                      control={control}
-                      required
-                    />
-                  </div>
-
-                  {/* Last Name */}
-                  <div className="form-group">
-                    <InputField
-                      name="lastName"
-                      label="Last Name"
-                      type="text"
-                      mode="react-hook-form"
-                      placeholder="Doe"
+                      placeholder="John Doe"
                       control={control}
                       required
                     />
@@ -222,10 +210,38 @@ const Register: React.FC = () => {
                       label="Role"
                       mode="react-hook-form"
                       control={control}
+                      placeholder="Select your role"
                       options={[
                         { value: "user", label: "User" },
+                        { value: "manager", label: "Manager" },
                         { value: "admin", label: "Admin" }
                       ]}
+                    />
+                  </div>
+
+                  {/* Password */}
+                  <div className="form-group">
+                    <InputField
+                      name="password"
+                      label="Password"
+                      type="password"
+                      mode="react-hook-form"
+                      placeholder="Enter your password"
+                      control={control}
+                      required
+                    />
+                  </div>
+
+                  {/* Confirm Password */}
+                  <div className="form-group">
+                    <InputField
+                      name="confirmPassword"
+                      label="Confirm Password"
+                      type="password"
+                      mode="react-hook-form"
+                      placeholder="Re-enter your password"
+                      control={control}
+                      required
                     />
                   </div>
 
