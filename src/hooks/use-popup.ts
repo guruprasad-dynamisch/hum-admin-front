@@ -10,7 +10,12 @@ interface UsePopupReturn {
 
 /**
  * Custom hook for managing popup/popover state
- * Handles anchor element and open/close state
+ * Handles anchor element and open/close state for dropdowns, popovers, etc.
+ * 
+ * @example
+ * const popup = usePopup();
+ * <button onClick={popup.open}>Open Popup</button>
+ * <Popover anchorEl={popup.anchorEl} open={popup.isOpen} onClose={popup.close}>...</Popover>
  */
 export function usePopup(): UsePopupReturn {
   const [isOpen, setIsOpen] = useState(false);

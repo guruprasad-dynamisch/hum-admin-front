@@ -7,9 +7,9 @@
   .select-field-label {
     display: block;
     margin-bottom: $spacing-sm;
-    font-size: $font-size-sm;
+    font-size: 14px;
     font-weight: $font-weight-medium;
-    color: $text-primary;
+    color: $primary-gold;
 
     .required {
       color: $status-error;
@@ -43,7 +43,8 @@
       background-color: $bg-input;
       color: $text-primary;
       outline: none;
-      border-color: $border-focus;
+      border-color: $primary-gold;
+      box-shadow: 0 0 0 3px $primary-gold-light;
     }
 
     &:disabled {

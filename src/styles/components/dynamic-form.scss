@@ -1,0 +1,115 @@
+@use '../variables' as *;
+
+.dynamic-form {
+  width: 100%;
+}
+
+// Grid Layout
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns, 12), 1fr);
+  gap: $spacing-sm;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    
+    .form-grid-item {
+      grid-column: span 1 !important;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .form-grid-item {
+      grid-column: span var(--sm-span, 12) !important;
+    }
+  }
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    .form-grid-item {
+      grid-column: span var(--md-span, 12) !important;
+    }
+  }
+
+  @media (min-width: 1281px) and (max-width: 1536px) {
+    .form-grid-item {
+      grid-column: span var(--lg-span, 12) !important;
+    }
+  }
+
+  @media (min-width: 1537px) {
+    .form-grid-item {
+      grid-column: span var(--xl-span, 12) !important;
+    }
+  }
+}
+
+.form-grid-item {
+  width: 100%;
+}
+
+// Stack Layout
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-spacing, 16px);
+  width: 100%;
+}
+
+.form-field {
+  width: 100%;
+}
+
+// Form Actions (Buttons)
+.form-actions {
+  display: flex;
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+  width: 100%;
+
+  &.justify-end {
+    justify-content: flex-end;
+  }
+
+  button {
+    flex: 1;
+
+    &.btn-small {
+      min-width: 100px;
+      padding: 6px 16px;
+      font-size: $font-size-sm;
+      flex: 0 0 auto;
+    }
+
+    &.btn-large {
+      padding: 12px 24px;
+      font-size: $font-size-lg;
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+    }
+  }
+}
+
+// Field Error
+.field-error {
+  display: block;
+  color: var(--error-red, #dc2626);
+  font-size: $font-size-xs;
+  margin-top: $spacing-xs;
+}
+
+// Field Placeholder (for coming soon fields)
+.field-placeholder {
+  color: var(--text-secondary, #666);
+  padding: $spacing-md;
+  background: var(--bg-secondary, #f5f5f5);
+  border-radius: $border-radius-sm;
+  text-align: center;
+  font-size: $font-size-sm;
+}

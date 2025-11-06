@@ -1,12 +1,14 @@
-import React from 'react';
-import { useForm, Control, FieldValues, UseFormReturn } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Box, Stack, Grid } from '@mui/material';
-import InputField from '../fields/InputField';
-import PhoneInput from '../fields/PhoneInput';
-import PrimaryBtn from '../buttons/PrimaryBtn';
-import SecondaryBtn from '../buttons/SecondaryBtn';
+import React from 'react'
+import { useForm, Control, FieldValues, UseFormReturn } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { cn } from '@utils/classNames'
+import InputField from '../fields/InputField'
+import PhoneInput from '../fields/PhoneInput'
+import SelectField from '../fields/SelectField'
+import PrimaryBtn from '../buttons/PrimaryBtn'
+import SecondaryBtn from '../buttons/SecondaryBtn'
+import '@styles/components/dynamic-form.scss'
 
 /**
  * Field configuration types
@@ -227,34 +229,37 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
     case 'checkbox':
       // TODO: Implement checkbox field
       return (
-        <Box sx={{ color: 'var(--text-secondary)', p: 2 }}>
+        <div className="field-placeholder">
           Checkbox field coming soon...
-        </Box>
+        </div>
       );
 
     case 'select':
     case 'dropdown':
-      // TODO: Implement select/dropdown field
       return (
-        <Box sx={{ color: 'var(--text-secondary)', p: 2 }}>
-          Select/Dropdown field coming soon...
-        </Box>
+        <SelectField
+          {...commonProps}
+          options={field.options || []}
+          value={mode === 'standalone' ? value : undefined}
+          onChange={mode === 'standalone' ? onChange : undefined}
+          control={mode === 'react-hook-form' ? control : undefined}
+        />
       );
 
     case 'date':
       // TODO: Implement date field
       return (
-        <Box sx={{ color: 'var(--text-secondary)', p: 2 }}>
+        <div className="field-placeholder">
           Date field coming soon...
-        </Box>
+        </div>
       );
 
     case 'group':
       // TODO: Implement group field
       return (
-        <Box sx={{ color: 'var(--text-secondary)', p: 2 }}>
+        <div className="field-placeholder">
           Group field coming soon...
-        </Box>
+        </div>
       );
 
     default:
@@ -323,45 +328,52 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
       }
     }, [formMethods, methods]);
 
+    const getButtonClassName = () => {
+      if (submitButtonSize === 'small') return 'btn-small'
+      if (submitButtonSize === 'large') return 'btn-large'
+      return ''
+    }
+
     return (
-      <Box
-        component="form"
+      <form
         onSubmit={handleSubmit(onSubmit)}
-        className={formClassName}
+        className={cn('dynamic-form', formClassName)}
         noValidate
-        sx={{ width: '100%' }}
       >
         {layout === 'grid' ? (
-          <Grid container spacing={fieldSpacing} sx={{ width: '100%' }}>
+          <div className="form-grid" style={{ '--grid-columns': gridColumns } as React.CSSProperties}>
             {fields.map((field) => {
-              const colSpan = field.colSpan || 12;
-              const gridProps = typeof colSpan === 'number'
-                ? { xs: 12, sm: colSpan }
-                : { xs: colSpan.xs || 12, sm: colSpan.sm || 12, md: colSpan.md, lg: colSpan.lg, xl: colSpan.xl };
+              const colSpan = field.colSpan || 12
+              const gridStyle = typeof colSpan === 'number'
+                ? { gridColumn: `span ${colSpan}` }
+                : {
+                    gridColumn: `span ${colSpan.xs || 12}`,
+                    '--sm-span': colSpan.sm || 12,
+                    '--md-span': colSpan.md || colSpan.sm || 12,
+                    '--lg-span': colSpan.lg || colSpan.md || colSpan.sm || 12,
+                    '--xl-span': colSpan.xl || colSpan.lg || colSpan.md || colSpan.sm || 12,
+                  } as React.CSSProperties
               
               return (
-                <Grid item {...gridProps} key={field.name}>
+                <div key={field.name} className="form-grid-item" style={gridStyle}>
                   <FieldRenderer
                     field={field}
                     mode="react-hook-form"
                     control={control}
                   />
-                </Grid>
-              );
+                </div>
+              )
             })}
             {(showSubmitButton || showCancelButton) && (
-              <Grid item xs={12}>
-                <Box sx={{ mt: 1, width: '100%', display: 'flex', justifyContent: submitButtonSize === 'small' ? 'flex-end' : 'flex-start', gap: 2 }}>
+              <div className="form-grid-item" style={{ gridColumn: 'span 12' }}>
+                <div className={cn('form-actions', submitButtonSize === 'small' && 'justify-end')}>
                   {showCancelButton && onCancel && (
                     <SecondaryBtn
                       type="button"
                       onClick={onCancel}
                       disabled={isSubmitting}
-                      sx={{
-                        minWidth: submitButtonSize === 'small' ? '100px' : 'auto',
-                        padding: submitButtonSize === 'small' ? '6px 16px' : '8px',
-                        fontSize: submitButtonSize === 'small' ? '0.875rem' : '1rem',
-                      }}
+                      className={getButtonClassName()}
+                      fullWidth={false}
                     >
                       {cancelButtonText}
                     </SecondaryBtn>
@@ -372,42 +384,35 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                       loading={isSubmitting}
                       disabled={isSubmitting}
                       fullWidth={submitButtonSize !== 'small' && !showCancelButton}
-                      sx={{
-                        minWidth: submitButtonSize === 'small' ? '100px' : 'auto',
-                        padding: submitButtonSize === 'small' ? '6px 16px' : '8px',
-                        fontSize: submitButtonSize === 'small' ? '0.875rem' : '1rem',
-                      }}
+                      className={getButtonClassName()}
                     >
                       {submitButtonText}
                     </PrimaryBtn>
                   )}
-                </Box>
-              </Grid>
+                </div>
+              </div>
             )}
-          </Grid>
+          </div>
         ) : (
-          <Stack spacing={fieldSpacing} sx={{ width: '100%' }}>
+          <div className="form-stack" style={{ '--field-spacing': `${fieldSpacing * 8}px` } as React.CSSProperties}>
             {fields.map((field) => (
-              <Box key={field.name} sx={{ width: '100%' }}>
+              <div key={field.name} className="form-field">
                 <FieldRenderer
                   field={field}
                   mode="react-hook-form"
                   control={control}
                 />
-              </Box>
+              </div>
             ))}
             {(showSubmitButton || showCancelButton) && (
-              <Box sx={{ mt: 1, width: '100%', display: 'flex', justifyContent: submitButtonSize === 'small' ? 'flex-end' : 'flex-start', gap: 2 }}>
+              <div className={cn('form-actions', submitButtonSize === 'small' && 'justify-end')}>
                 {showCancelButton && onCancel && (
                   <SecondaryBtn
                     type="button"
                     onClick={onCancel}
                     disabled={isSubmitting}
-                    sx={{
-                      minWidth: submitButtonSize === 'small' ? '100px' : 'auto',
-                      padding: submitButtonSize === 'small' ? '6px 16px' : '8px',
-                      fontSize: submitButtonSize === 'small' ? '0.875rem' : '1rem',
-                    }}
+                    className={getButtonClassName()}
+                    fullWidth={false}
                   >
                     {cancelButtonText}
                   </SecondaryBtn>
@@ -418,20 +423,16 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                     loading={isSubmitting}
                     disabled={isSubmitting}
                     fullWidth={submitButtonSize !== 'small' && !showCancelButton}
-                    sx={{
-                      minWidth: submitButtonSize === 'small' ? '100px' : 'auto',
-                      padding: submitButtonSize === 'small' ? '6px 16px' : '8px',
-                      fontSize: submitButtonSize === 'small' ? '0.875rem' : '1rem',
-                    }}
+                    className={getButtonClassName()}
                   >
                     {submitButtonText}
                   </PrimaryBtn>
                 )}
-              </Box>
+              </div>
             )}
-          </Stack>
+          </div>
         )}
-      </Box>
+      </form>
     );
   }
 
@@ -451,24 +452,34 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
     }
   };
 
+  const getButtonClassName = () => {
+    if (submitButtonSize === 'small') return 'btn-small'
+    if (submitButtonSize === 'large') return 'btn-large'
+    return ''
+  }
+
   return (
-    <Box
-      component="form"
+    <form
       onSubmit={handleStandaloneSubmit}
-      className={formClassName}
+      className={cn('dynamic-form', formClassName)}
       noValidate
-      sx={{ width: '100%' }}
     >
       {layout === 'grid' ? (
-        <Grid container spacing={fieldSpacing} sx={{ width: '100%' }}>
+        <div className="form-grid" style={{ '--grid-columns': gridColumns } as React.CSSProperties}>
           {fields.map((field) => {
-            const colSpan = field.colSpan || 12;
-            const gridProps = typeof colSpan === 'number'
-              ? { xs: 12, sm: colSpan }
-              : { xs: colSpan.xs || 12, sm: colSpan.sm || 12, md: colSpan.md, lg: colSpan.lg, xl: colSpan.xl };
+            const colSpan = field.colSpan || 12
+            const gridStyle = typeof colSpan === 'number'
+              ? { gridColumn: `span ${colSpan}` }
+              : {
+                  gridColumn: `span ${colSpan.xs || 12}`,
+                  '--sm-span': colSpan.sm || 12,
+                  '--md-span': colSpan.md || colSpan.sm || 12,
+                  '--lg-span': colSpan.lg || colSpan.md || colSpan.sm || 12,
+                  '--xl-span': colSpan.xl || colSpan.lg || colSpan.md || colSpan.sm || 12,
+                } as React.CSSProperties
             
             return (
-              <Grid item {...gridProps} key={field.name}>
+              <div key={field.name} className="form-grid-item" style={gridStyle}>
                 <FieldRenderer
                   field={field}
                   mode="standalone"
@@ -477,34 +488,23 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                   error={errors?.[field.name]}
                 />
                 {errors?.[field.name] && (
-                  <Box
-                    component="span"
-                    sx={{
-                      color: 'var(--error-red)',
-                      fontSize: '12px',
-                      mt: 0.5,
-                      display: 'block',
-                    }}
-                  >
+                  <span className="field-error">
                     {errors[field.name]}
-                  </Box>
+                  </span>
                 )}
-              </Grid>
-            );
+              </div>
+            )
           })}
           {(showSubmitButton || showCancelButton) && (
-            <Grid item xs={12}>
-              <Box sx={{ mt: 1, width: '100%', display: 'flex', justifyContent: submitButtonSize === 'small' ? 'flex-end' : 'flex-start', gap: 2 }}>
+            <div className="form-grid-item" style={{ gridColumn: 'span 12' }}>
+              <div className={cn('form-actions', submitButtonSize === 'small' && 'justify-end')}>
                 {showCancelButton && onCancel && (
                   <SecondaryBtn
                     type="button"
                     onClick={onCancel}
                     disabled={isSubmitting}
-                    sx={{
-                      minWidth: submitButtonSize === 'small' ? '100px' : 'auto',
-                      padding: submitButtonSize === 'small' ? '6px 16px' : '8px',
-                      fontSize: submitButtonSize === 'small' ? '0.875rem' : '1rem',
-                    }}
+                    className={getButtonClassName()}
+                    fullWidth={false}
                   >
                     {cancelButtonText}
                   </SecondaryBtn>
@@ -515,23 +515,19 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                     loading={isSubmitting}
                     disabled={isSubmitting}
                     fullWidth={submitButtonSize !== 'small' && !showCancelButton}
-                    sx={{
-                      minWidth: submitButtonSize === 'small' ? '100px' : 'auto',
-                      padding: submitButtonSize === 'small' ? '6px 16px' : '8px',
-                      fontSize: submitButtonSize === 'small' ? '0.875rem' : '1rem',
-                    }}
+                    className={getButtonClassName()}
                   >
                     {submitButtonText}
                   </PrimaryBtn>
                 )}
-              </Box>
-            </Grid>
+              </div>
+            </div>
           )}
-        </Grid>
+        </div>
       ) : (
-        <Stack spacing={fieldSpacing} sx={{ width: '100%' }}>
+        <div className="form-stack" style={{ '--field-spacing': `${fieldSpacing * 8}px` } as React.CSSProperties}>
           {fields.map((field) => (
-            <Box key={field.name} sx={{ width: '100%' }}>
+            <div key={field.name} className="form-field">
               <FieldRenderer
                 field={field}
                 mode="standalone"
@@ -540,32 +536,21 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                 error={errors?.[field.name]}
               />
               {errors?.[field.name] && (
-                <Box
-                  component="span"
-                  sx={{
-                    color: 'var(--error-red)',
-                    fontSize: '12px',
-                    mt: 0.5,
-                    display: 'block',
-                  }}
-                >
+                <span className="field-error">
                   {errors[field.name]}
-                </Box>
+                </span>
               )}
-            </Box>
+            </div>
           ))}
           {(showSubmitButton || showCancelButton) && (
-            <Box sx={{ mt: 1, width: '100%', display: 'flex', justifyContent: submitButtonSize === 'small' ? 'flex-end' : 'flex-start', gap: 2 }}>
+            <div className={cn('form-actions', submitButtonSize === 'small' && 'justify-end')}>
               {showCancelButton && onCancel && (
                 <SecondaryBtn
                   type="button"
                   onClick={onCancel}
                   disabled={isSubmitting}
-                  sx={{
-                    minWidth: submitButtonSize === 'small' ? '100px' : 'auto',
-                    padding: submitButtonSize === 'small' ? '6px 16px' : '8px',
-                    fontSize: submitButtonSize === 'small' ? '0.875rem' : '1rem',
-                  }}
+                  className={getButtonClassName()}
+                  fullWidth={false}
                 >
                   {cancelButtonText}
                 </SecondaryBtn>
@@ -576,21 +561,17 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                   loading={isSubmitting}
                   disabled={isSubmitting}
                   fullWidth={submitButtonSize !== 'small' && !showCancelButton}
-                  sx={{
-                    minWidth: submitButtonSize === 'small' ? '100px' : 'auto',
-                    padding: submitButtonSize === 'small' ? '6px 16px' : '8px',
-                    fontSize: submitButtonSize === 'small' ? '0.875rem' : '1rem',
-                  }}
+                  className={getButtonClassName()}
                 >
                   {submitButtonText}
                 </PrimaryBtn>
               )}
-            </Box>
+            </div>
           )}
-        </Stack>
+        </div>
       )}
-    </Box>
+    </form>
   );
 }
 
-export default DynamicForm;
+export default DynamicForm

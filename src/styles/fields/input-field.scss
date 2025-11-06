@@ -1,15 +1,15 @@
 @use '../variables' as *;
 
 .input-field-wrapper {
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-sm;
   width: 100%;
 
   .input-field-label {
     display: block;
-    margin-bottom: $spacing-sm;
-    font-size: $font-size-sm;
+    margin-bottom: $spacing-xs;
+    font-size: 14px;
     font-weight: $font-weight-medium;
-    color: $text-primary;
+    color: $primary-gold;
 
     .required {
       color: $status-error;
@@ -61,6 +61,8 @@
       background-color: $bg-input;
       color: $text-primary;
       outline: none;
+      border-color: $primary-gold;
+      box-shadow: 0 0 0 3px $primary-gold-light;
     }
 
     &:disabled {
@@ -89,11 +91,17 @@
 
     // Autofill styles
     &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus {
+    &:-webkit-autofill:hover {
       -webkit-box-shadow: 0 0 0 1000px $bg-input inset;
       -webkit-text-fill-color: $text-primary;
       border-color: $border-default;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+    &:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 1000px $bg-input inset, 0 0 0 3px $primary-gold-light;
+      -webkit-text-fill-color: $text-primary;
+      border-color: $primary-gold;
       transition: background-color 5000s ease-in-out 0s;
     }
   }

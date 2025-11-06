@@ -1,0 +1,109 @@
+@use '../variables' as *;
+
+// Override Bootstrap Modal styles to match theme
+.custom-modal {
+  &-dialog{
+    max-width: 480px !important;
+  }
+  // max-width: 500px;
+  .modal-content {
+    background: $bg-secondary;
+    border: 1px solid $border-default;
+    border-radius: $border-radius-lg;
+    color: $text-primary;
+    width: 100%;
+  }
+
+  .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+.custom-modal-header {
+  background: transparent;
+  border-bottom: none !important;
+  padding: $spacing-md $spacing-md $spacing-xs !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .btn-close {
+    background: none;
+    border: none;
+    color: $text-secondary;
+    font-size: 18px;
+    cursor: pointer;
+    opacity: 0.6;
+    padding: 0;
+    width: auto;
+    height: auto;
+    margin-right: $spacing-md !important;
+    
+    &:hover {
+      opacity: 1;
+      color: $primary-gold;
+    }
+
+    &::before {
+      content: '✖';
+    }
+  }
+}
+
+.custom-modal-title {
+  color: $primary-gold !important;
+  font-size: 16px !important;
+  font-weight: $font-weight-bold !important;
+  margin: 0;
+}
+
+.custom-modal-body {
+  padding: $spacing-xl;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-primary;
+    border-radius: $border-radius-sm;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $border-default;
+    border-radius: $border-radius-sm;
+
+    &:hover {
+      background: $primary-gold;
+    }
+  }
+}
+
+.custom-modal-footer {
+  background: $bg-primary;
+  border-top: 1px solid $border-default;
+  padding: $spacing-lg $spacing-xl;
+  display: flex;
+  gap: $spacing-md;
+  justify-content: flex-end;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .custom-modal-header,
+  .custom-modal-body,
+  .custom-modal-footer {
+    padding: $spacing-md;
+  }
+
+  .custom-modal-title {
+    font-size: $font-size-lg;
+  }
+
+  .custom-modal-body {
+    max-height: 60vh;
+  }
+}

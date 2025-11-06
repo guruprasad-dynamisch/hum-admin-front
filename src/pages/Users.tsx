@@ -5,41 +5,95 @@ import DataTable from '@components/common/DataTable'
 import TableFilters, { FilterConfig } from '@components/common/TableFilters'
 import PrimaryBtn from '@components/buttons/PrimaryBtn'
 import SecondaryBtn from '@components/buttons/SecondaryBtn'
+import UserModal from '@components/modals/UserModal'
 import { MOCK_USERS, User } from '@constants/mock-users'
 import { getUserColumns } from '@config/users/columnDefinitions'
 import { USER_ROLE_OPTIONS, USER_STATUS_OPTIONS } from '@config/users/filterOptions'
+import { UserFormData } from '@validations/user-validations'
+import { useModal } from '@hooks/index'
+import { exportToCSV, getDateString } from '@utils/exportHelpers'
 import '@styles/components/user-table.scss'
 
 export default function Users() {
   const [searchQuery, setSearchQuery] = useState('')
   const [roleFilter, setRoleFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
+  const modal = useModal()
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [users, setUsers] = useState<User[]>(MOCK_USERS)
 
   const handleAddUser = () => {
-    console.log('Add user clicked')
-    // TODO: Open add user modal
+    setSelectedUser(null)
+    modal.open()
   }
 
   const handleExport = () => {
-    console.log('Export clicked')
-    // TODO: Implement export functionality
+    // Prepare data for export (exclude id and format for CSV)
+    const exportData = users.map(user => ({
+      'First Name': user.firstName,
+      'Last Name': user.lastName,
+      'Email': user.email,
+      'Phone': user.phone,
+      'Role': user.role,
+      'Organization': user.organization,
+      'Status': user.status,
+      'Last Login': user.lastLogin
+    }))
+
+    // Export to CSV with date-stamped filename
+    exportToCSV(exportData, `users_export_${getDateString()}`)
+    console.log(`Exported ${users.length} users to CSV`)
   }
 
   const handleEditUser = (user: User) => {
-    console.log('Edit user:', user)
-    // TODO: Open edit user modal
+    setSelectedUser(user)
+    modal.open()
   }
 
   const handleDeleteUser = (user: User) => {
     if (confirm(`Are you sure you want to delete ${user.firstName} ${user.lastName}?`)) {
-      console.log('Delete user:', user.id)
-      // TODO: Implement delete functionality
+      setUsers(prevUsers => prevUsers.filter(u => u.id !== user.id))
+      console.log('User deleted:', user.id)
     }
+  }
+
+  const handleSubmitUser = async (data: UserFormData) => {
+    if (selectedUser) {
+      // Edit existing user
+      setUsers(prevUsers =>
+        prevUsers.map(u =>
+          u.id === selectedUser.id
+            ? {
+                ...u,
+                ...data,
+                lastLogin: u.lastLogin // Keep existing lastLogin
+              }
+            : u
+        )
+      )
+      console.log('User updated:', data)
+    } else {
+      // Add new user
+      const newUser: User = {
+        id: Date.now(),
+        ...data,
+        lastLogin: 'Just now',
+        status: data.status || 'active'
+      }
+      setUsers(prevUsers => [...prevUsers, newUser])
+      console.log('User added:', newUser)
+    }
+    modal.close()
+  }
+
+  const handleCloseModal = () => {
+    modal.close()
+    setSelectedUser(null)
   }
 
   // Filter data based on search and filters
   const filteredData = useMemo(() => {
-    const filtered = MOCK_USERS.filter((user) => {
+    const filtered = users.filter((user) => {
       const matchesSearch =
         searchQuery === '' ||
         user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -59,7 +113,7 @@ export default function Users() {
     })
     
     return filtered
-  }, [searchQuery, roleFilter, statusFilter])
+  }, [users, searchQuery, roleFilter, statusFilter])
 
   // Define table columns with handlers
   const columns = useMemo(
@@ -67,6 +121,7 @@ export default function Users() {
       onEdit: handleEditUser,
       onDelete: handleDeleteUser
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -125,6 +180,14 @@ export default function Users() {
           pageSize={10}
         />
       </div>
+
+      {/* Add/Edit User Modal */}
+      <UserModal
+        show={modal.show}
+        onClose={handleCloseModal}
+        user={selectedUser}
+        onSubmit={handleSubmitUser}
+      />
     </>
   )
 }

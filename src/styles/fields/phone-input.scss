@@ -8,9 +8,9 @@
   .phone-input-label {
     display: block;
     margin-bottom: $spacing-sm;
-    font-size: $font-size-sm;
+    font-size: 14px;
     font-weight: $font-weight-medium;
-    color: $text-primary;
+    color: $primary-gold;
 
     .required {
       color: $status-error;
