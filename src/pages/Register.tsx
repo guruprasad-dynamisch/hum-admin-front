@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Container, Card, Form } from "react-bootstrap";
-import { InputField, PhoneInput, SelectField, CheckboxField } from "@components/fields";
+import { InputField, PhoneInput, SelectField, CheckboxField, OtpVerification } from "@components/fields";
 import PrimaryBtn from "@components/buttons/PrimaryBtn";
-import OtpVerification from "@components/auth/OtpVerification";
 import { registerSchema, RegisterFormData } from "@validations/register-validations";
 import "@styles/pages/register.scss";
 import { getRouteByKey } from "@utils/helpers";
@@ -150,99 +149,103 @@ const Register: React.FC = () => {
                 <p className="card-subtitle">Sign up to get started with Humanistic AI</p>
 
                 <Form onSubmit={handleSubmit(onSubmit)}>
-                  {/* Full Name */}
-                  <div className="form-group">
-                    <InputField
-                      name="fullName"
-                      label="Full Name"
-                      type="text"
-                      mode="react-hook-form"
-                      placeholder="John Doe"
-                      control={control}
-                      required
-                    />
+                  {/* Full Name - Full Width */}
+                  <div className="form-row">
+                    <div className="form-group full-width">
+                      <InputField
+                        name="fullName"
+                        label="Full Name"
+                        type="text"
+                        mode="react-hook-form"
+                        placeholder="John Doe"
+                        control={control}
+                        required
+                      />
+                    </div>
                   </div>
 
-                  {/* Email */}
-                  <div className="form-group">
-                    <InputField
-                      name="email"
-                      label="Email Address"
-                      type="email"
-                      mode="react-hook-form"
-                      placeholder="john.doe@example.com"
-                      control={control}
-                      required
-                    />
+                  {/* Email & Phone - Two Columns */}
+                  <div className="form-row">
+                    <div className="form-group">
+                      <InputField
+                        name="email"
+                        label="Email Address"
+                        type="email"
+                        mode="react-hook-form"
+                        placeholder="john.doe@example.com"
+                        control={control}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <PhoneInput
+                        name="phone"
+                        label="Phone Number"
+                        mode="react-hook-form"
+                        placeholder="123-456-7890"
+                        control={control}
+                        defaultCountry="IN"
+                        required
+                      />
+                    </div>
                   </div>
 
-                  {/* Phone Number */}
-                  <div className="form-group">
-                    <PhoneInput
-                      name="phone"
-                      label="Phone Number"
-                      mode="react-hook-form"
-                      placeholder="123-456-7890"
-                      control={control}
-                      defaultCountry="IN"
-                      required
-                    />
-                    <div className="helper-text">We'll send you a verification code via SMS</div>
+                  {/* Organization & Role - Two Columns */}
+                  <div className="form-row">
+                    <div className="form-group">
+                      <InputField
+                        name="organization"
+                        label="Organization"
+                        type="text"
+                        mode="react-hook-form"
+                        placeholder="Acme Inc"
+                        control={control}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <SelectField
+                        name="role"
+                        label="Role"
+                        mode="react-hook-form"
+                        control={control}
+                        placeholder="Select your role"
+                        options={[
+                          { value: "user", label: "User" },
+                          { value: "manager", label: "Manager" },
+                          { value: "admin", label: "Admin" }
+                        ]}
+                      />
+                    </div>
                   </div>
 
-                  {/* Organization */}
-                  <div className="form-group">
-                    <InputField
-                      name="organization"
-                      label="Organization"
-                      type="text"
-                      mode="react-hook-form"
-                      placeholder="Acme Inc"
-                      control={control}
-                      required
-                    />
-                  </div>
+                  {/* Password & Confirm Password - Two Columns */}
+                  <div className="form-row">
+                    <div className="form-group">
+                      <InputField
+                        name="password"
+                        label="Password"
+                        type="password"
+                        mode="react-hook-form"
+                        placeholder="Enter your password"
+                        control={control}
+                        required
+                      />
+                    </div>
 
-                  {/* Role */}
-                  <div className="form-group">
-                    <SelectField
-                      name="role"
-                      label="Role"
-                      mode="react-hook-form"
-                      control={control}
-                      placeholder="Select your role"
-                      options={[
-                        { value: "user", label: "User" },
-                        { value: "manager", label: "Manager" },
-                        { value: "admin", label: "Admin" }
-                      ]}
-                    />
-                  </div>
-
-                  {/* Password */}
-                  <div className="form-group">
-                    <InputField
-                      name="password"
-                      label="Password"
-                      type="password"
-                      mode="react-hook-form"
-                      placeholder="Enter your password"
-                      control={control}
-                      required
-                    />
-                  </div>
-
-                  {/* Confirm Password */}
-                  <div className="form-group">
-                    <InputField
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      type="password"
-                      mode="react-hook-form"
-                      placeholder="Re-enter your password"
-                      control={control}
-                      required
-                    />
+                    <div className="form-group">
+                      <InputField
+                        name="confirmPassword"
+                        label="Confirm Password"
+                        type="password"
+                        mode="react-hook-form"
+                        placeholder="Re-enter your password"
+                        control={control}
+                        required
+                      />
+                    </div>
                   </div>
 
                   {/* Terms & Conditions */}
