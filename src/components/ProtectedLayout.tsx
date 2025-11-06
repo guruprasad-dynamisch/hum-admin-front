@@ -23,7 +23,7 @@ export default function ProtectedLayout() {
     }
   }, [dispatch])
 
-  // Check if mobile on resize and auto-close sidebar when going to mobile
+  // Check if mobile on resize and auto-toggle sidebar based on screen size
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth <= 768
@@ -34,6 +34,10 @@ export default function ProtectedLayout() {
       // Auto-close sidebar when transitioning from desktop to mobile
       if (mobile && !wasMobile && sidebarOpen) {
         dispatch(setSidebarOpen(false))
+      }
+      // Auto-open sidebar when transitioning from mobile to desktop
+      else if (!mobile && wasMobile && !sidebarOpen) {
+        dispatch(setSidebarOpen(true))
       }
     }
     
