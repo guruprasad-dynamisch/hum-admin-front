@@ -12,17 +12,35 @@ export default function ProtectedLayout() {
   const sidebarOpen = useAppSelector(selectSidebarOpen)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Check if mobile on mount and resize
+  // Set initial sidebar state based on screen size (only on mount)
+  useEffect(() => {
+    const mobile = window.innerWidth <= 768
+    setIsMobile(mobile)
+    
+    // Collapse sidebar initially if on mobile
+    if (mobile) {
+      dispatch(setSidebarOpen(false))
+    }
+  }, [dispatch])
+
+  // Check if mobile on resize and auto-close sidebar when going to mobile
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
+      const mobile = window.innerWidth <= 768
+      const wasMobile = isMobile
+      
+      setIsMobile(mobile)
+      
+      // Auto-close sidebar when transitioning from desktop to mobile
+      if (mobile && !wasMobile && sidebarOpen) {
+        dispatch(setSidebarOpen(false))
+      }
     }
     
-    checkMobile()
     window.addEventListener('resize', checkMobile)
     
     return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+  }, [isMobile, sidebarOpen, dispatch])
 
   const handleToggleSidebar = (open: boolean) => {
     dispatch(setSidebarOpen(open))
