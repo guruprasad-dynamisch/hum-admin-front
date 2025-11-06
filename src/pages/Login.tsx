@@ -42,8 +42,13 @@ export default function Login() {
       <Container className="login-container">
         {/* Logo Section */}
         <div className="logo-section">
-          <div className="logo-icon">🤖</div>
-          <div className="logo-text">Humanistic AI</div>
+          <div className="login-logo-container">
+            <img
+              src="/assets/humanistics_logo_transparent.webp"
+              alt="Humanistics AI"
+              className="login-logo-image"
+            />
+          </div>
         </div>
 
         {/* Login Card */}
@@ -94,7 +99,7 @@ export default function Login() {
                   className="forgot-link"
                   onClick={(e) => {
                     e.preventDefault();
-                    navigate(getRouteByKey("forgot-password"));
+                    navigate(getRouteByKey("forgotPassword"));
                   }}
                 >
                   Forgot password?

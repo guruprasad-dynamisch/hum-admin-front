@@ -1,0 +1,216 @@
+@use '../variables' as *;
+
+.otp-verification {
+  width: 100%;
+
+  .card-title {
+    font-size: 28px;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin-bottom: $spacing-sm;
+    text-align: center;
+  }
+
+  .card-subtitle {
+    font-size: 14px;
+    color: $text-secondary;
+    margin-bottom: 32px;
+    text-align: center;
+    line-height: 1.5;
+
+    strong {
+      color: $primary-gold;
+      font-weight: $font-weight-semibold;
+    }
+  }
+
+  // OTP Input Container
+  .otp-inputs {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 16px;
+
+    .otp-input {
+      width: 50px;
+      height: 56px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: $font-weight-semibold;
+      color: $text-primary;
+      background-color: $bg-secondary;
+      border: 2px solid #333;
+      border-radius: $border-radius-sm;
+      outline: none;
+      transition: $transition-fast;
+      caret-color: $primary-gold;
+
+      &:focus {
+        border-color: $primary-gold;
+        box-shadow: 0 0 0 3px $primary-gold-light;
+        background-color: #1f1f1f;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      &.error {
+        border-color: $status-error;
+        
+        &:focus {
+          box-shadow: 0 0 0 3px rgba($status-error, 0.2);
+        }
+      }
+
+      // Remove number input arrows
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &[type='number'] {
+        appearance: textfield;
+        -moz-appearance: textfield;
+      }
+    }
+  }
+
+  // Error Message
+  .error-message {
+    color: $status-error;
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    background-color: rgba($status-error, 0.1);
+    border-radius: $border-radius-sm;
+    border: 1px solid rgba($status-error, 0.3);
+  }
+
+  // Verify Button
+  .verify-btn {
+    width: 100%;
+    padding: 14px !important;
+    background: $primary-gold !important;
+    color: $bg-primary !important;
+    border: none;
+    border-radius: $border-radius-sm !important;
+    font-size: 16px;
+    font-weight: $font-weight-semibold !important;
+    cursor: pointer;
+    transition: $transition-fast;
+    margin-bottom: 20px;
+
+    &:hover:not(:disabled) {
+      background: $primary-gold-dark !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($primary-gold, 0.3);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+  }
+
+  // Resend Section
+  .resend-section {
+    text-align: center;
+    margin-bottom: 20px;
+
+    .resend-timer {
+      font-size: 13px;
+      color: $text-secondary;
+      margin: 0;
+
+      strong {
+        color: $primary-gold;
+        font-weight: $font-weight-semibold;
+      }
+    }
+
+    .resend-link {
+      font-size: 13px;
+      color: $text-secondary;
+      margin: 0;
+
+      button {
+        background: none;
+        border: none;
+        color: $primary-gold;
+        font-size: 13px;
+        font-weight: $font-weight-semibold;
+        cursor: pointer;
+        padding: 0;
+        text-decoration: none;
+        transition: $transition-fast;
+
+        &:hover:not(.disabled) {
+          text-decoration: underline;
+          color: $primary-gold-dark;
+        }
+
+        &.disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  // Back Button
+  .back-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: $text-secondary;
+    border: 1px solid #333;
+    border-radius: $border-radius-sm;
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover:not(:disabled) {
+      background-color: rgba($primary-gold, 0.1);
+      border-color: $primary-gold;
+      color: $primary-gold;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 576px) {
+  .otp-verification {
+    .otp-inputs {
+      gap: 8px;
+
+      .otp-input {
+        width: 42px;
+        height: 48px;
+        font-size: 20px;
+      }
+    }
+
+    .card-title {
+      font-size: 24px;
+    }
+
+    .card-subtitle {
+      font-size: 13px;
+    }
+  }
+}
