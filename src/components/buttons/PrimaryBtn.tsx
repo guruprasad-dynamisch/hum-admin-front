@@ -29,22 +29,22 @@ const PrimaryBtn = ({
         <button
             type={type}
             className={cn(
-                'btn',
-                'btn-primary',
-                { 'btn-full-width': fullWidth },
+                'hum-btn',
+                'hum-btn-primary',
+                { 'hum-btn-full-width': fullWidth },
                 className
             )}
             onClick={onClick}
             disabled={disabled || loading}
         >
-            <div className="btn-content">
-                {loading && <span className="btn-spinner" />}
+            <div className="hum-btn-content">
+                {loading && <span className="hum-btn-spinner" />}
                 {!loading && icon && iconPosition === 'start' && (
-                    <span className="btn-icon-start">{icon}</span>
+                    <span className="hum-btn-icon-start">{icon}</span>
                 )}
                 {children}
                 {!loading && icon && iconPosition === 'end' && (
-                    <span className="btn-icon-end">{icon}</span>
+                    <span className="hum-btn-icon-end">{icon}</span>
                 )}
             </div>
         </button>

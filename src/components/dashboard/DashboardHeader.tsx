@@ -1,22 +1,18 @@
 import { useState } from 'react'
-import { useAppSelector, useAppDispatch } from '@redux/store'
-import { selectSidebarOpen, toggleSidebar, selectNotifications, selectMessages } from '@redux/slices/miscSlice'
+import { useAppSelector } from '@redux/store'
+import { selectSidebarOpen, selectNotifications, selectMessages } from '@redux/slices/miscSlice'
 import { cn } from '@utils/classNames'
 import IconBtn from '@components/buttons/IconBtn'
+import MenuToggleButton from '@components/common/MenuToggleButton'
 import UserMenu from '@components/common/UserMenu'
 import InputField from '@components/fields/InputField'
 import '@styles/components/topbar.scss'
 
 export default function DashboardHeader() {
-  const dispatch = useAppDispatch()
   const sidebarOpen = useAppSelector(selectSidebarOpen)
   const notificationCount = useAppSelector(selectNotifications)
   const messageCount = useAppSelector(selectMessages)
   const [searchQuery, setSearchQuery] = useState('')
-
-  const handleMenuToggle = () => {
-    dispatch(toggleSidebar())
-  }
 
   const handleNotificationClick = () => {
     console.log('Notifications clicked')
@@ -50,15 +46,7 @@ export default function DashboardHeader() {
       {/* Left Section */}
       <div className="topbar-left">
         {/* Menu Toggle Button */}
-        <IconBtn
-          variant="gold"
-          size="md"
-          onClick={handleMenuToggle}
-          aria-label="Toggle menu"
-          className="topbar-menu-toggle"
-        >
-          ☰
-        </IconBtn>
+        <MenuToggleButton className="topbar-menu-toggle" />
 
         {/* Search Bar */}
         <div className="topbar-search-bar">

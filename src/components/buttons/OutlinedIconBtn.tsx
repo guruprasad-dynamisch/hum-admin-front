@@ -24,17 +24,17 @@ const OutlinedIconBtn = ({
   return (
     <button
       type="button"
-      className={cn('btn', 'btn-outlined-icon', className)}
+      className={cn('hum-btn', 'hum-btn-outlined-icon', className)}
       onClick={onClick}
       disabled={disabled}
     >
-      <div className="btn-content">
+      <div className="hum-btn-content">
         {(startIcon || icon) && (
-          <span className="btn-icon-start">{startIcon || icon}</span>
+          <span className="hum-btn-icon-start">{startIcon || icon}</span>
         )}
         {label}
         {endIcon && (
-          <span className="btn-icon-end">{endIcon}</span>
+          <span className="hum-btn-icon-end">{endIcon}</span>
         )}
       </div>
     </button>

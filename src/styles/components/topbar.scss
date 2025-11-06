@@ -30,6 +30,13 @@
   gap: $spacing-xl;
 }
 
+.page-title {
+  color: $primary-gold;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  white-space: nowrap;
+}
+
 .topbar-menu-toggle {
   background: none;
   border: none;
@@ -192,8 +199,21 @@
     display: none;
   }
 
+  .page-title {
+    font-size: $font-size-lg;
+  }
+
   .topbar-right {
     gap: $spacing-md;
+
+    .hum-btn {
+      padding: 8px 12px;
+      font-size: $font-size-xs;
+
+      span {
+        display: none;
+      }
+    }
   }
 }
 

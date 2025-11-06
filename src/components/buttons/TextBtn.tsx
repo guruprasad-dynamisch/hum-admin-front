@@ -28,11 +28,11 @@ const TextBtn = ({
     const getColorClass = () => {
         switch (color) {
             case "secondary":
-                return 'btn-text-secondary';
+                return 'hum-btn-text-secondary';
             case "error":
-                return 'btn-text-error';
+                return 'hum-btn-text-error';
             case "warning":
-                return 'btn-text-warning';
+                return 'hum-btn-text-warning';
             default:
                 return '';
         }
@@ -42,22 +42,22 @@ const TextBtn = ({
         <button
             type={type}
             className={cn(
-                'btn',
-                'btn-text',
+                'hum-btn',
+                'hum-btn-text',
                 getColorClass(),
                 className
             )}
             onClick={onClick}
             disabled={disabled || loading}
         >
-            <div className="btn-content">
-                {loading && <span className="btn-spinner" />}
+            <div className="hum-btn-content">
+                {loading && <span className="hum-btn-spinner" />}
                 {!loading && icon && iconPosition === 'start' && (
-                    <span className="btn-icon-start">{icon}</span>
+                    <span className="hum-btn-icon-start">{icon}</span>
                 )}
                 {children}
                 {!loading && icon && iconPosition === 'end' && (
-                    <span className="btn-icon-end">{icon}</span>
+                    <span className="hum-btn-icon-end">{icon}</span>
                 )}
             </div>
         </button>
