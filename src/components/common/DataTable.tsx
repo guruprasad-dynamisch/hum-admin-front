@@ -109,6 +109,21 @@ export default function DataTable<T extends object>({
     state: { pageIndex: number; pageSize: number }
   }
 
+  const tableInstance = useTable(
+    {
+      columns,
+      data,
+      initialState: { 
+        pageIndex: manualPagination ? (controlledCurrentPage - 1) : 0, 
+        pageSize 
+      } as any,
+      manualPagination,
+      ...(manualPagination && controlledPageCount ? { pageCount: controlledPageCount } : {})
+    } as TableOptions<T>,
+    useSortBy,
+    usePagination
+  ) as ExtendedTableInstance
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -124,17 +139,7 @@ export default function DataTable<T extends object>({
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize: currentPageSize }
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: manualPagination ? controlledCurrentPage - 1 : 0, pageSize } as any,
-      manualPagination,
-      pageCount: controlledPageCount
-    } as TableOptions<T>,
-    useSortBy,
-    usePagination
-  ) as ExtendedTableInstance
+  } = tableInstance
 
   /**
    * Handle page change for both manual and automatic pagination
@@ -148,9 +153,49 @@ export default function DataTable<T extends object>({
     }
   }
 
-  const displayPageIndex = manualPagination ? controlledCurrentPage : pageIndex + 1
+  /**
+   * Handle next page navigation
+   */
+  const handleNextPage = (): void => {
+    if (manualPagination && onPageChange) {
+      onPageChange(controlledCurrentPage + 1)
+    } else {
+      nextPage()
+    }
+  }
+
+  /**
+   * Handle previous page navigation
+   */
+  const handlePreviousPage = (): void => {
+    if (manualPagination && onPageChange) {
+      onPageChange(controlledCurrentPage - 1)
+    } else {
+      previousPage()
+    }
+  }
+
+  /**
+   * Handle goto page (0-indexed)
+   */
+  const handleGotoPage = (page: number): void => {
+    if (manualPagination && onPageChange) {
+      onPageChange(page + 1)
+    } else {
+      gotoPage(page)
+    }
+  }
+
+  // Calculate display values
+  const displayPageIndex = manualPagination ? (controlledCurrentPage - 1) : pageIndex
   const displayPageCount = manualPagination ? (controlledPageCount || 1) : pageCount
   const displayTotalItems = totalItems || data.length
+  const displayCanNextPage = manualPagination 
+    ? (controlledCurrentPage < (controlledPageCount || 1))
+    : canNextPage
+  const displayCanPreviousPage = manualPagination 
+    ? (controlledCurrentPage > 1)
+    : canPreviousPage
 
   return (
     <div className={cn('data-table-wrapper', className)}>
@@ -209,7 +254,7 @@ export default function DataTable<T extends object>({
                     onClick={() => onRowClick?.(row.original)}
                     className={cn({ 'clickable': !!onRowClick })}
                   >
-                    {row.cells.map((cell) => (
+                    {row.cells.map((cell:any) => (
                       <td {...cell.getCellProps()} key={cell.column.id}>{cell.render('Cell')}</td>
                     ))}
                   </tr>
@@ -225,14 +270,14 @@ export default function DataTable<T extends object>({
         <Pagination
           data={data}
           totalRows={displayTotalItems}
-          pageIndex={pageIndex}
+          pageIndex={displayPageIndex}
           pageSize={currentPageSize}
           pageCount={displayPageCount}
-          gotoPage={gotoPage}
-          nextPage={nextPage}
-          previousPage={previousPage}
-          canNextPage={canNextPage}
-          canPreviousPage={canPreviousPage}
+          gotoPage={handleGotoPage}
+          nextPage={handleNextPage}
+          previousPage={handlePreviousPage}
+          canNextPage={displayCanNextPage}
+          canPreviousPage={displayCanPreviousPage}
           neighborCount={1}
           showInfo={showPaginationInfo}
           className={paginationClassName}
