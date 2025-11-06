@@ -1,0 +1,40 @@
+@import '../variables';
+
+.no-data-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  min-height: 300px;
+}
+
+.no-data-image {
+  margin-bottom: 1.5rem;
+  
+  img {
+    max-width: 200px;
+    height: auto;
+    opacity: 0.8;
+  }
+
+  svg {
+    opacity: 0.6;
+  }
+}
+
+.no-data-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary, #333);
+  margin: 0 0 0.5rem 0;
+}
+
+.no-data-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #666);
+  margin: 0;
+  max-width: 400px;
+  line-height: 1.5;
+}

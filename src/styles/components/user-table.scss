@@ -1,0 +1,119 @@
+@use '../variables' as *;
+
+// User Cell
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $primary-gold, $primary-gold-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-bold;
+  color: $bg-primary;
+  font-size: $font-size-sm;
+  flex-shrink: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-name {
+  color: $text-primary;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+}
+
+.user-email {
+  font-size: $font-size-xs;
+  color: $text-tertiary;
+}
+
+// Badge
+.badge {
+  display: inline-block;
+  padding: 4px $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: capitalize;
+
+  &.badge-admin {
+    background: rgba(226, 195, 106, 0.1);
+    color: $primary-gold;
+  }
+
+  &.badge-user {
+    background: rgba(136, 136, 136, 0.1);
+    color: $text-secondary;
+  }
+
+  &.badge-active {
+    background: rgba(0, 255, 0, 0.1);
+    color: $status-success;
+  }
+
+  &.badge-inactive {
+    background: rgba(255, 68, 68, 0.1);
+    color: $status-error;
+  }
+}
+
+// Action Buttons
+.action-btns {
+  display: flex;
+  gap: $spacing-xs;
+}
+
+.action-btn {
+  padding: $spacing-xs $spacing-sm;
+  background: $bg-primary;
+  border: 1px solid $border-default;
+  border-radius: $border-radius-sm;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: $transition-fast;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    border-color: $primary-gold;
+    color: $primary-gold;
+    background: $bg-hover;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.action-btn-delete {
+    &:hover {
+      border-color: $status-error;
+      color: $status-error;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: $font-size-xs;
+  }
+
+  .user-cell {
+    gap: $spacing-sm;
+  }
+}
