@@ -6,13 +6,13 @@
   align-items: center;
   justify-content: center;
   gap: $spacing-sm;
-  padding: 10px 24px;
-  border-radius: $border-radius-md;
-  font-size: $font-size-md;
-  font-weight: $font-weight-medium;
+  padding: $spacing-sm $spacing-lg !important;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition: $transition-fast;
+  transition: all 0.3s;
   border: none;
   outline: none;
   text-decoration: none;
@@ -37,7 +37,7 @@
   // Full width variant
   &.hum-btn-full-width {
     width: 100%;
-    padding: 8px;
+    padding: 10px 20px;
   }
 }
 
@@ -45,42 +45,44 @@
 .hum-btn-primary {
   background-color: $primary-gold;
   color: $bg-primary;
-  border: 1px solid $primary-gold;
+  border: none;
 
   &:hover:not(:disabled) {
-    background-color: $primary-gold-dark;
-    border-color: $primary-gold-dark;
+    background-color: #d4b560;
+    transform: translateY(-2px);
   }
 
   &:active:not(:disabled) {
-    background-color: $primary-gold-dark;
+    background-color: #d4b560;
+    transform: translateY(-1px);
   }
 
   &:disabled {
     background-color: $primary-gold;
     color: $bg-primary;
+    transform: none;
   }
 }
 
 // Secondary Button (Outlined style)
 .hum-btn-secondary {
   background-color: transparent;
-  color: $text-secondary;
-  border: 1px solid $border-default;
+  color: $primary-gold;
+  border: 1px solid $primary-gold;
 
   &:hover:not(:disabled) {
-    border-color: $border-hover;
-    background-color: $bg-hover;
-    color: $text-primary;
+    background-color: rgba(226, 195, 106, 0.1);
+    border-color: $primary-gold;
+    color: $primary-gold;
   }
 
   &:active:not(:disabled) {
-    background-color: $bg-active;
+    background-color: rgba(226, 195, 106, 0.15);
   }
 
   &:disabled {
-    border-color: $border-default;
-    color: $text-secondary;
+    border-color: $primary-gold;
+    color: $primary-gold;
   }
 }
 
