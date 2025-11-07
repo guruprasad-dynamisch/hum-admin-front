@@ -66,6 +66,25 @@
     background: rgba(255, 68, 68, 0.1);
     color: $status-error;
   }
+
+  // Template tags
+  &.badge-tag {
+    background: rgba(226, 195, 106, 0.1);
+    color: $primary-gold;
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  // Department badges
+  &.badge-sales,
+  &.badge-marketing,
+  &.badge-support,
+  &.badge-product,
+  &.badge-engineering {
+    background: rgba(136, 136, 136, 0.1);
+    color: $text-secondary;
+  }
 }
 
 // Action Buttons
@@ -101,6 +120,13 @@
     &:hover {
       border-color: $status-error;
       color: $status-error;
+    }
+  }
+
+  &.action-btn-use {
+    &:hover {
+      border-color: $primary-gold;
+      color: $primary-gold;
     }
   }
 }

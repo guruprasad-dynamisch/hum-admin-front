@@ -91,6 +91,21 @@
   justify-content: flex-end;
 }
 
+// Template Modal - Wider on large screens
+.modal-xl {
+  .modal-dialog {
+    max-width: 900px;
+    
+    @media (min-width: 1200px) {
+      max-width: 1100px;
+    }
+    
+    @media (min-width: 1400px) {
+      max-width: 1200px;
+    }
+  }
+}
+
 // Responsive
 @media (max-width: 768px) {
   .custom-modal-header,
@@ -105,5 +120,12 @@
 
   .custom-modal-body {
     max-height: 60vh;
+  }
+  
+  .modal-xl {
+    .modal-dialog {
+      max-width: 95%;
+      margin: 10px auto;
+    }
   }
 }

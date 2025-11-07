@@ -1,0 +1,97 @@
+@import '../variables';
+
+.confirmation-modal {
+  .confirmation-modal-content {
+    text-align: center;
+    padding: 20px 0;
+
+    .confirmation-modal-icon {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 48px;
+
+      &.icon-danger {
+        color: var(--danger-color, #dc3545);
+      }
+
+      &.icon-warning {
+        color: var(--warning-color, #ffc107);
+      }
+
+      &.icon-info {
+        color: var(--info-color, #17a2b8);
+      }
+
+      svg {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    .confirmation-modal-message {
+      color: var(--text-primary, #fff);
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+    }
+  }
+
+  .confirmation-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 24px;
+
+    button {
+      min-width: 100px;
+    }
+
+    .confirmation-modal-confirm {
+      &.confirm-danger {
+        background: var(--danger-color, #dc3545);
+        border-color: var(--danger-color, #dc3545);
+
+        &:hover:not(:disabled) {
+          background: var(--danger-hover, #c82333);
+          border-color: var(--danger-hover, #c82333);
+        }
+      }
+
+      &.confirm-warning {
+        background: var(--warning-color, #ffc107);
+        border-color: var(--warning-color, #ffc107);
+        color: var(--dark-bg, #0a0a0a);
+
+        &:hover:not(:disabled) {
+          background: var(--warning-hover, #e0a800);
+          border-color: var(--warning-hover, #e0a800);
+        }
+      }
+
+      &.confirm-info {
+        background: var(--info-color, #17a2b8);
+        border-color: var(--info-color, #17a2b8);
+
+        &:hover:not(:disabled) {
+          background: var(--info-hover, #138496);
+          border-color: var(--info-hover, #138496);
+        }
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 576px) {
+  .confirmation-modal {
+    .confirmation-modal-actions {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
