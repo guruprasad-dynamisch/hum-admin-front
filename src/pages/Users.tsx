@@ -1,30 +1,31 @@
 import { useMemo, useState } from 'react'
-import PageHeader from '@components/common/PageHeader'
 import PageTopBar from '@components/common/PageTopBar'
 import DataTable from '@components/common/DataTable'
 import TableFilters, { FilterConfig } from '@components/common/TableFilters'
 import PrimaryBtn from '@components/buttons/PrimaryBtn'
 import SecondaryBtn from '@components/buttons/SecondaryBtn'
 import UserModal from '@components/modals/UserModal'
+import InviteUserModal from '@components/modals/InviteUserModal'
 import { MOCK_USERS, User } from '@constants/mock-users'
 import { getUserColumns } from '@config/users/columnDefinitions'
 import { USER_ROLE_OPTIONS, USER_STATUS_OPTIONS } from '@config/users/filterOptions'
 import { UserFormData } from '@validations/user-validations'
 import { useModal } from '@hooks/index'
 import { exportToCSV, getDateString } from '@utils/exportHelpers'
+import { FiMail, FiDownload } from 'react-icons/fi'
 import '@styles/components/user-table.scss'
 
 export default function Users() {
   const [searchQuery, setSearchQuery] = useState('')
   const [roleFilter, setRoleFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
-  const modal = useModal()
+  const editModal = useModal()
+  const inviteModal = useModal()
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [users, setUsers] = useState<User[]>(MOCK_USERS)
 
-  const handleAddUser = () => {
-    setSelectedUser(null)
-    modal.open()
+  const handleInviteUser = () => {
+    inviteModal.open()
   }
 
   const handleExport = () => {
@@ -47,7 +48,7 @@ export default function Users() {
 
   const handleEditUser = (user: User) => {
     setSelectedUser(user)
-    modal.open()
+    editModal.open()
   }
 
   const handleDeleteUser = (user: User) => {
@@ -57,34 +58,30 @@ export default function Users() {
   }
 
   const handleSubmitUser = async (data: UserFormData) => {
-    if (selectedUser) {
-      // Edit existing user
-      setUsers(prevUsers =>
-        prevUsers.map(u =>
-          u.id === selectedUser.id
-            ? {
-                ...u,
-                ...data,
-                lastLogin: u.lastLogin // Keep existing lastLogin
-              }
-            : u
-        )
+    // Edit existing user
+    setUsers(prevUsers =>
+      prevUsers.map(u =>
+        u.id === selectedUser!.id
+          ? {
+              ...u,
+              ...data,
+              lastLogin: u.lastLogin // Keep existing lastLogin
+            }
+          : u
       )
-    } else {
-      // Add new user
-      const newUser: User = {
-        id: Date.now(),
-        ...data,
-        lastLogin: 'Just now',
-        status: data.status || 'active'
-      }
-      setUsers(prevUsers => [...prevUsers, newUser])
-    }
-    modal.close()
+    )
+    editModal.close()
   }
 
-  const handleCloseModal = () => {
-    modal.close()
+  const handleInviteSubmit = async (emails: string[]) => {
+    // TODO: Implement actual invite API call
+    console.log('Sending invites to:', emails)
+    // For now, just close the modal
+    inviteModal.close()
+  }
+
+  const handleCloseEditModal = () => {
+    editModal.close()
     setSelectedUser(null)
   }
 
@@ -150,8 +147,8 @@ export default function Users() {
         }
         rightContent={
           <>
-            <PrimaryBtn onClick={handleAddUser} icon={<span>➕</span>}>
-              Add User
+            <PrimaryBtn onClick={handleInviteUser} icon={<span>📧</span>}>
+              Invite User
             </PrimaryBtn>
             <SecondaryBtn onClick={handleExport} icon={<span>📥</span>}>
               Export
@@ -172,12 +169,21 @@ export default function Users() {
         />
       </div>
 
-      {/* Add/Edit User Modal */}
-      <UserModal
-        show={modal.show}
-        onClose={handleCloseModal}
-        user={selectedUser}
-        onSubmit={handleSubmitUser}
+      {/* Edit User Modal */}
+      {selectedUser && (
+        <UserModal
+          show={editModal.show}
+          onClose={handleCloseEditModal}
+          user={selectedUser}
+          onSubmit={handleSubmitUser}
+        />
+      )}
+
+      {/* Invite User Modal */}
+      <InviteUserModal
+        show={inviteModal.show}
+        onClose={inviteModal.close}
+        onSubmit={handleInviteSubmit}
       />
     </>
   )

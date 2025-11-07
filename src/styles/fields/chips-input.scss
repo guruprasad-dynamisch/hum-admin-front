@@ -1,0 +1,180 @@
+@use '../variables' as *;
+
+.chips-input-wrapper {
+  margin-bottom: $spacing-lg;
+  width: 100%;
+}
+
+.chips-input-label {
+  display: block;
+  margin-bottom: $spacing-sm;
+  font-size: 14px;
+  font-weight: $font-weight-medium;
+  color: $primary-gold;
+
+  .required {
+    color: $status-error;
+    margin-left: 2px;
+  }
+}
+
+.chips-input-container {
+  background-color: $bg-input;
+  border: 1px solid $border-input;
+  border-radius: $border-radius-sm;
+  padding: $spacing-xs;
+  min-height: 42px;
+  transition: $transition-default;
+  cursor: text;
+
+  &:focus-within {
+    border-color: $primary-gold;
+    box-shadow: 0 0 0 3px $primary-gold-light;
+  }
+
+  &.has-error {
+    border-color: $status-error;
+
+    &:focus-within {
+      border-color: $status-error;
+      box-shadow: 0 0 0 3px $status-error-light;
+    }
+  }
+
+  &.disabled {
+    background-color: $bg-tertiary;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.inline-mode {
+    border: none;
+    border-bottom: 1px solid $border-input;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  align-items: center;
+}
+
+.chip-item {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  background: rgba(226, 195, 106, 0.1);
+  border: 1px solid rgba(226, 195, 106, 0.3);
+  border-radius: $border-radius-sm;
+  padding: 4px 8px;
+  font-size: $font-size-xs;
+  color: $text-primary;
+  max-width: 300px;
+  transition: $transition-fast;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(226, 195, 106, 0.15);
+    border-color: rgba(226, 195, 106, 0.5);
+  }
+}
+
+.chip-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.chip-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: $text-secondary;
+  cursor: pointer;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transition: $transition-fast;
+  flex-shrink: 0;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    background: rgba(226, 195, 106, 0.2);
+    color: $primary-gold;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.chips-input {
+  flex: 1;
+  min-width: 120px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: $text-primary;
+  font-size: $font-size-sm;
+  padding: 4px;
+  font-family: inherit;
+
+  &::placeholder {
+    color: $text-tertiary;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.chips-empty-state {
+  color: $text-tertiary;
+  font-size: $font-size-sm;
+  padding: 4px;
+}
+
+.chips-error-message {
+  display: block;
+  margin-top: $spacing-xs;
+  font-size: $font-size-xs;
+  color: $status-error;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .chip-item {
+    max-width: 200px;
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  .chips-input {
+    min-width: 100px;
+    font-size: $font-size-xs;
+  }
+}
+
+@media (max-width: 480px) {
+  .chip-item {
+    max-width: 150px;
+    font-size: 10px;
+  }
+
+  .chips-input {
+    min-width: 80px;
+  }
+}

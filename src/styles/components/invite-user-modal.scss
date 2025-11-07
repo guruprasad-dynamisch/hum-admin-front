@@ -1,0 +1,28 @@
+@use '../variables' as *;
+
+.invite-user-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xxl;
+
+  .invite-email-section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .invite-hint {
+      font-size: $font-size-xs;
+      color: $text-secondary;
+      margin: 0;
+      margin-top: $spacing-xs;
+    }
+  }
+
+  .invite-modal-actions {
+    display: flex;
+    gap: $spacing-md;
+    justify-content: flex-end;
+    padding-top: $spacing-md;
+    border-top: 1px solid $border-default;
+  }
+}

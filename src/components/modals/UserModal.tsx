@@ -9,8 +9,8 @@ export interface UserModalProps {
   show: boolean
   /** Callback when modal should close */
   onClose: () => void
-  /** User data for edit mode (undefined for add mode) */
-  user?: User | null
+  /** User data for edit mode (required) */
+  user: User
   /** Callback when form is submitted */
   onSubmit: (data: UserFormData) => void | Promise<void>
   /** Loading state */
@@ -18,20 +18,11 @@ export interface UserModalProps {
 }
 
 /**
- * Add/Edit User Modal Component
+ * Edit User Modal Component
  * 
  * Uses DynamicForm with react-hook-form and zod validation
  * 
  * @example
- * // Add User
- * <UserModal
- *   show={showModal}
- *   onClose={() => setShowModal(false)}
- *   onSubmit={handleAddUser}
- * />
- * 
- * @example
- * // Edit User
  * <UserModal
  *   show={showModal}
  *   onClose={() => setShowModal(false)}
@@ -46,8 +37,6 @@ const UserModal: React.FC<UserModalProps> = ({
   onSubmit,
   loading = false
 }) => {
-  const isEditMode = !!user
-
   // Field configuration for DynamicForm
   const fields: FieldConfig[] = [
     {
@@ -105,18 +94,16 @@ const UserModal: React.FC<UserModalProps> = ({
     }
   ]
 
-  // Prepare default values
-  const defaultValues: Partial<UserFormData> = user
-    ? {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
-        organization: user.organization,
-        status: user.status
-      }
-    : userDefaultValues
+  // Prepare default values from user data
+  const defaultValues: Partial<UserFormData> = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    phone: user.phone,
+    role: user.role,
+    organization: user.organization,
+    status: user.status
+  }
 
   const handleSubmit = async (data: UserFormData) => {
     try {
@@ -132,7 +119,7 @@ const UserModal: React.FC<UserModalProps> = ({
     <Modal
       show={show}
       onHide={onClose}
-      title={isEditMode ? 'Edit User' : 'Add New User'}
+      title="Edit User"
       size="lg"
       centered
       backdrop="static"
@@ -147,7 +134,7 @@ const UserModal: React.FC<UserModalProps> = ({
         layout="grid"
         gridColumns={12}
         fieldSpacing={3}
-        submitButtonText={isEditMode ? 'Update User' : 'Save User'}
+        submitButtonText="Update User"
         showSubmitButton
         submitButtonSize="medium"
         cancelButtonText="Cancel"
