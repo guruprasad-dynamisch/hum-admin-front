@@ -1,5 +1,5 @@
 import { USER_KEY } from "@constants/auth-constants";
-import { User } from "@redux/slices/authSlice";
+import { User } from "@models/auth.types";
 
 // Re-export User type as PublicUser for backward compatibility
 export type PublicUser = User;

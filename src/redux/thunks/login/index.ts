@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setUser } from '@utils/auth';
 import { LoginCredentials, LoginError } from './types';
-import { loginRequest } from '@api/auth';
-import { ApiResponse, LoginResponse } from '@models/api-types';
+import { loginRequest, userInfoRequest } from '@api/auth';
+import { ApiResponse, UserInfoResponse } from '@models/api.types';
 import { Role } from '@constants/roles';
 import { AUTH_MESSAGES, ERROR_CODES } from '@constants/message-constants';
-import { User } from '@redux/slices/authSlice';
+import { User } from '@models/auth.types';
 
 /**
  * Login user async thunk
@@ -25,20 +25,22 @@ export const loginUser = createAsyncThunk<{ user: User }, LoginCredentials, { re
             });
 
             // Backend response structure: { success, message, data: { id, email, fullName, role, ... } }
-            const apiResponse: ApiResponse<LoginResponse> = response.data;
+            const apiResponse: ApiResponse = response.data;
 
             // Validate response structure
-            if (!apiResponse || !apiResponse.success || !apiResponse.data) {
+            if (!apiResponse || !apiResponse.success) {
                 return rejectWithValue({
                     message: apiResponse?.message || AUTH_MESSAGES.invalidResponse,
                     code: ERROR_CODES.INVALID_RESPONSE
                 });
             }
 
-            const userData = apiResponse.data;
+            const userResponse = await userInfoRequest();
 
-            // Validate required fields
-            if (!userData.id) {
+            const userInfo: UserInfoResponse | undefined = userResponse.data.data;
+
+            // Validate user info response
+            if (!userInfo || !userInfo.id) {
                 return rejectWithValue({
                     message: AUTH_MESSAGES.missingUserData,
                     code: ERROR_CODES.MISSING_USER_DATA
@@ -46,16 +48,23 @@ export const loginUser = createAsyncThunk<{ user: User }, LoginCredentials, { re
             }
 
             // Map backend user structure to frontend user structure
-            const user = {
-                id: userData.id,
-                fullName: userData.fullName,
-                email: userData.email,
-                isActive: userData.isActive !== undefined ? userData.isActive : true,
-                role: (userData.role as Role) || Role.USER,
+            const user: User = {
+                id: userInfo.id,
+                fullName: userInfo.fullName,
+                email: userInfo.email,
+                isActive: userInfo.isActive,
+                role: userInfo.role as Role, // Convert string to Role enum
+                // Optional fields
+                organizationId: userInfo.organizationId,
+                phone: userInfo.phone,
+                phoneVerified: userInfo.phoneVerified,
+                lastLogin: userInfo.lastLogin,
+                passwordChangedAt: userInfo.passwordChangedAt,
+                createdAt: userInfo.createdAt,
+                updatedAt: userInfo.updatedAt,
+                organization: userInfo.organization,
             };
-            
-            console.log('Mapped user:', user)
-            
+
             // Store only user profile data (NOT tokens - they're in httpOnly cookies)
             setUser(user, credentials.rememberMe);
 
@@ -64,7 +73,7 @@ export const loginUser = createAsyncThunk<{ user: User }, LoginCredentials, { re
         } catch (error: any) {
             const errorMessage = error.response?.data?.message || error.message || AUTH_MESSAGES.loginError;
             const errorCode = error.response?.data?.code || error.response?.status || ERROR_CODES.LOGIN_ERROR;
-            
+
             return rejectWithValue({
                 message: errorMessage,
                 code: errorCode

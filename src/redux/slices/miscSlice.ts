@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-
-interface MiscState {
-  sidebarOpen: boolean
-  theme: 'light' | 'dark'
-  notifications: number
-  messages: number
-}
+import { MiscState } from '@models/state.types'
 
 const initialState: MiscState = {
   sidebarOpen: true,

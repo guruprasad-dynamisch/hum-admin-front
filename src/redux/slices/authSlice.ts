@@ -1,29 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loginUser, logoutUser } from '../thunks';
 import { getErrorMessage } from '@constants/errorHandling';
-import { Role } from '@constants/roles';
 import type { RootState } from '../store';
-
-// Types
-export interface User {
-  id: string;
-  fullName: string;
-  email: string;
-  isActive: boolean;
-  role: Role;
-}
-
-/**
- * SECURITY NOTE: Tokens are stored in httpOnly cookies by the backend.
- * The auth state only tracks user profile data and authentication status.
- * Actual token validation happens server-side on each API request.
- */
-export interface AuthState {
-  user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  error: string | null;
-}
+import { User, AuthState } from '@models/auth.types';
 
 // Helper functions for state updates
 const setLoading = (state: AuthState, loading: boolean) => {

@@ -5,9 +5,7 @@ import PageLoader from "../components/PageLoader";
 import { userInfoRequest } from "../api/auth";
 import { Role } from "../constants/roles";
 
-interface AuthInitProps {
-  children: React.ReactNode;
-}
+import { AuthInitProps } from '@models/auth.types';
 
 const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -32,6 +30,15 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
                 email: userData.email,
                 isActive: userData.isActive,
                 role: userData.role as Role, // Convert string to Role enum
+                // Optional fields
+                organizationId: userData.organizationId,
+                phone: userData.phone,
+                phoneVerified: userData.phoneVerified,
+                lastLogin: userData.lastLogin,
+                passwordChangedAt: userData.passwordChangedAt,
+                createdAt: userData.createdAt,
+                updatedAt: userData.updatedAt,
+                organization: userData.organization,
               }
             }));
           }
