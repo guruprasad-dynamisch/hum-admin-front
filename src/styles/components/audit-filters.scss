@@ -1,0 +1,13 @@
+@import '../variables';
+
+.audit-filters {
+  display: flex;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}

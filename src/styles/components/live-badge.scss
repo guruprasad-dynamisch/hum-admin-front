@@ -1,0 +1,21 @@
+@import '../variables';
+
+.live-badge {
+  padding: 4px 10px;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid $status-error;
+  color: $status-error;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: $font-weight-semibold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
