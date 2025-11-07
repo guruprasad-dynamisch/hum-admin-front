@@ -9,6 +9,7 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: $spacing-xl;
     margin-bottom: $spacing-xxl + $spacing-sm;
+    margin-top: $spacing-xxl + $spacing-sm;
     padding: 0 $spacing-xxl;
   }
 
@@ -17,7 +18,10 @@
     border: 1px solid $border-default;
     border-radius: $border-radius-lg;
     padding: $spacing-xxl;
-    margin: 0 $spacing-xxl $spacing-xxl + $spacing-sm;
+
+    &.line-graph{
+      margin: 0 $spacing-xxl $spacing-xxl + $spacing-sm;
+    }
   }
 
   .cost-breakdown {
@@ -31,6 +35,13 @@
       font-size: $font-size-lg;
       font-weight: $font-weight-semibold;
       margin-bottom: $spacing-xl;
+    }
+
+    // Ensure child sections don't overflow
+    > .chart-section,
+    > .pie-chart-card {
+      min-width: 0;
+      overflow: hidden;
     }
   }
 
@@ -69,10 +80,22 @@
 
     .chart-section {
       margin: 0 $spacing-lg $spacing-lg;
+      padding: $spacing-lg;
+
+      &.line-graph {
+        margin: 0 $spacing-lg $spacing-lg;
+      }
     }
 
     .cost-breakdown {
       margin: 0 $spacing-lg $spacing-lg;
+      grid-template-columns: 1fr;
+      gap: $spacing-lg;
+
+      &-heading {
+        font-size: $font-size-md;
+        margin-bottom: $spacing-md;
+      }
     }
 
     > div > .export-section {
@@ -89,11 +112,24 @@
     }
 
     .chart-section {
-      margin: 0 $spacing-md $spacing-md;
+      padding: $spacing-md;
+      margin: 0;
+      margin-bottom: $spacing-md;
+
+      &.line-graph {
+        margin: 0 $spacing-md $spacing-md;
+      }
     }
 
     .cost-breakdown {
       margin: 0 $spacing-md $spacing-md;
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+
+      &-heading {
+        font-size: $font-size-sm;
+        margin-bottom: $spacing-sm;
+      }
     }
 
     > div > .export-section {

@@ -3,9 +3,11 @@
 .cost-breakdown-table {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 
   table {
     width: 100%;
+    min-width: 500px;
     border-collapse: collapse;
   }
 
@@ -75,6 +77,10 @@
 // Responsive
 @media (max-width: 768px) {
   .cost-breakdown-table {
+    table {
+      min-width: 450px;
+    }
+
     thead th,
     tbody td {
       padding: $spacing-md $spacing-sm;
@@ -85,6 +91,54 @@
       width: 32px;
       height: 32px;
       font-size: 16px;
+    }
+
+    .service-cell {
+      gap: $spacing-sm;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .cost-breakdown-table {
+    table {
+      min-width: 380px;
+    }
+
+    thead th,
+    tbody td {
+      padding: $spacing-sm $spacing-xs;
+      font-size: 10px;
+    }
+
+    .service-cell {
+      gap: $spacing-xs;
+      
+      span {
+        font-size: 11px;
+      }
+    }
+
+    .service-icon {
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+    }
+
+    .cost-value {
+      font-size: 12px;
+    }
+
+    .progress-bar {
+      height: 6px;
+    }
+
+    .share-cell {
+      gap: 4px;
+      
+      span {
+        font-size: 11px;
+      }
     }
   }
 }

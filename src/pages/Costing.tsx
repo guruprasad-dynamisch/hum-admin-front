@@ -75,7 +75,7 @@ export default function Costing() {
           </div>
 
           {/* Cost Trend Chart */}
-          <div className="chart-section">
+          <div className="chart-section line-graph">
             <DashboardChart
               title="Cost Trends"
               filters={costTrendFilters}

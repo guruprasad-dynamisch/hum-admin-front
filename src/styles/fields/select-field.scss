@@ -1,7 +1,7 @@
 @use '../variables' as *;
 
 .select-field-wrapper {
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-sm;
   width: 100%;
 
   .select-field-label {
@@ -27,8 +27,8 @@
     border: 1px solid $border-input;
     border-radius: $border-radius-sm;
     color: $text-primary;
-    padding: 12px 16px;
-    font-size: $font-size-md;
+    padding: 10px 12px;
+    font-size: $font-size-sm;
     transition: $transition-default;
     width: 100%;
     font-family: inherit;
