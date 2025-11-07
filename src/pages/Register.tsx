@@ -62,7 +62,8 @@ const Register: React.FC = () => {
       
       setRegistrationData(data);
       setPhoneNumber(data.phone);
-      setShowOtpSection(true);
+      // setShowOtpSection(true);
+      navigate(getRouteByKey('login'));
     } catch (error) {
       console.error('Failed to send OTP:', error);
       // TODO: Show error toast/notification
@@ -267,7 +268,7 @@ const Register: React.FC = () => {
                     loading={isLoading}
                     className="register-btn"
                   >
-                    Send Verification Code
+                    Submit Profile
                   </PrimaryBtn>
                 </Form>
 

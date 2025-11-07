@@ -59,7 +59,7 @@ const initialState: AuthState = {
     "email": "john.doe@example.com",
     "userType": Role.ADMIN,
   },
-  isAuthenticated: true,
+  isAuthenticated: false,
   isLoading: false,
   error: null,
 };

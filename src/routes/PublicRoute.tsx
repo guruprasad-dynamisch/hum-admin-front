@@ -10,9 +10,9 @@ export default function PublicRoute({ children }: Props) {
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const location = useLocation();
 
-  // If user is authenticated, redirect to discoveries
+  // If user is authenticated, redirect to dashboard
   if (isAuthenticated) {
-    return <Navigate to={getRouteByKey('discoveries')} replace state={{ from: location }} />
+    return <Navigate to={getRouteByKey('dashboard')} replace state={{ from: location }} />
   }
 
   return <>{children}</>

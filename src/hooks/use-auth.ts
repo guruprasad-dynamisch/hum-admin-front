@@ -24,7 +24,7 @@ export const useAuth = () => {
 
             if (loginUser.fulfilled.match(result)) {
                 showSuccess('Login successful')
-                const toPath = to || location.state?.from?.pathname || getRouteByKey('discoveries')
+                const toPath = to || location.state?.from?.pathname || getRouteByKey('dashboard')
                 // Brief delay to allow user to see success message
                 setTimeout(() => {
                     navigate(toPath, { replace: true })

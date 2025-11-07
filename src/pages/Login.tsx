@@ -1,8 +1,8 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppSelector } from "../redux/store";
-import { selectAuthLoading } from "../redux/slices/authSlice";
+import { useAppDispatch, useAppSelector } from "../redux/store";
+import { selectAuthLoading, setAuthState } from "../redux/slices/authSlice";
 import { useAuth } from "@hooks/use-auth";
 import { Container, Card, Form } from "react-bootstrap";
 import { InputField, CheckboxField } from "@components/fields";
@@ -16,6 +16,7 @@ export default function Login() {
   const isLoading = useAppSelector(selectAuthLoading);
   const { handleLogin } = useAuth();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const {
     control,
@@ -34,7 +35,13 @@ export default function Login() {
   });
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
-    await handleLogin(data.identifier, data.password, data.rememberMe || false);
+    // await handleLogin(data.identifier, data.password, data.rememberMe || false);
+    let user = {
+      id: "hfjhdaksjdh78678ade7823",
+      name: "John Doe",
+      email: "john.doe@example.com",
+    };
+    dispatch(setAuthState({ user }));
   };
 
   return (
