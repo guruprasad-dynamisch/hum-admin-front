@@ -134,6 +134,7 @@
   justify-content: center;
   border-radius: 50%;
   background: rgba($primary-gold, 0.1);
+  padding-bottom: 4px;
 
   .audit-timeline-item-compact.expanded & {
     color: $primary-gold;
