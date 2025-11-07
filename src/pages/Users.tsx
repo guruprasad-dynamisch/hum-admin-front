@@ -53,7 +53,6 @@ export default function Users() {
   const handleDeleteUser = (user: User) => {
     if (confirm(`Are you sure you want to delete ${user.firstName} ${user.lastName}?`)) {
       setUsers(prevUsers => prevUsers.filter(u => u.id !== user.id))
-      console.log('User deleted:', user.id)
     }
   }
 
@@ -71,7 +70,6 @@ export default function Users() {
             : u
         )
       )
-      console.log('User updated:', data)
     } else {
       // Add new user
       const newUser: User = {
@@ -81,7 +79,6 @@ export default function Users() {
         status: data.status || 'active'
       }
       setUsers(prevUsers => [...prevUsers, newUser])
-      console.log('User added:', newUser)
     }
     modal.close()
   }
@@ -104,12 +101,6 @@ export default function Users() {
       const matchesStatus = statusFilter === '' || user.status === statusFilter
 
       return matchesSearch && matchesRole && matchesStatus
-    })
-    
-    console.log('📊 Pagination Debug:', {
-      totalUsers: filtered.length,
-      pageSize: 10,
-      expectedPages: Math.ceil(filtered.length / 10)
     })
     
     return filtered

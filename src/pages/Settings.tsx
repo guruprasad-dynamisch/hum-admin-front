@@ -46,7 +46,6 @@ export default function Settings() {
 
   const handleDeleteAccount = () => {
     if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-      console.log('Account deletion requested')
       alert('Account deletion initiated')
     }
   }
@@ -56,7 +55,6 @@ export default function Settings() {
   }
 
   const handleRevokeSession = (sessionId: string) => {
-    console.log('Revoking session:', sessionId)
     alert(`Session ${sessionId} revoked`)
   }
 

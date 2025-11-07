@@ -1,6 +1,6 @@
 # Humanistics AI
 
-This repository contains the Humanistics Portal web application built with React, TypeScript, Vite, and Material UI v6.
+This repository contains the Humanistics Portal web application built with React, TypeScript, Vite.
 
 ## Prerequisites
 
@@ -53,7 +53,6 @@ npm run preview
 - TypeScript 5
 - Vite 5
 - React Router 6
-- Material UI 6 (`@mui/material` and `@mui/icons-material`)
 - Emotion (styling engine for MUI)
 - Redux Toolkit
 - Jest + React Testing Library(for unit testing)
@@ -87,23 +86,6 @@ tests/jest.config.cjs
 - Use `.test.tsx` or `.spec.tsx` for React component tests.
 - Mock selectors, API calls, and hooks using Jest’s built-in mocking utilities.
 
-## Notable Conventions
-
-- Path aliases are configured via `vite-tsconfig-paths` and `tsconfig` paths. Example imports:
-  ```ts
-  import { getDashboardItems } from '@api/dashboard'
-  ```
-- MUI v6 Grid v2 (`@mui/material/Grid2`) is used. In Grid v2, item sizing is done using the `size` prop (not `xs`/`sm`/`md`/`lg` props). Example:
-  ```tsx
-  import Grid from '@mui/material/Grid2'
-
-  <Grid container spacing={2}>
-    <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-      {/* content */}
-    </Grid>
-  </Grid>
-  ```
-
 ## Environment Variables
 
 If you introduce environment variables, create a `.env` file in `humanistics-portal/` and prefix variables with `VITE_` to expose them to the client, e.g. `VITE_API_BASE_URL`.
@@ -132,8 +114,6 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL
 - Keep UI concerns in components and data fetching in `api/`.
 
 ## Troubleshooting
-
-- If you see Grid-related type errors in MUI v6, verify you are using `Grid` from `@mui/material/Grid2` and the `size` prop for item sizing.
 - If path aliases fail to resolve, ensure the dev server was started from `humanistics-portal/` and `vite-tsconfig-paths` is installed/configured.
 
 ## License

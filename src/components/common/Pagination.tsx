@@ -38,14 +38,6 @@ const Pagination: React.FC<PaginationProps> = ({
   const start = totalRecords === 0 ? 0 : pageIndex * pageSize + 1
   const end = Math.min((pageIndex + 1) * pageSize, totalRecords)
   const pageNumbers = Array.from({ length: pageCount }, (_, i) => i)
-  
-  console.log('🔢 Pagination State:', {
-    currentPage: pageIndex + 1,
-    totalPages: pageCount,
-    canNext: canNextPage,
-    canPrev: canPreviousPage,
-    showing: `${start}-${end} of ${totalRecords}`
-  })
 
   const renderPaginationButtons = () => {
     const visiblePages = new Set<number>([
@@ -65,7 +57,6 @@ const Pagination: React.FC<PaginationProps> = ({
           <button
             key={number}
             onClick={() => {
-              console.log(`🔢 Page ${number + 1} clicked`)
               gotoPage(number)
             }}
             className={cn("pagination-btn", { active: number === pageIndex })}
@@ -95,7 +86,6 @@ const Pagination: React.FC<PaginationProps> = ({
       <div className="pagination-numbers">
         <SecondaryBtn 
           onClick={() => {
-            console.log('⬅️ Previous clicked')
             previousPage()
           }} 
           className='pagination-btn' 
@@ -107,7 +97,6 @@ const Pagination: React.FC<PaginationProps> = ({
         {renderPaginationButtons()}
         <SecondaryBtn 
           onClick={() => {
-            console.log('➡️ Next clicked')
             nextPage()
           }} 
           className='pagination-btn' 

@@ -15,12 +15,12 @@ export default function DashboardHeader() {
   const [searchQuery, setSearchQuery] = useState('')
 
   const handleNotificationClick = () => {
-    console.log('Notifications clicked')
+    alert('Notifications clicked')
     // TODO: Open notifications panel
   }
 
   const handleMessageClick = () => {
-    console.log('Messages clicked')
+    alert('Messages clicked')
     // TODO: Open messages panel
   }
 
