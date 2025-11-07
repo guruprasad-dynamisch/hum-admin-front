@@ -49,7 +49,7 @@ export default function Costing() {
               value={dateRange}
               onChange={handleDateRangeChange}
               showLabel={false}
-              className="date-range-select-field"
+              className="date-range-select-field mb-0"
             />
             <PrimaryBtn onClick={handleExportReport}>
               📥 Export Report
