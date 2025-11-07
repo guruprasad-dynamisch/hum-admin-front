@@ -4,6 +4,10 @@
 .custom-modal {
   &-dialog{
     max-width: 480px !important;
+
+    &.template-modal-dialog{
+      max-width: 800px !important
+    }
   }
   // max-width: 500px;
   .modal-content {

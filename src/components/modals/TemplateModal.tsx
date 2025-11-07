@@ -123,6 +123,7 @@ const TemplateModal: React.FC<TemplateModalProps> = ({
       centered
       backdrop="static"
       keyboard={!loading}
+      dialogClassName='template-modal-dialog'
     >
       <DynamicForm
         mode="react-hook-form"
