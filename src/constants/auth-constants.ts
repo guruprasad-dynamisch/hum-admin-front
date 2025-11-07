@@ -17,6 +17,7 @@ export const AUTH_APIS = {
   loginApi: "/api/auth/login",
   logoutApi: "/api/auth/logout",
   refreshTokenApi: "/api/auth/refresh-token",
+  userInfoApi: "/api/auth/user-info",
 };
 
 // These endpoints should return 401 for invalid credentials without triggering refresh

@@ -4,7 +4,6 @@ import { useAppSelector, useAppDispatch } from '@redux/store'
 import { selectSidebarOpen, setSidebarOpen } from '@redux/slices/miscSlice'
 import { cn } from '@utils/classNames'
 import Sidebar from './Sidebar'
-import DashboardHeader from './dashboard/DashboardHeader'
 import '@styles/components/protected-layout.scss'
 
 export default function ProtectedLayout() {

@@ -33,42 +33,42 @@ export const TOP_NAVIGATION_ITEMS: NavigationItem[] = [
     label: 'Dashboard',
     path: getRouteByKey('dashboard'),
     icon: '📊',
-    roles: []
+    roles: [Role.SUPER_ADMIN]
   },
   {
     id: 'users',
     label: 'User Management',
     path: getRouteByKey('users'),
     icon: '👥',
-    roles: []
+    roles: [Role.SUPER_ADMIN]
   },
   {
     id: 'templates',
     label: 'Templates',
     path: getRouteByKey('templates'),
     icon: '📝',
-    roles: []
+    roles: [Role.SUPER_ADMIN]
   },
   {
     id: 'audit',
     label: 'Audit Trail',
     path: getRouteByKey('audit'),
     icon: '🔍',
-    roles: []
+    roles: [Role.SUPER_ADMIN]
   },
   {
     id: 'costing',
     label: 'Cost Reports',
     path: getRouteByKey('costing'),
     icon: '💰',
-    roles: []
+    roles: [Role.SUPER_ADMIN]
   },
   {
     id: 'settings',
     label: 'Settings',
     path: getRouteByKey('settings'),
     icon: '⚙️',
-    roles: []
+    roles: [Role.SUPER_ADMIN]
   },
 ]
 

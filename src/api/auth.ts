@@ -21,3 +21,7 @@ export async function refreshTokenRequest(): Promise<AxiosResponse<ApiResponse<R
   // Refresh token is sent automatically via HTTP-only cookies
   return apiClient.get(AUTH_APIS.refreshTokenApi);
 }
+
+export async function userInfoRequest(): Promise<AxiosResponse<ApiResponse<LoginResponse>>> {
+  return apiClient.get(AUTH_APIS.userInfoApi);
+}

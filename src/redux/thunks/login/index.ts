@@ -1,7 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setUser } from '@utils/auth';
-import { LoginCredentials, LoginResponse, LoginError } from './types';
+import { LoginCredentials, LoginError } from './types';
 import { loginRequest } from '@api/auth';
+import { ApiResponse, LoginResponse } from '@models/api-types';
+import { Role } from '@constants/roles';
+import { AUTH_MESSAGES, ERROR_CODES } from '@constants/message-constants';
+import { User } from '@redux/slices/authSlice';
 
 /**
  * Login user async thunk
@@ -9,7 +13,7 @@ import { loginRequest } from '@api/auth';
  * SECURITY: Tokens are stored in httpOnly cookies by the backend.
  * We only store user profile data in localStorage/sessionStorage.
  */
-export const loginUser = createAsyncThunk<LoginResponse, LoginCredentials, { rejectValue: LoginError }>(
+export const loginUser = createAsyncThunk<{ user: User }, LoginCredentials, { rejectValue: LoginError }>(
     'auth/loginUser',
     async (credentials: LoginCredentials, { rejectWithValue }) => {
         try {
@@ -21,13 +25,13 @@ export const loginUser = createAsyncThunk<LoginResponse, LoginCredentials, { rej
             });
 
             // Backend response structure: { success, message, data: { id, email, fullName, role, ... } }
-            const apiResponse = response.data;
-            
+            const apiResponse: ApiResponse<LoginResponse> = response.data;
+
             // Validate response structure
             if (!apiResponse || !apiResponse.success || !apiResponse.data) {
                 return rejectWithValue({
-                    message: apiResponse?.message || 'Invalid response from server',
-                    code: 'INVALID_RESPONSE'
+                    message: apiResponse?.message || AUTH_MESSAGES.invalidResponse,
+                    code: ERROR_CODES.INVALID_RESPONSE
                 });
             }
 
@@ -36,29 +40,30 @@ export const loginUser = createAsyncThunk<LoginResponse, LoginCredentials, { rej
             // Validate required fields
             if (!userData.id) {
                 return rejectWithValue({
-                    message: 'Missing required user data',
-                    code: 'INVALID_RESPONSE'
+                    message: AUTH_MESSAGES.missingUserData,
+                    code: ERROR_CODES.MISSING_USER_DATA
                 });
             }
 
             // Map backend user structure to frontend user structure
             const user = {
                 id: userData.id,
-                name: userData.fullName || userData.email,
-                username: userData.email.split('@')[0], // Generate username from email
+                fullName: userData.fullName,
                 email: userData.email,
-                userType: userData.role || 'USER'
+                isActive: userData.isActive !== undefined ? userData.isActive : true,
+                role: (userData.role as Role) || Role.USER,
             };
-
+            
+            console.log('Mapped user:', user)
+            
             // Store only user profile data (NOT tokens - they're in httpOnly cookies)
             setUser(user, credentials.rememberMe);
 
-            return { 
-                user
-            };
+            // Return the user object wrapped for the authSlice
+            return { user };
         } catch (error: any) {
-            const errorMessage = error.response?.data?.message || error.message || 'Login failed';
-            const errorCode = error.response?.data?.code || error.response?.status || 'LOGIN_ERROR';
+            const errorMessage = error.response?.data?.message || error.message || AUTH_MESSAGES.loginError;
+            const errorCode = error.response?.data?.code || error.response?.status || ERROR_CODES.LOGIN_ERROR;
             
             return rejectWithValue({
                 message: errorMessage,

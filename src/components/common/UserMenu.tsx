@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector, useAppDispatch } from '@redux/store'
+import { useAppSelector } from '@redux/store'
 import { selectUser } from '@redux/slices/authSlice'
-import { logoutUser } from '@redux/thunks'
-import { getRouteByKey, getUserInitials } from '@utils/helpers'
-import { FiSettings, FiLogOut, FiUser } from 'react-icons/fi'
+import { getRouteByKey, getUserInitials, ucFirstLetter } from '@utils/helpers'
+import { FiSettings, FiLogOut } from 'react-icons/fi'
 import '@styles/components/user-menu.scss'
+import { getRoleDisplayName, Role } from '@constants/roles'
 
 interface UserMenuProps {
   className?: string
@@ -13,7 +13,6 @@ interface UserMenuProps {
 
 export default function UserMenu({ className }: UserMenuProps) {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
   const user = useAppSelector(selectUser)
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -52,14 +51,14 @@ export default function UserMenu({ className }: UserMenuProps) {
     <div className={`user-menu-wrapper ${className || ''}`} ref={menuRef}>
       <div className="user-menu" onClick={handleToggle}>
         <div className="user-menu-avatar">
-          {getUserInitials(user?.name)}
+          {getUserInitials(user?.fullName)}
         </div>
         <div className="user-menu-info">
           <div className="user-menu-name">
-            {user?.name || 'Admin User'}
+            {ucFirstLetter(user?.fullName as string)}
           </div>
           <div className="user-menu-role">
-            {user?.userType || 'Administrator'}
+            {getRoleDisplayName(user?.role as Role)}
           </div>
         </div>
       </div>
@@ -68,14 +67,14 @@ export default function UserMenu({ className }: UserMenuProps) {
         <div className="user-menu-popover">
           <div className="user-menu-popover-header">
             <div className="user-menu-avatar">
-              {getUserInitials(user?.name)}
+              {getUserInitials(user?.fullName)}
             </div>
             <div className="user-menu-popover-info">
               <div className="user-menu-popover-name">
-                {user?.name || 'Admin User'}
+                {ucFirstLetter(user?.fullName as string)}
               </div>
               <div className="user-menu-popover-email">
-                {user?.email || 'admin@example.com'}
+                {user?.email}
               </div>
             </div>
           </div>

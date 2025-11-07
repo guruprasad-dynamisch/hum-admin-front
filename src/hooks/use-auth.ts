@@ -1,12 +1,11 @@
 import { useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '@redux/store';
-import { clearError } from '@redux/slices/authSlice';
 import { loginUser } from '@redux/thunks';
 import { getRouteByKey } from '@utils/helpers';
 import { useToast } from './use-toast';
 import { logoutUser } from '@redux/thunks';
-import { SOMETHING_WENT_WRONG } from '@constants/message-constants';
+import { AUTH_MESSAGES, SOMETHING_WENT_WRONG } from '@constants/message-constants';
 
 export const useAuth = () => {
     const dispatch = useAppDispatch();
@@ -16,21 +15,15 @@ export const useAuth = () => {
 
     const handleLogin = useCallback(async (identifier: string, password: string, rememberMe: boolean = false, to?: string | null) => {
         try {
-            const result = await dispatch(loginUser({
-                identifier,
-                password,
-                rememberMe
-            }));
+            const result = await dispatch(loginUser({ identifier, password, rememberMe }));
 
             if (loginUser.fulfilled.match(result)) {
-                showSuccess('Login successful')
+                showSuccess(AUTH_MESSAGES.loginSuccess)
                 const toPath = to || location.state?.from?.pathname || getRouteByKey('dashboard')
-                // Brief delay to allow user to see success message
                 setTimeout(() => {
                     navigate(toPath, { replace: true })
                 }, 500);
             } else if (loginUser.rejected.match(result)) {
-                // Show toast error when login is rejected
                 const errorMessage = result.payload?.message || SOMETHING_WENT_WRONG;
                 showError(errorMessage);
             }
@@ -42,8 +35,7 @@ export const useAuth = () => {
     const handleLogout = useCallback(async () => {
         try {
             await dispatch(logoutUser());
-            showSuccess('Logout successful');
-            // Navigate to login
+            showSuccess(AUTH_MESSAGES.logoutSuccess);
             navigate(getRouteByKey('login'), { replace: true });
         } catch (error: any) {
             showError(error?.message || SOMETHING_WENT_WRONG);

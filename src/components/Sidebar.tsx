@@ -35,7 +35,7 @@ export default function Sidebar({ open: controlledOpen, onToggle, mobileOpen = f
   }, [])
 
   // Get user role, default to USER if not set
-  const userRole = (user?.userType as Role) || Role.USER
+  const userRole = (user?.role as Role) || Role.USER
 
   // Get navigation items filtered by role
   const { top: topNavItems, bottom: bottomNavItems } = useMemo(() => {

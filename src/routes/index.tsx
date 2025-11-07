@@ -85,10 +85,9 @@ export const router = createBrowserRouter([
         path: '/',
         element: <ProtectedLayoutWrapper />,
         children: [
-          // Index route - redirect to discoveries
           {
             index: true,
-            element: <Navigate to={getRouteByKey('discoveries')} replace />
+            element: <Navigate to={getRouteByKey('dashboard')} replace />
           },
           ...convertToRouteObjects(protectedRoutes)
         ],

@@ -27,6 +27,12 @@ export const VALIDATION_MESSAGE = {
 }
 
 export const AUTH_MESSAGES = {
+    loginSuccess: 'Login successful',
+    loginError: 'Login failed',
+    logoutSuccess: 'Logout successful',
+    invalidResponse: 'Invalid response from server',
+    missingUserData: 'Missing required user data',
+
     sendOtpSuccess: (phone: string) => `Verification code sent successfully to ${phone}`,
     sendOtpError: "Failed to send verification code. Please try again.",
 
@@ -44,4 +50,10 @@ export const AUTH_MESSAGES = {
 
     resetPasswordSuccess: 'Your password has been reset successfully. You can now log in with your new password.',
     resetPasswordError: 'Failed to reset password. Please try again.',
+}
+
+export const ERROR_CODES = {
+    INVALID_RESPONSE: 'INVALID_RESPONSE',
+    LOGIN_ERROR: 'LOGIN_ERROR',
+    MISSING_USER_DATA: 'MISSING_USER_DATA',
 }

@@ -7,10 +7,10 @@ import type { RootState } from '../store';
 // Types
 export interface User {
   id: string;
-  name: string;
-  username?: string;
-  email?: string;
-  userType?: Role;
+  fullName: string;
+  email: string;
+  isActive: boolean;
+  role: Role;
 }
 
 /**
@@ -53,12 +53,7 @@ const clearAuth = (state: AuthState) => {
 
 // Auth slice
 const initialState: AuthState = {
-  user: {
-    "id": "hfjhdaksjdh78678ade7823",
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "userType": Role.ADMIN,
-  },
+  user: null,
   isAuthenticated: false,
   isLoading: false,
   error: null,

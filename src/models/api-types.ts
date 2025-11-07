@@ -22,13 +22,13 @@ export interface ApiErrorResponse {
  * Authentication API response types
  */
 export interface LoginResponse {
-  user: {
-    id: string;
-    email: string;
-    fullName: string;
-    phone?: string;
-    organizationName?: string;
-  };
+  id: string;
+  fullName: string;
+  email: string;
+  isActive: boolean;
+  role: string;
+  phone?: string;
+  organizationName?: string;
   accessToken?: string; // May not be present if using httpOnly cookies
 }
 
