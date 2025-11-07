@@ -1,5 +1,9 @@
 @use '../variables' as *;
 
+.user-menu-wrapper {
+  position: relative;
+}
+
 .user-menu {
   display: flex;
   align-items: center;
@@ -51,6 +55,117 @@
   line-height: 1.2;
 }
 
+// Popover
+.user-menu-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 260px;
+  background: $bg-secondary;
+  border: 1px solid $border-default;
+  border-radius: $border-radius-lg;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  animation: popoverFadeIn 0.2s ease-out;
+}
+
+@keyframes popoverFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-menu-popover-header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+}
+
+.user-menu-popover-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-menu-popover-name {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $primary-gold;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.user-menu-popover-email {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu-popover-divider {
+  height: 1px;
+  background: $border-default;
+  margin: 0 $spacing-md;
+}
+
+.user-menu-popover-items {
+  padding: $spacing-sm;
+}
+
+.user-menu-popover-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+  background: none;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $text-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: $transition-fast;
+  text-align: left;
+
+  .item-icon {
+    font-size: 18px;
+    color: $text-secondary;
+    transition: $transition-fast;
+  }
+
+  &:hover {
+    background: $bg-hover;
+    color: $primary-gold;
+
+    .item-icon {
+      color: $primary-gold;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.logout {
+    &:hover {
+      background: $status-error-light;
+      color: $status-error;
+
+      .item-icon {
+        color: $status-error;
+      }
+    }
+  }
+}
+
 // Responsive
 @media (max-width: 768px) {
   .user-menu-info {
@@ -60,11 +175,33 @@
   .user-menu {
     padding: $spacing-sm;
   }
+
+  .user-menu-popover {
+    min-width: 240px;
+  }
 }
 
 @media (max-width: 480px) {
   .user-menu-avatar {
     width: 36px;
     height: 36px;
+  }
+
+  .user-menu-popover {
+    min-width: 220px;
+    right: -$spacing-md;
+  }
+
+  .user-menu-popover-header {
+    padding: $spacing-md;
+  }
+
+  .user-menu-popover-item {
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-xs;
+
+    .item-icon {
+      font-size: 16px;
+    }
   }
 }

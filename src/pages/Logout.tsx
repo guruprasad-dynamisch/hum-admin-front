@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useAuth } from '@hooks/use-auth'
+import { FiLogOut } from 'react-icons/fi'
+import '@styles/pages/logout.scss'
 
 const Logout: React.FC = () => {
   const { handleLogout } = useAuth()
@@ -13,14 +15,19 @@ const Logout: React.FC = () => {
   }, [handleLogout])
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      fontSize: '18px'
-    }}>
-      Logging out...
+    <div className="logout-page">
+      <div className="logout-container">
+        <div className="logout-icon-wrapper">
+          <FiLogOut className="logout-icon" />
+        </div>
+        <h1 className="logout-title">Logging Out</h1>
+        <p className="logout-message">Please wait while we securely log you out...</p>
+        <div className="logout-spinner">
+          <div className="spinner-ring"></div>
+          <div className="spinner-ring"></div>
+          <div className="spinner-ring"></div>
+        </div>
+      </div>
     </div>
   )
 }
