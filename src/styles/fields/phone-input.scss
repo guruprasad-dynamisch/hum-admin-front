@@ -7,7 +7,7 @@
 
   .phone-input-label {
     display: block;
-    margin-bottom: $spacing-sm;
+    margin-bottom: $spacing-xs;
     font-size: 14px;
     font-weight: $font-weight-medium;
     color: $primary-gold;
@@ -27,7 +27,7 @@
     transition: $transition-default;
 
     .PhoneInputInput {
-      min-height: 45px !important;
+      min-height: 40px !important;
       background: transparent !important;
       color: $text-primary !important;
       outline: none !important;
