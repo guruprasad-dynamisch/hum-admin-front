@@ -32,19 +32,6 @@ export interface LoginResponse {
   accessToken?: string; // May not be present if using httpOnly cookies
 }
 
-export interface ForgotPasswordResponse {
-  message: string;
-}
-
-export interface VerifyResetTokenResponse {
-  valid: boolean;
-  message?: string;
-}
-
-export interface ResetPasswordResponse {
-  message: string;
-}
-
 export interface RefreshTokenResponse {
   accessToken?: string;
 }

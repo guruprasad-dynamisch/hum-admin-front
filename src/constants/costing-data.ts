@@ -1,4 +1,4 @@
-import type { CostStat, CostItem, OrganizationCost, CostTrendData } from '../types/costing'
+import type { CostStat, CostItem, OrganizationCost, CostTrendData } from '@models/costing'
 
 /**
  * Mock data for Costing page
