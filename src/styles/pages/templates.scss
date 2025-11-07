@@ -54,6 +54,7 @@
       border-radius: 12px;
       transition: all 0.3s ease;
       height: 100%;
+      padding: 10px;
 
       &:hover {
         border-color: var(--primary-color, #e2c36a);
@@ -62,7 +63,7 @@
       }
 
       .card-body {
-        padding: 24px;
+        padding: 10px;
         display: flex;
         flex-direction: column;
         height: 100%;
