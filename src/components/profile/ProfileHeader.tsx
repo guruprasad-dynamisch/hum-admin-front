@@ -5,6 +5,7 @@ import { getUserInitials, ucFirstLetter } from '@utils/helpers'
 import { User } from '@models/auth.types'
 import { getRoleDisplayName } from '@constants/roles'
 import { DateFormat, parseDateTimeString } from '@utils/dateUtils'
+import { SecondaryBtn } from '@components/buttons'
 
 export interface ProfileMetaItem {
   label: string
@@ -85,9 +86,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             <div className="profile-avatar">{getUserInitials(user.fullName)}</div>
           )}
           {showChangeAvatar && (
-            <button className="change-avatar-btn" onClick={handleAvatarClick}>
+            <SecondaryBtn className='change-avatar-btn' onClick={handleAvatarClick}>
               Change Photo
-            </button>
+            </SecondaryBtn>
           )}
         </div>
 

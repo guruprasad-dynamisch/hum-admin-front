@@ -7,12 +7,13 @@ import { PersonalInfoFormData } from '@validations/profile-validations'
 import { getRouteByKey } from '@utils/helpers'
 import { useNavigate } from 'react-router-dom'
 import '@styles/pages/settings.scss'
-import { useAppSelector } from '@redux/store'
-import { selectUser } from '@redux/slices/authSlice'
+import { useAppSelector, useAppDispatch } from '@redux/store'
+import { selectUser, updateAvatarUrl } from '@redux/slices/authSlice'
 import { getRoleDisplayName, Role } from '@constants/roles'
 
 export default function Settings() {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const [activeTab, setActiveTab] = useState('personal')
   const user = useAppSelector(selectUser);
 
@@ -25,8 +26,8 @@ export default function Settings() {
   }
 
   const handleAvatarChange = (file: File) => {
-    console.log('Avatar changed:', file.name)
-    // TODO: Upload avatar to server
+    const tempUrl = URL.createObjectURL(file)
+    dispatch(updateAvatarUrl(tempUrl))
   }
 
   const handlePersonalInfoSubmit = (data: PersonalInfoFormData) => {

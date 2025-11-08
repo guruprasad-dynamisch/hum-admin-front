@@ -48,6 +48,11 @@ const authSlice = createSlice({
     setAuthState: (state, action: PayloadAction<{ user: User }>) => {
       setAuthSuccess(state, action.payload.user);
     },
+    updateAvatarUrl: (state, action: PayloadAction<string>) => {
+      if (state.user) {
+        state.user.avatarUrl = action.payload;
+      }
+    },
     clearAuthState: (state) => {
       clearAuth(state);
     }
@@ -65,7 +70,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearError, setAuthState, clearAuthState } = authSlice.actions;
+export const { clearError, setAuthState, clearAuthState, updateAvatarUrl } = authSlice.actions;
 export const selectAuth = (state: RootState) => state.auth;
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
