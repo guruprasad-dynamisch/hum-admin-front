@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { selectAuthLoading, setAuthState, clearAuthState } from "../redux/slices/authSlice";
 import PageLoader from "../components/PageLoader";
@@ -11,11 +11,18 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectAuthLoading);
   const [isInitializing, setIsInitializing] = useState(true);
+  const hasInitialized = useRef(false);
 
   useEffect(() => {
     let isMounted = true;
 
     const initializeAuth = async () => {
+      // Prevent double initialization in React.StrictMode
+      if (hasInitialized.current) {
+        setIsInitializing(false);
+        return;
+      }
+      hasInitialized.current = true;
       try {
         const response = await userInfoRequest();
 
