@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/store";
-import { selectAuthLoading, setAuthState, clearAuthState } from "../redux/slices/authSlice";
+import { useAppDispatch } from "../redux/store";
+import { setAuthState, clearAuthState } from "../redux/slices/authSlice";
 import PageLoader from "../components/PageLoader";
 import { userInfoRequest } from "../api/auth";
 import { Role } from "../constants/roles";
@@ -9,7 +9,6 @@ import { AuthInitProps } from '@models/auth.types';
 
 const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(selectAuthLoading);
   const [isInitializing, setIsInitializing] = useState(true);
   const hasInitialized = useRef(false);
 
@@ -73,7 +72,7 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
     };
   }, [dispatch]);
 
-  if (isInitializing || isLoading) {
+  if (isInitializing) {
     return <PageLoader />;
   }
 
