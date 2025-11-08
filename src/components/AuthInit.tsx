@@ -11,10 +11,9 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const [isInitializing, setIsInitializing] = useState(true);
   const hasInitialized = useRef(false);
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
-    let isMounted = true;
-
     const initializeAuth = async () => {
       // Prevent double initialization in React.StrictMode
       if (hasInitialized.current) {
@@ -24,12 +23,11 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
       hasInitialized.current = true;
       try {
         const response = await userInfoRequest();
-
         if (response.data.success && response.data.data) {
-          if (isMounted) {
+          if (isMountedRef.current) {
             // Transform API response to User type
             const userData = response.data.data;
-            dispatch(setAuthState({ 
+            dispatch(setAuthState({
               user: {
                 id: userData.id,
                 fullName: userData.fullName,
@@ -49,17 +47,17 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
             }));
           }
         } else {
-          if (isMounted) {
+          if (isMountedRef.current) {
             dispatch(clearAuthState());
           }
         }
       } catch (error) {
         console.error("Auth initialization error:", error);
-        if (isMounted) {
+        if (isMountedRef.current) {
           dispatch(clearAuthState());
         }
       } finally {
-        if (isMounted) {
+        if (isMountedRef.current) {
           setIsInitializing(false);
         }
       }
@@ -68,7 +66,9 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
     initializeAuth();
 
     return () => {
-      isMounted = false;
+      if (!hasInitialized.current) {
+        isMountedRef.current = false;
+      }
     };
   }, [dispatch]);
 
