@@ -1,4 +1,3 @@
-import React from 'react'
 import SelectField from '@components/fields/SelectField'
 import '@styles/components/audit-filters.scss'
 

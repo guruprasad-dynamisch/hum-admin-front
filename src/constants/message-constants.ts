@@ -57,3 +57,28 @@ export const ERROR_CODES = {
     LOGIN_ERROR: 'LOGIN_ERROR',
     MISSING_USER_DATA: 'MISSING_USER_DATA',
 }
+
+// Dialog Messages
+export const DIALOG_MESSAGES = {
+    // Template messages
+    deleteTemplate: (name: string) => `Are you sure you want to delete "${name}"? This action cannot be undone.`,
+    deleteTemplateTitle: 'Delete Template',
+    templateDeletedSuccess: (name: string) => `Template "${name}" has been deleted successfully.`,
+    templateCreatedSuccess: (name: string) => `Template "${name}" has been created successfully.`,
+    templateUpdatedSuccess: (name: string) => `Template "${name}" has been updated successfully.`,
+    
+    // Generic confirmation messages
+    confirmDelete: (item: string) => `Are you sure you want to delete this ${item}? This action cannot be undone.`,
+    confirmAction: 'Are you sure you want to proceed with this action?',
+    
+    // Generic success messages
+    deleteSuccess: (item: string) => `${item} deleted successfully.`,
+    createSuccess: (item: string) => `${item} created successfully.`,
+    updateSuccess: (item: string) => `${item} updated successfully.`,
+    
+    // Button text
+    confirmButton: 'Confirm',
+    cancelButton: 'Cancel',
+    deleteButton: 'Delete',
+    okButton: 'OK',
+}

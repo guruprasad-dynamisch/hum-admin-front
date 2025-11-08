@@ -1,11 +1,5 @@
 import { useRef } from 'react'
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  ChartOptions
-} from 'chart.js'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions } from 'chart.js'
 import { Doughnut } from 'react-chartjs-2'
 import { CHART_COLORS } from '@constants/chart-colors'
 import '@styles/components/pie-chart.scss'
@@ -26,11 +20,11 @@ interface PieChartProps {
   className?: string
 }
 
-export default function PieChart({ 
-  title, 
-  data, 
+export default function PieChart({
+  title,
+  data,
   showLegend = true,
-  className 
+  className
 }: PieChartProps) {
   const chartRef = useRef(null)
 
@@ -91,8 +85,8 @@ export default function PieChart({
               return (
                 <div key={index} className="legend-item">
                   <div className="legend-label">
-                    <div 
-                      className="legend-color" 
+                    <div
+                      className="legend-color"
                       style={{ backgroundColor: item.color }}
                     />
                     <span>{item.label}</span>

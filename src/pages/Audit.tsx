@@ -207,11 +207,11 @@ export default function Audit() {
           </div>
         }
         rightContent={
-          <>
+          <div className='d-flex align-items-center gap-2'>
             <PrimaryBtn onClick={handleExportLogs}>
               📥 Export Logs
             </PrimaryBtn>
-          </>
+          </div>
         }
       />
 

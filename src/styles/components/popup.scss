@@ -25,6 +25,9 @@
 
 .custom-popup-dialog,
 .custom-dialog-dialog {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 90% !important;
   max-width: 480px;
 
   &.modal-sm {
@@ -47,27 +50,31 @@
 .custom-popup-header,
 .custom-dialog-header {
   background: transparent;
-  border-bottom: 1px solid $border-default;
+  border-bottom: none !important;
   padding: $spacing-lg $spacing-xl;
   display: flex;
   align-items: center;
-  gap: $spacing-md;
+  justify-content: space-between;
+  position: relative;
 
   .btn-close {
     background: none;
     border: none;
     color: $text-secondary;
-    font-size: 20px;
+    font-size: $font-size-lg;
     cursor: pointer;
-    opacity: 0.6;
+    opacity: 0.5;
     padding: 0;
-    width: auto;
-    height: auto;
+    width: 20px;
+    height: 20px;
     transition: $transition-fast;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     &:hover {
       opacity: 1;
-      color: $primary-gold;
+      color: $text-primary;
     }
 
     &::before {
@@ -78,13 +85,10 @@
 
 .custom-popup-title,
 .custom-dialog-title {
-  color: $primary-gold;
-  font-size: $font-size-lg;
+  color: $primary-gold !important;
+  font-size: $font-size-md !important;
   font-weight: $font-weight-bold;
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
   flex: 1;
 }
 
@@ -108,8 +112,8 @@
   flex-shrink: 0;
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: 50px;
+    height: 50px;
   }
 
   &.dialog-icon-success,
@@ -131,6 +135,10 @@
   &.popup-icon-info {
     color: $status-info;
   }
+
+  &.dialog-icon-danger {
+    color: $danger-color;
+  }
 }
 
 // ============================================
@@ -139,10 +147,14 @@
 
 .custom-popup-body,
 .custom-dialog-body {
-  padding: $spacing-xl;
+  padding: $spacing-xl $spacing-xl $spacing-lg;
   text-align: center;
   max-height: 60vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-lg;
 
   // Custom scrollbar
   &::-webkit-scrollbar {
@@ -167,10 +179,11 @@
 .custom-popup-message,
 .custom-dialog-message {
   color: $text-primary;
-  font-size: $font-size-md;
+  font-size: $font-size-sm;
   line-height: 1.6;
   margin: 0;
   word-wrap: break-word;
+  max-width: 100%;
 }
 
 // ============================================
@@ -180,16 +193,19 @@
 .custom-popup-footer,
 .custom-dialog-footer {
   background: transparent;
-  border-top: 1px solid $border-default;
-  padding: $spacing-lg $spacing-xl;
+  border-top: none !important;
+  padding: $spacing-lg $spacing-xl $spacing-xl;
   display: flex;
   gap: $spacing-md;
-  justify-content: center;
+  justify-content: center !important;
   flex-wrap: wrap;
 
   .hum-btn {
-    min-width: 100px;
+    min-width: 120px;
     flex: none;
+    padding: $spacing-sm $spacing-xl;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-md;
   }
 
   &.custom-dialog-footer-custom {

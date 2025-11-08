@@ -2,13 +2,14 @@ import { useMemo, useState } from 'react'
 import { Container, Card, ButtonGroup } from 'react-bootstrap'
 import PageTopBar from '@components/common/PageTopBar'
 import DataTable from '@components/common/DataTable'
-import ConfirmationModal from '@components/common/ConfirmationModal'
 import TemplateModal from '@components/modals/TemplateModal'
 import BadgeCell from '@components/tables/cells/BadgeCell'
 import PrimaryBtn from '@components/buttons/PrimaryBtn'
 import SecondaryBtn from '@components/buttons/SecondaryBtn'
 import IconBtn from '@components/buttons/IconBtn'
+import { useDialogMessages } from '@hooks/useDialog'
 import { MOCK_TEMPLATES, Template } from '@constants/mock-templates'
+import { DIALOG_MESSAGES } from '@constants/message-constants'
 import { getTemplateColumns } from '@config/templates/columnDefinitions'
 import { TemplateFormData } from '@validations/template-validations'
 import { FiGrid, FiList, FiEdit2, FiTrash2, FiPlus, FiPlay } from 'react-icons/fi'
@@ -19,10 +20,11 @@ type ViewMode = 'grid' | 'list'
 export default function Templates() {
   const [viewMode, setViewMode] = useState<ViewMode>('list')
   const [templates, setTemplates] = useState<Template[]>(MOCK_TEMPLATES)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [templateToDelete, setTemplateToDelete] = useState<Template | null>(null)
   const [showTemplateModal, setShowTemplateModal] = useState(false)
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null)
+
+  // Initialize dialog hook
+  const { showConfirmation, showSuccessDialog } = useDialogMessages()
 
   const handleCreateTemplate = () => {
     setSelectedTemplate(null)
@@ -40,24 +42,27 @@ export default function Templates() {
     alert(`Using template: ${template.name}`)
   }
 
-  const handleDeleteClick = (template: Template) => {
-    setTemplateToDelete(template)
-    setShowDeleteModal(true)
-  }
+  const handleDeleteClick = async (template: Template) => {
+    const confirmed = await showConfirmation(
+      DIALOG_MESSAGES.deleteTemplate(template.name),
+      {
+        title: DIALOG_MESSAGES.deleteTemplateTitle,
+        confirmText: DIALOG_MESSAGES.deleteButton,
+        cancelText: DIALOG_MESSAGES.cancelButton,
+        confirmVariant: 'danger',
+        icon: <FiTrash2 />
+      }
+    )
 
-  const handleConfirmDelete = () => {
-    if (templateToDelete) {
-      setTemplates(prevTemplates => 
-        prevTemplates.filter(t => t.id !== templateToDelete.id)
+    if (confirmed) {
+      // Delete the template
+      setTemplates(prevTemplates =>
+        prevTemplates.filter(t => t.id !== template.id)
       )
-      setShowDeleteModal(false)
-      setTemplateToDelete(null)
-    }
-  }
 
-  const handleCloseDeleteModal = () => {
-    setShowDeleteModal(false)
-    setTemplateToDelete(null)
+      // Show success message
+      showSuccessDialog(DIALOG_MESSAGES.templateDeletedSuccess(template.name))
+    }
   }
 
   const handleSubmitTemplate = (data: TemplateFormData) => {
@@ -67,16 +72,17 @@ export default function Templates() {
         prevTemplates.map(t =>
           t.id === selectedTemplate.id
             ? {
-                ...t,
-                name: data.name,
-                description: data.description,
-                department: data.department,
-                tags: data.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-                updatedAt: 'Just now'
-              }
+              ...t,
+              name: data.name,
+              description: data.description,
+              department: data.department,
+              tags: data.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+              updatedAt: 'Just now'
+            }
             : t
         )
       )
+      showSuccessDialog(DIALOG_MESSAGES.templateUpdatedSuccess(data.name))
     } else {
       // Create new template
       const newTemplate: Template = {
@@ -91,6 +97,7 @@ export default function Templates() {
         createdAt: new Date().toLocaleDateString('en-CA')
       }
       setTemplates(prevTemplates => [newTemplate, ...prevTemplates])
+      showSuccessDialog(DIALOG_MESSAGES.templateCreatedSuccess(data.name))
     }
     setShowTemplateModal(false)
     setSelectedTemplate(null)
@@ -119,13 +126,15 @@ export default function Templates() {
           <div className="page-title">Template Management</div>
         }
         rightContent={
-          <PrimaryBtn 
-            onClick={handleCreateTemplate} 
-            icon={<FiPlus />}
-            fullWidth={false}
-          >
-            Create Template
-          </PrimaryBtn>
+          <div className='d-flex align-items-center gap-2'>
+            <PrimaryBtn
+              onClick={handleCreateTemplate}
+              icon={<FiPlus />}
+              fullWidth={false}
+            >
+              Create Template
+            </PrimaryBtn>
+          </div>
         }
       />
 
@@ -174,63 +183,63 @@ export default function Templates() {
             <div className="template-grid">
               {templates.map((template) => (
                 <Card key={template.id} className="template-card">
-                    <Card.Body>
-                      <div className="template-card-icon">{template.icon}</div>
-                      <Card.Title className="template-card-title">
-                        {template.name}
-                      </Card.Title>
-                      <Card.Text className="template-card-description">
-                        {template.description}
-                      </Card.Text>
-                      
-                      <div className="template-card-tags">
-                        {template.tags.map((tag, index) => (
-                          <BadgeCell key={index} value={tag} variant="tag" />
-                        ))}
-                      </div>
+                  <Card.Body>
+                    <div className="template-card-icon">{template.icon}</div>
+                    <Card.Title className="template-card-title">
+                      {template.name}
+                    </Card.Title>
+                    <Card.Text className="template-card-description">
+                      {template.description}
+                    </Card.Text>
 
-                      <div className="template-card-meta">
-                        <div className="meta-item">
-                          <span className="meta-icon">👁</span>
-                          <span className="meta-text">{template.uses} uses</span>
-                        </div>
-                        <div className="meta-item">
-                          <span className="meta-icon">📅</span>
-                          <span className="meta-text">{template.updatedAt}</span>
-                        </div>
-                      </div>
+                    <div className="template-card-tags">
+                      {template.tags.map((tag, index) => (
+                        <BadgeCell key={index} value={tag} variant="tag" />
+                      ))}
+                    </div>
 
-                      <div className="template-card-actions">
-                        <IconBtn
-                          size="sm"
-                          variant="success"
-                          onClick={() => handleUseTemplate(template)}
-                          title="Use template"
-                          aria-label={`Use ${template.name}`}
-                        >
-                          <FiPlay />
-                        </IconBtn>
-                        <IconBtn
-                          size="sm"
-                          variant="primary"
-                          onClick={() => handleEditTemplate(template)}
-                          title="Edit template"
-                          aria-label={`Edit ${template.name}`}
-                        >
-                          <FiEdit2 />
-                        </IconBtn>
-                        <IconBtn
-                          size="sm"
-                          variant="danger"
-                          onClick={() => handleDeleteClick(template)}
-                          title="Delete template"
-                          aria-label={`Delete ${template.name}`}
-                        >
-                          <FiTrash2 />
-                        </IconBtn>
+                    <div className="template-card-meta">
+                      <div className="meta-item">
+                        <span className="meta-icon">👁</span>
+                        <span className="meta-text">{template.uses} uses</span>
                       </div>
-                    </Card.Body>
-                  </Card>
+                      <div className="meta-item">
+                        <span className="meta-icon">📅</span>
+                        <span className="meta-text">{template.updatedAt}</span>
+                      </div>
+                    </div>
+
+                    <div className="template-card-actions">
+                      <IconBtn
+                        size="sm"
+                        variant="success"
+                        onClick={() => handleUseTemplate(template)}
+                        title="Use template"
+                        aria-label={`Use ${template.name}`}
+                      >
+                        <FiPlay />
+                      </IconBtn>
+                      <IconBtn
+                        size="sm"
+                        variant="primary"
+                        onClick={() => handleEditTemplate(template)}
+                        title="Edit template"
+                        aria-label={`Edit ${template.name}`}
+                      >
+                        <FiEdit2 />
+                      </IconBtn>
+                      <IconBtn
+                        size="sm"
+                        variant="danger"
+                        onClick={() => handleDeleteClick(template)}
+                        title="Delete template"
+                        aria-label={`Delete ${template.name}`}
+                      >
+                        <FiTrash2 />
+                      </IconBtn>
+                    </div>
+                  </Card.Body>
+                </Card>
               ))}
             </div>
           )}
@@ -244,19 +253,6 @@ export default function Templates() {
         onClose={handleCloseTemplateModal}
         onSubmit={handleSubmitTemplate}
         template={selectedTemplate}
-      />
-
-      {/* Delete Confirmation Modal */}
-      <ConfirmationModal
-        show={showDeleteModal}
-        onClose={handleCloseDeleteModal}
-        onConfirm={handleConfirmDelete}
-        title="Delete Template"
-        message={`Are you sure you want to delete "${templateToDelete?.name}"? This action cannot be undone.`}
-        confirmText="Delete"
-        cancelText="Cancel"
-        variant="danger"
-        icon={<FiTrash2 size={48} />}
       />
     </>
   )

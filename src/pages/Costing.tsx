@@ -3,20 +3,8 @@ import { PrimaryBtn } from '@components/buttons'
 import { PageTopBar } from '@components/common'
 import DashboardChart from '@components/dashboard/DashboardChart'
 import SelectField from '@components/fields/SelectField'
-import {
-  CostStatCard,
-  CostBreakdownTable,
-  PieChart,
-  ExportSection
-} from '@components/costing'
-import {
-  costStats,
-  costTrendData,
-  costTrendFilters,
-  costItems,
-  organizationCostData,
-  dateRangeOptions
-} from '@constants/costing-data'
+import { CostStatCard, CostBreakdownTable, PieChart, ExportSection } from '@components/costing'
+import { costStats, costTrendData, costTrendFilters, costItems, organizationCostData, dateRangeOptions } from '@constants/costing-data'
 import type { DateRangeOption } from '@models/costing.types'
 import '@styles/pages/costing.scss'
 
@@ -42,7 +30,7 @@ export default function Costing() {
           <div className="page-title">Cost Reports & Analytics</div>
         }
         rightContent={
-          <>
+          <div className='d-flex align-items-center gap-2'>
             <SelectField
               mode="standalone"
               options={dateRangeOptions}
@@ -54,7 +42,7 @@ export default function Costing() {
             <PrimaryBtn onClick={handleExportReport}>
               📥 Export Report
             </PrimaryBtn>
-          </>
+          </div>
         }
       />
 

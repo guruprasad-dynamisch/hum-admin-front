@@ -23,11 +23,7 @@ const ResetPassword: React.FC = () => {
   // Get token from URL query params
   const token = searchParams.get('token');
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ResetPasswordFormData>({
+  const { control, handleSubmit, formState: { errors }, } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
     mode: 'onSubmit',
     defaultValues: {
@@ -47,16 +43,16 @@ const ResetPassword: React.FC = () => {
     }
 
     setIsLoading(true);
-    
+
     try {
       // TODO: Replace with actual API call to reset password
       // await authService.resetPassword(token, data.password);
-      
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       setResetSuccess(true);
-      
+
       // Redirect to login after 3 seconds
       setTimeout(() => {
         navigate(getRouteByKey('login'));

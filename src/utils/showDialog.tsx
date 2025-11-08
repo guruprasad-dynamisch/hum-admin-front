@@ -304,28 +304,26 @@ const showDialog = (
             className={cn('custom-dialog-header', titleClassName)}
           >
             <Modal.Title className="custom-dialog-title">
-              {icon && (
-                <span className={cn('custom-dialog-icon', iconClassName)}>
-                  {icon}
-                </span>
-              )}
-              <div className="custom-dialog-title-content">
-                {title}
-                {subtitle && <div className="custom-dialog-subtitle">{subtitle}</div>}
-              </div>
+              {title}
+              {subtitle && <div className="custom-dialog-subtitle">{subtitle}</div>}
             </Modal.Title>
           </Modal.Header>
         )}
 
-        {message && (
-          <Modal.Body className={cn('custom-dialog-body', messageClassName)}>
-            {typeof message === 'string' ? (
+        <Modal.Body className={cn('custom-dialog-body', messageClassName)}>
+          {icon && (
+            <div className={cn('custom-dialog-icon', iconClassName)}>
+              {icon}
+            </div>
+          )}
+          {message && (
+            typeof message === 'string' ? (
               <p className="custom-dialog-message">{message}</p>
             ) : (
               message
-            )}
-          </Modal.Body>
-        )}
+            )
+          )}
+        </Modal.Body>
 
         {customFooter ? (
           <Modal.Footer className={cn('custom-dialog-footer', 'custom-dialog-footer-custom', buttonsClassName)}>

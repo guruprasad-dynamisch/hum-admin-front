@@ -145,14 +145,14 @@ export default function Users() {
           <div className="page-title">User Management</div>
         }
         rightContent={
-          <>
-            <PrimaryBtn onClick={handleInviteUser} icon={<span>📧</span>}>
+          <div className='d-flex align-items-center gap-2'>
+            <PrimaryBtn onClick={handleInviteUser} fullWidth={false} icon={<span>📧</span>}>
               Invite User
             </PrimaryBtn>
             <SecondaryBtn onClick={handleExport} icon={<span>📥</span>}>
               Export
             </SecondaryBtn>
-          </>
+          </div>
         }
       />
       {/* Main Content */}

@@ -29,6 +29,8 @@ export interface DialogMessageOptions extends Omit<DialogOptions, 'icon'> {
  * Confirmation dialog options
  */
 export interface ConfirmationOptions extends DialogMessageOptions {
+  /** Dialog title */
+  title?: string;
   /** Confirm button text */
   confirmText?: string;
   /** Cancel button text */
@@ -65,17 +67,15 @@ export function useDialogMessages() {
    * Get default icon for variant
    */
   const getVariantIcon = (variant: DialogVariant): React.ReactNode => {
-    const iconProps = { size: 48 };
-    
     switch (variant) {
       case 'success':
-        return <FiCheckCircle {...iconProps} />;
+        return <FiCheckCircle />;
       case 'error':
-        return <FiAlertCircle {...iconProps} />;
+        return <FiAlertCircle />;
       case 'warning':
-        return <FiAlertTriangle {...iconProps} />;
+        return <FiAlertTriangle />;
       case 'info':
-        return <FiInfo {...iconProps} />;
+        return <FiInfo />;
       default:
         return null;
     }
@@ -197,7 +197,7 @@ export function useDialogMessages() {
         cancelText = 'Cancel',
         confirmVariant = 'primary',
         showCancel = true,
-        icon = <FiAlertCircle size={48} />,
+        icon = <FiAlertCircle />,
         ...restOptions
       } = options;
 
@@ -217,20 +217,27 @@ export function useDialogMessages() {
         onPress: () => resolve(true)
       });
 
+      const { title, iconClassName, ...dialogOptions } = restOptions;
+
+      // Determine icon class based on confirm variant
+      const defaultIconClass = confirmVariant === 'danger' 
+        ? 'dialog-icon-danger' 
+        : 'dialog-icon-warning';
+
       showDialog(
         {
-          title: restOptions.titleClassName || 'Confirm Action',
+          title: title || 'Confirm Action',
           message
         },
         buttons,
         {
           icon,
-          iconClassName: 'dialog-icon-warning',
+          iconClassName: iconClassName || defaultIconClass,
           cancelable: showCancel,
           centered: true,
           size: 'sm',
           onClose: () => resolve(false),
-          ...restOptions
+          ...dialogOptions
         }
       );
     });

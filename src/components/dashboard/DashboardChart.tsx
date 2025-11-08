@@ -1,16 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-  ChartOptions
+  Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement,
+  BarElement, Title, Tooltip, Legend, Filler, ChartOptions
 } from 'chart.js'
 import { Line, Bar } from 'react-chartjs-2'
 import { cn } from '@utils/classNames'
@@ -70,7 +61,7 @@ export default function DashboardChart({
         label: title,
         data: currentData.values,
         borderColor: CHART_COLORS.primaryGold,
-        backgroundColor: type === 'line' 
+        backgroundColor: type === 'line'
           ? CHART_COLORS.primaryGoldLight
           : CHART_COLORS.primaryGoldBar,
         borderWidth: 2,

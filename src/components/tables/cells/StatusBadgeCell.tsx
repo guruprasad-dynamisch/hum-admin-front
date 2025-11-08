@@ -1,4 +1,3 @@
-import React from 'react'
 import '@styles/components/sessions-table.scss'
 
 interface StatusBadgeCellProps {

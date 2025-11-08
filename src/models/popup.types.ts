@@ -105,6 +105,8 @@ export interface PopupMessageOptions extends Omit<PopupOptions, 'icon'> {
  * Confirmation popup options
  */
 export interface ConfirmationOptions extends PopupMessageOptions {
+  /** Dialog title */
+  title?: string;
   /** Confirm button text */
   confirmText?: string;
   /** Cancel button text */

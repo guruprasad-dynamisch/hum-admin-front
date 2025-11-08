@@ -128,14 +128,14 @@ export default function Settings() {
           <div className="page-title">Profile & Settings</div>
         }
         rightContent={
-          <>
+          <div className='d-flex align-items-center gap-2'>
             <PrimaryBtn onClick={handleSaveChanges}>
               Save Changes
             </PrimaryBtn>
             <SecondaryBtn onClick={handleCancelClick}>
               Cancel
             </SecondaryBtn>
-          </>
+          </div>
         }
       />
 

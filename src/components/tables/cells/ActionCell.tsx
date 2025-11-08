@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface ActionCellProps<T> {
   row: T
   onEdit?: (row: T) => void
@@ -32,7 +30,7 @@ export default function ActionCell<T>({
           ✎
         </button>
       )}
-      
+
       {onDelete && (
         <button
           className="action-btn action-btn-delete"
