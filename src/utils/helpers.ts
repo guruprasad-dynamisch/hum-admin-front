@@ -1,5 +1,6 @@
 import { publicRoutes } from "@routes/publicRoutes";
 import { protectedRoutes } from "@routes/protectedRoutes";
+import { PublicRouteConfig, ProtectedRouteConfig } from "@routes/types";
 
 /**
  * Finds an item in an array by matching a specific key-value pair.
@@ -104,6 +105,30 @@ export function getRouteByKey(
     }
 
     return path;
+}
+
+/**
+ * Retrieves the title of a route by its key from the combined public and protected routes.
+ * Supports nested children routes.
+ * 
+ * @param {string} value - The route key to look up (e.g., 'login', 'dashboard', 'users')
+ * @returns {string | undefined} The route title if found, undefined otherwise
+ * 
+ * @example
+ * // Get title for a route
+ * getRouteTitleByKey('login'); // Returns 'Login'
+ * getRouteTitleByKey('dashboard'); // Returns 'Dashboard'
+ * getRouteTitleByKey('nonexistent'); // Returns undefined
+ */
+export function getRouteTitleByKey(value: string): string | undefined {
+    // Flatten all routes including nested children
+    const allRoutes = [
+        ...flattenRoutes(publicRoutes as PublicRouteConfig[]), 
+        ...flattenRoutes(protectedRoutes as ProtectedRouteConfig[])
+    ];
+    const item = findByKey(allRoutes, "key", value);
+
+    return item?.title;
 }
 
 export function ucFirstLetter(str:string) {

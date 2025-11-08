@@ -5,6 +5,7 @@ import PublicRoute from './PublicRoute'
 import RoleBasedRoute from './RoleBasedRoute'
 import ProtectedLayout from '../components/ProtectedLayout'
 import PageLoader from '../components/PageLoader'
+import PageTitle from '../components/PageTitle'
 import NotFound from '../pages/NotFound'
 import { publicRoutes } from './publicRoutes'
 import { protectedRoutes } from './protectedRoutes'
@@ -12,9 +13,10 @@ import AuthInit from '../components/AuthInit'
 import { ProtectedRouteConfig } from './types'
 import { getRouteByKey } from '../utils/helpers'
 
-// AuthInit wrapper for router context
+// AuthInit wrapper for router context with PageTitle
 const AuthInitWrapper = () => (
   <AuthInit>
+    <PageTitle />
     <Outlet />
   </AuthInit>
 )
