@@ -60,7 +60,7 @@ apiClient.interceptors.response.use(
     if (error.response?.status === HttpCodes.UNAUTHORIZED && originalRequest && !originalRequest._retry) {
       // Skip refresh token logic for authentication endpoints (login, register, etc.)
       const shouldSkipRefresh = authEndpoints.some(endpoint => originalRequest.url?.includes(endpoint));
-      
+
       if (shouldSkipRefresh) {
         return Promise.reject(error);
       }
@@ -91,8 +91,10 @@ apiClient.interceptors.response.use(
           timeout: API_TIMEOUT,
           withCredentials: true,
         });
-        
-        await refreshClient.get('/api/auth/refresh-token');
+
+        // Use constant for refresh token endpoint
+        const { AUTH_APIS } = await import('@constants/auth-constants');
+        await refreshClient.get(AUTH_APIS.refreshTokenApi);
 
         // Refresh successful, process queued requests
         processQueue();
@@ -105,13 +107,13 @@ apiClient.interceptors.response.use(
         const error = refreshError as Error;
         processQueue(error);
         isRefreshing = false;
-        
+
         logger.error('Token refresh failed, redirecting to login', refreshError);
-        
+
         // Clear all auth data (localStorage, sessionStorage, and Redux state)
         clearAuthData();
         store.dispatch(clearAuthState());
-        
+
         // Redirect to login page (full page reload to ensure clean state)
         window.location.href = getRouteByKey('login');
         return Promise.reject(refreshError);
@@ -120,12 +122,15 @@ apiClient.interceptors.response.use(
 
     // Handle network errors and timeouts
     if (!error.response) {
-      if (error.code === 'ECONNABORTED') {
+      // Use error messages from errorHandling constants
+      const { errorMessages, ErrorTypes } = await import('@constants/errorHandling');
+      const { AXIOS_ERROR_CODES } = await import('@constants/errorHandling');
+      if (error.code === AXIOS_ERROR_CODES.TIMEOUT) {
         logger.error('Request timeout', { url: originalRequest?.url, timeout: API_TIMEOUT });
-        return Promise.reject(new Error('Request timeout. Please check your connection and try again.'));
+        return Promise.reject(new Error(errorMessages[ErrorTypes.NETWORK_ERROR]));
       }
       logger.error('Network error', { message: error.message, url: originalRequest?.url });
-      return Promise.reject(new Error('Network error. Please check your internet connection.'));
+      return Promise.reject(new Error(errorMessages[ErrorTypes.NETWORK_ERROR]));
     }
 
     return Promise.reject(error);

@@ -1,3 +1,8 @@
+// Common axios error codes
+export const AXIOS_ERROR_CODES = {
+  TIMEOUT: 'ECONNABORTED',
+  NETWORK: 'ERR_NETWORK',
+};
 import { AsyncThunkError, handleAsyncError } from '@redux/types/asyncTypes';
 import { HttpCodes } from './httpcode.constants';
 
