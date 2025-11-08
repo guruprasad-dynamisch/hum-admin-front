@@ -7,7 +7,7 @@ import PrimaryBtn from "@components/buttons/PrimaryBtn";
 import { forgotPasswordSchema, ForgotPasswordFormData } from "@validations/password-validations";
 import "@styles/pages/forgot-password.scss";
 import { getRouteByKey } from "@utils/helpers";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 /**
  * Forgot Password Page Component
@@ -19,12 +19,7 @@ const ForgotPassword: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<ForgotPasswordFormData>({
+  const { control, handleSubmit, formState: { errors }, getValues, } = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
     mode: 'onSubmit',
     defaultValues: {
@@ -37,14 +32,14 @@ const ForgotPassword: React.FC = () => {
    */
   const onSubmit: SubmitHandler<ForgotPasswordFormData> = async (data) => {
     setIsLoading(true);
-    
+
     try {
       // TODO: Replace with actual API call to send reset email
       // await authService.sendPasswordResetEmail(data.email);
-      
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       setEmailSent(true);
     } catch (error) {
       console.error('Failed to send reset email:', error);
@@ -104,15 +99,7 @@ const ForgotPassword: React.FC = () => {
 
                 {/* Back to Login Link */}
                 <div className="back-link">
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate(getRouteByKey("login"));
-                    }}
-                  >
-                    ← Back to Login
-                  </a>
+                  <NavLink to={getRouteByKey("login")}>← Back to Login</NavLink>
                 </div>
               </>
             ) : (
@@ -140,15 +127,7 @@ const ForgotPassword: React.FC = () => {
 
                 {/* Back to Login Link */}
                 <div className="back-link">
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate(getRouteByKey("login"));
-                    }}
-                  >
-                    ← Back to Login
-                  </a>
+                  <NavLink to={getRouteByKey("login")}>← Back to Login</NavLink>
                 </div>
               </>
             )}

@@ -1,4 +1,5 @@
 import { User } from './auth.types';
+import { Organization, OrganizationCreateRequest, OrganizationUpdateRequest } from './organization.types';
 
 /**
  * Common API Response Types
@@ -50,11 +51,8 @@ export interface UserInfoResponse {
   passwordChangedAt: string | null;
   createdAt: string;
   updatedAt: string;
-  organization: {
-    id: string;
-    name: string;
-    tier: string;
-  };
+  organization: Organization;
+  avatarUrl?: string;
   uploadedDocuments?: any[];
 }
 
@@ -87,14 +85,7 @@ export interface InviteUserRequest {
 /**
  * Organization API Types
  */
-export interface OrganizationResponse {
-  id: string;
-  name: string;
-  tier: string;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+export interface OrganizationResponse extends Organization {}
 
 // Type guard
 export const isSuccessResponse = (data: any): data is ApiResponse => {

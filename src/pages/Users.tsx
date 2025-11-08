@@ -11,8 +11,7 @@ import { getUserColumns } from '@config/users/columnDefinitions'
 import { USER_ROLE_OPTIONS, USER_STATUS_OPTIONS } from '@config/users/filterOptions'
 import { UserFormData } from '@validations/user-validations'
 import { useModal } from '@hooks/index'
-import { exportToCSV, getDateString } from '@utils/exportHelpers'
-import { FiMail, FiDownload } from 'react-icons/fi'
+import { exportToCSV } from '@utils/exportHelpers'
 import '@styles/components/user-table.scss'
 
 export default function Users() {
@@ -42,7 +41,7 @@ export default function Users() {
     }))
 
     // Export to CSV with date-stamped filename
-    exportToCSV(exportData, `users_export_${getDateString()}`)
+    exportToCSV(exportData, `users_export_12_02_2025}`)
     console.log(`Exported ${users.length} users to CSV`)
   }
 

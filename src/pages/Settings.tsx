@@ -2,20 +2,21 @@ import { useState } from 'react'
 import { PrimaryBtn, SecondaryBtn } from '@components/buttons'
 import { PageTopBar, Tabs } from '@components/common'
 import { ProfileHeader } from '@components/profile'
-import {
-  PersonalInfoTab,
-  SecurityTab,
-  NotificationsTab,
-  SessionsTab
-} from '@components/settings'
+import { PersonalInfoTab, SecurityTab, NotificationsTab, SessionsTab } from '@components/settings'
 import { PersonalInfoFormData } from '@validations/profile-validations'
 import { getRouteByKey } from '@utils/helpers'
 import { useNavigate } from 'react-router-dom'
 import '@styles/pages/settings.scss'
+import { useAppSelector } from '@redux/store'
+import { selectUser } from '@redux/slices/authSlice'
+import { getRoleDisplayName, Role } from '@constants/roles'
 
 export default function Settings() {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('personal')
+  const user = useAppSelector(selectUser);
+
+  console.log('Current User in Settings Page:', user);
 
   const handleSaveChanges = () => {
     alert('Profile updated successfully!')
@@ -58,27 +59,15 @@ export default function Settings() {
     alert(`Session ${sessionId} revoked`)
   }
 
-  // Sample user data - replace with actual user data from context/store
-  const userData = {
-    firstName: 'Admin',
-    lastName: 'User',
-    email: 'admin@example.com',
-    role: 'Administrator',
-    metaItems: [
-      { label: 'Member Since', value: 'January 2025' },
-      { label: 'Organization', value: 'Acme Inc' },
-      { label: 'Last Login', value: '2 minutes ago' }
-    ]
-  }
+
 
   // Personal Information Default Values
   const personalInfoDefaultValues = {
-    firstName: userData.firstName,
-    lastName: userData.lastName,
-    email: userData.email,
-    phone: '+1 123-456-7890',
-    organization: 'Acme Inc',
-    role: userData.role,
+    fullName: user?.fullName || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    organization: user?.organization?.name || '',
+    role: getRoleDisplayName(user?.role as Role),
     bio: ''
   }
 
@@ -155,11 +144,7 @@ export default function Settings() {
         <div className="settings-container">
           {/* Profile Header */}
           <ProfileHeader
-            firstName={userData.firstName}
-            lastName={userData.lastName}
-            email={userData.email}
-            role={userData.role}
-            metaItems={userData.metaItems}
+            user={user}
             onAvatarChange={handleAvatarChange}
           />
 

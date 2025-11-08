@@ -7,7 +7,7 @@ import PrimaryBtn from "@components/buttons/PrimaryBtn";
 import { registerSchema, RegisterFormData } from "@validations/register-validations";
 import "@styles/pages/register.scss";
 import { getRouteByKey } from "@utils/helpers";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 /**
  * Production-ready Registration Page Component
@@ -26,12 +26,7 @@ const Register: React.FC = () => {
   const [registrationData, setRegistrationData] = useState<RegisterFormData | null>(null);
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormData>({
+  const { control, handleSubmit, formState: { errors }, } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     mode: 'onSubmit',
     defaultValues: {
@@ -52,14 +47,14 @@ const Register: React.FC = () => {
    */
   const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     setIsLoading(true);
-    
+
     try {
       // TODO: Replace with actual API call to send OTP
       // await authService.sendOtp(data.phone);
-      
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       setRegistrationData(data);
       setPhoneNumber(data.phone);
       // setShowOtpSection(true);
@@ -87,10 +82,10 @@ const Register: React.FC = () => {
       //   ...registrationData,
       //   otp
       // });
-      
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       // Success - redirect to login
       navigate(getRouteByKey('login'));
     } catch (error) {
@@ -118,7 +113,7 @@ const Register: React.FC = () => {
     try {
       // TODO: Replace with actual API call to resend OTP
       // await authService.resendOtp(phoneNumber);
-      
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
     } catch (error) {
@@ -275,15 +270,7 @@ const Register: React.FC = () => {
                 {/* Login Link */}
                 <div className="login-link">
                   Already have an account?{" "}
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate(getRouteByKey("login"));
-                    }}
-                  >
-                    Sign In
-                  </a>
+                  <NavLink to={getRouteByKey("login")}>Sign In</NavLink>
                 </div>
               </>
             ) : (

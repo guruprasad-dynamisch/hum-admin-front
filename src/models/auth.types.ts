@@ -1,4 +1,5 @@
 import { Role } from '@constants/roles';
+import { Organization } from './organization.types';
 
 /**
  * User model with complete type information
@@ -10,6 +11,7 @@ export interface User {
   isActive: boolean;
   role: Role;
   // Optional fields from API response
+  avatarUrl?: string;
   organizationId?: string;
   organizationName?: string;
   phone?: string | null;
@@ -18,11 +20,7 @@ export interface User {
   passwordChangedAt?: string | null;
   createdAt?: string;
   updatedAt?: string;
-  organization?: {
-    id: string;
-    name: string;
-    tier: string;
-  };
+  organization?: Organization;
 }
 
 /**

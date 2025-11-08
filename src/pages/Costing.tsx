@@ -17,7 +17,7 @@ import {
   organizationCostData,
   dateRangeOptions
 } from '@constants/costing-data'
-import type { DateRangeOption } from '@models/costing'
+import type { DateRangeOption } from '@models/costing.types'
 import '@styles/pages/costing.scss'
 
 export default function Costing() {

@@ -9,12 +9,11 @@ import PrimaryBtn from "@components/buttons/PrimaryBtn";
 import { LoginFormData, loginSchema } from "@validations/login-validations";
 import "@styles/pages/login.scss";
 import { getRouteByKey } from "@utils/helpers";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Login() {
   const isLoading = useAppSelector(selectAuthLoading);
   const { handleLogin } = useAuth();
-  const navigate = useNavigate();
 
   const { control, handleSubmit, formState: { errors }, } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -88,16 +87,7 @@ export default function Login() {
                   id="rememberMe"
                   label="Remember me"
                 />
-                <a
-                  href="#"
-                  className="forgot-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate(getRouteByKey("forgotPassword"));
-                  }}
-                >
-                  Forgot password?
-                </a>
+                <NavLink to={getRouteByKey("forgotPassword")} className={'forgot-link'}>Forgot Password?</NavLink>
               </div>
 
               {/* Login Button */}
@@ -141,15 +131,7 @@ export default function Login() {
             {/* Signup Link */}
             <div className="signup-link">
               Don't have an account?{" "}
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate(getRouteByKey("register"));
-                }}
-              >
-                Sign Up
-              </a>
+              <NavLink to={getRouteByKey("register")}>Sign Up</NavLink>
             </div>
           </Card.Body>
         </Card>

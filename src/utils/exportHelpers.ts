@@ -20,7 +20,7 @@ export function exportToCSV<T extends Record<string, any>>(
   }
 
   // Get headers from first object if not provided
-  const csvHeaders = headers || Object.keys(data[0])
+  const csvHeaders = headers || (data[0] ? Object.keys(data[0]) : [])
 
   // Create CSV rows
   const csvRows = [
@@ -76,19 +76,4 @@ function downloadFile(content: string, filename: string, mimeType: string): void
   
   // Clean up
   URL.revokeObjectURL(url)
-}
-
-/**
- * Get current date string in YYYY-MM-DD format
- */
-export function getDateString(): string {
-  return new Date().toISOString().split('T')[0]
-}
-
-/**
- * Get current timestamp string in YYYY-MM-DD_HH-MM-SS format
- */
-export function getTimestampString(): string {
-  const now = new Date()
-  return now.toISOString().replace(/:/g, '-').split('.')[0].replace('T', '_')
 }

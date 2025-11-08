@@ -12,18 +12,11 @@ export interface PersonalInfoTabProps {
 const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({ defaultValues, onSubmit }) => {
   const fields: FieldConfig[] = [
     {
-      name: 'firstName',
-      label: 'First Name',
+      name: 'fullName',
+      label: 'Full Name',
       type: 'text',
-      placeholder: 'Enter first name',
-      colSpan: { xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }
-    },
-    {
-      name: 'lastName',
-      label: 'Last Name',
-      type: 'text',
-      placeholder: 'Enter last name',
-      colSpan: { xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }
+      placeholder: 'Enter full name',
+      colSpan: { xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }
     },
     {
       name: 'email',

@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import ChangeAvatarModal from './ChangeAvatarModal'
 import '@styles/components/profile-header.scss'
+import { getUserInitials, ucFirstLetter } from '@utils/helpers'
+import { User } from '@models/auth.types'
+import { getRoleDisplayName } from '@constants/roles'
+import { DateFormat, parseDateTimeString } from '@utils/dateUtils'
 
 export interface ProfileMetaItem {
   label: string
@@ -8,18 +12,8 @@ export interface ProfileMetaItem {
 }
 
 export interface ProfileHeaderProps {
-  /** User's first name */
-  firstName: string
-  /** User's last name */
-  lastName: string
-  /** User's email */
-  email: string
-  /** User's role */
-  role: string
-  /** Optional profile image URL */
-  avatarUrl?: string
-  /** Meta information items */
-  metaItems?: ProfileMetaItem[]
+  /** User object containing all user information */
+  user: User | null
   /** Callback when avatar is changed */
   onAvatarChange?: (file: File) => void
   /** Show change avatar button */
@@ -44,21 +38,27 @@ export interface ProfileHeaderProps {
  * />
  */
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
-  firstName,
-  lastName,
-  email,
-  role,
-  avatarUrl,
-  metaItems = [],
+  user,
   onAvatarChange,
   showChangeAvatar = true
 }) => {
   const [showAvatarModal, setShowAvatarModal] = useState(false)
 
-  // Get initials for avatar
-  const getInitials = () => {
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
-  }
+  // Construct meta items from user data
+  const metaItems: ProfileMetaItem[] = [
+    { 
+      label: 'Member Since', 
+      value: user?.createdAt ? parseDateTimeString(user.createdAt, DateFormat.MONTH_YEAR) : '-'
+    },
+    { 
+      label: 'Organization', 
+      value: user?.organization?.name || '-' 
+    },
+    { 
+      label: 'Last Login', 
+      value: user?.lastLogin ?parseDateTimeString(user.createdAt, DateFormat.MONTH_YEAR): 'Never' 
+    }
+  ];
 
   const handleAvatarClick = () => {
     if (showChangeAvatar) {
@@ -73,14 +73,16 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     setShowAvatarModal(false)
   }
 
+  if (!user) return null;
+
   return (
     <>
       <div className="profile-header">
         <div className="profile-avatar-section">
-          {avatarUrl ? (
-            <img src={avatarUrl} alt={`${firstName} ${lastName}`} className="profile-avatar-img" />
+          {user.avatarUrl ? (
+            <img src={user.avatarUrl} alt={user.fullName} className="profile-avatar-img" />
           ) : (
-            <div className="profile-avatar">{getInitials()}</div>
+            <div className="profile-avatar">{getUserInitials(user.fullName)}</div>
           )}
           {showChangeAvatar && (
             <button className="change-avatar-btn" onClick={handleAvatarClick}>
@@ -90,20 +92,18 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         </div>
 
         <div className="profile-info">
-          <h1 className="profile-name">{`${firstName} ${lastName}`}</h1>
-          <p className="profile-email">{email}</p>
-          <span className="badge">{role}</span>
+          <h1 className="profile-name">{ucFirstLetter(user.fullName)}</h1>
+          <p className="profile-email">{user.email}</p>
+          <span className="badge">{getRoleDisplayName(user.role)}</span>
 
-          {metaItems.length > 0 && (
-            <div className="profile-meta">
-              {metaItems.map((item, index) => (
-                <div key={index} className="meta-item">
-                  <span className="meta-label">{item.label}</span>
-                  <span className="meta-value">{item.value}</span>
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="profile-meta">
+            {metaItems.map((item: ProfileMetaItem, index: number) => (
+              <div key={index} className="meta-item">
+                <span className="meta-label">{item.label}</span>
+                <span className="meta-value">{item.value}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -112,7 +112,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           show={showAvatarModal}
           onClose={() => setShowAvatarModal(false)}
           onAvatarChange={handleAvatarChange}
-          currentAvatar={avatarUrl}
+          currentAvatar={user.avatarUrl}
         />
       )}
     </>
