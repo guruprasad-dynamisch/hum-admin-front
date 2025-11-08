@@ -16,8 +16,6 @@ export default function Settings() {
   const [activeTab, setActiveTab] = useState('personal')
   const user = useAppSelector(selectUser);
 
-  console.log('Current User in Settings Page:', user);
-
   const handleSaveChanges = () => {
     alert('Profile updated successfully!')
   }

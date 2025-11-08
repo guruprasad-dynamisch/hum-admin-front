@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTable, useSortBy, usePagination, Column, TableInstance, Row, HeaderGroup, ColumnInstance, TableOptions } from 'react-table'
 import { cn } from '@utils/classNames'
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa'
@@ -113,9 +112,9 @@ export default function DataTable<T extends object>({
     {
       columns,
       data,
-      initialState: { 
-        pageIndex: manualPagination ? (controlledCurrentPage - 1) : 0, 
-        pageSize 
+      initialState: {
+        pageIndex: manualPagination ? (controlledCurrentPage - 1) : 0,
+        pageSize
       } as any,
       manualPagination,
       ...(manualPagination && controlledPageCount ? { pageCount: controlledPageCount } : {})
@@ -190,12 +189,8 @@ export default function DataTable<T extends object>({
   const displayPageIndex = manualPagination ? (controlledCurrentPage - 1) : pageIndex
   const displayPageCount = manualPagination ? (controlledPageCount || 1) : pageCount
   const displayTotalItems = totalItems || data.length
-  const displayCanNextPage = manualPagination 
-    ? (controlledCurrentPage < (controlledPageCount || 1))
-    : canNextPage
-  const displayCanPreviousPage = manualPagination 
-    ? (controlledCurrentPage > 1)
-    : canPreviousPage
+  const displayCanNextPage = manualPagination ? (controlledCurrentPage < (controlledPageCount || 1)) : canNextPage
+  const displayCanPreviousPage = manualPagination ? (controlledCurrentPage > 1) : canPreviousPage
 
   return (
     <div className={cn('data-table-wrapper', className)}>
@@ -203,62 +198,68 @@ export default function DataTable<T extends object>({
         {loading ? (
           <Loader text="Loading data..." />
         ) : data.length === 0 ? (
-          <NoData 
-            title="No Data Available" 
+          <NoData
+            title="No Data Available"
             description={emptyMessage}
           />
         ) : (
           <table {...getTableProps()} className="data-table">
             <thead>
-              {headerGroups.map((headerGroup: HeaderGroup<T>) => (
-                <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-                  {headerGroup.headers.map((column: ColumnInstance<T> & {
-                    isSorted?: boolean
-                    isSortedDesc?: boolean
-                    canSort?: boolean
-                    getSortByToggleProps?: () => any
-                  }) => (
-                    <th
-                      {...column.getHeaderProps(column.getSortByToggleProps?.())}
-                      key={column.id}
-                      className={cn({
-                        'sortable': column.canSort,
-                        'sorted-asc': column.isSorted && !column.isSortedDesc,
-                        'sorted-desc': column.isSorted && column.isSortedDesc
-                      })}
-                    >
-                      <div className="th-content">
-                        {column.render('Header')}
-                        {column.canSort && (
-                          <span className="sort-icon">
-                            {column.isSorted
-                              ? column.isSortedDesc
-                                ? <FaSortDown />
-                                : <FaSortUp />
-                              : <FaSort />}
-                          </span>
-                        )}
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              ))}
+              {headerGroups.map((headerGroup: HeaderGroup<T>) => {
+                const { key: headerGroupKey, ...headerGroupProps } = headerGroup.getHeaderGroupProps();
+                return (
+                  <tr {...headerGroupProps} key={headerGroupKey ?? headerGroup.id}>
+                    {headerGroup.headers.map((column: ColumnInstance<T> & {
+                      isSorted?: boolean
+                      isSortedDesc?: boolean
+                      canSort?: boolean
+                      getSortByToggleProps?: () => any
+                    }) => {
+                      const { key: columnKey, ...columnProps } = column.getHeaderProps(column.getSortByToggleProps?.());
+                      return (
+                        <th
+                          {...columnProps}
+                          key={columnKey ?? column.id}
+                          className={cn({
+                            'sortable': column.canSort,
+                            'sorted-asc': column.isSorted && !column.isSortedDesc,
+                            'sorted-desc': column.isSorted && column.isSortedDesc
+                          })}
+                        >
+                          <div className="th-content">
+                            {column.render('Header')}
+                            {column.canSort && (
+                              <span className="sort-icon">
+                                {column.isSorted ? column.isSortedDesc ? <FaSortDown /> : <FaSortUp /> : <FaSort />}
+                              </span>
+                            )}
+                          </div>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </thead>
             <tbody {...getTableBodyProps()}>
               {page.map((row: Row<T>) => {
-                prepareRow(row)
+                prepareRow(row);
+                const { key: rowKey, ...rowProps } = row.getRowProps();
                 return (
                   <tr
-                    {...row.getRowProps()}
-                    key={row.id}
+                    {...rowProps}
+                    key={rowKey ?? row.id}
                     onClick={() => onRowClick?.(row.original)}
                     className={cn({ 'clickable': !!onRowClick })}
                   >
-                    {row.cells.map((cell:any) => (
-                      <td {...cell.getCellProps()} key={cell.column.id}>{cell.render('Cell')}</td>
-                    ))}
+                    {row.cells.map((cell: any) => {
+                      const { key: cellKey, ...cellProps } = cell.getCellProps();
+                      return (
+                        <td {...cellProps} key={cellKey ?? cell.column.id}>{cell.render('Cell')}</td>
+                      );
+                    })}
                   </tr>
-                )
+                );
               })}
             </tbody>
           </table>
