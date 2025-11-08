@@ -12,6 +12,7 @@ interface PrimaryBtnProps {
     loading?: boolean;
     icon?: React.ReactNode;
     iconPosition?: "start" | "end";
+    style?: React.CSSProperties;
 }
 
 const PrimaryBtn = ({
@@ -23,7 +24,8 @@ const PrimaryBtn = ({
     className = "",
     loading = false,
     icon,
-    iconPosition = "start"
+    iconPosition = "start",
+    style
 }: PrimaryBtnProps) => {
     return (
         <button
@@ -36,6 +38,7 @@ const PrimaryBtn = ({
             )}
             onClick={onClick}
             disabled={disabled || loading}
+            style={style}
         >
             <div className="hum-btn-content">
                 {loading && <span className="hum-btn-spinner" />}

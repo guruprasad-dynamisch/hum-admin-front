@@ -12,6 +12,7 @@ interface SecondaryBtnProps {
     loading?: boolean;
     icon?: React.ReactNode;
     iconPosition?: "start" | "end";
+    style?: React.CSSProperties;
 }
 
 const SecondaryBtn = ({
@@ -23,7 +24,8 @@ const SecondaryBtn = ({
     className = "",
     loading = false,
     icon,
-    iconPosition = "start"
+    iconPosition = "start",
+    style
 }: SecondaryBtnProps) => {
     return (
         <button
@@ -36,6 +38,7 @@ const SecondaryBtn = ({
             )}
             onClick={onClick}
             disabled={disabled || loading}
+            style={style}
         >
             <div className="hum-btn-content">
                 {loading && <span className="hum-btn-spinner" />}

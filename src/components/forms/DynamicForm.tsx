@@ -133,6 +133,22 @@ export interface DynamicFormPropsWithHookForm<T extends FieldValues = any> {
   showCancelButton?: boolean;
   onCancel?: () => void;
   formClassName?: string;
+  /** Custom class names for the form actions container */
+  formActionsClassName?: string;
+  /** Alignment of the form action buttons: 'start', 'center', 'end', 'between', 'around' */
+  formActionsAlignment?: 'start' | 'center' | 'end' | 'between' | 'around';
+  /** Spacing between form action buttons (in pixels) */
+  buttonSpacing?: number;
+  /** Custom class names for the submit button */
+  submitButtonClassName?: string;
+  /** Custom class names for the cancel button */
+  cancelButtonClassName?: string;
+  /** Whether to reverse the order of submit and cancel buttons */
+  reverseButtonOrder?: boolean;
+  /** Whether to stack buttons vertically on mobile */
+  stackButtonsOnMobile?: boolean;
+  /** Fixed width for both buttons (in pixels or CSS units) */
+  buttonWidth?: string;
   fieldSpacing?: number;
   /** Layout mode: 'stack' (default) or 'grid' */
   layout?: 'stack' | 'grid';
@@ -159,6 +175,22 @@ export interface DynamicFormPropsStandalone {
   showCancelButton?: boolean;
   onCancel?: () => void;
   formClassName?: string;
+  /** Custom class names for the form actions container */
+  formActionsClassName?: string;
+  /** Alignment of the form action buttons: 'start', 'center', 'end', 'between', 'around' */
+  formActionsAlignment?: 'start' | 'center' | 'end' | 'between' | 'around';
+  /** Spacing between form action buttons (in pixels) */
+  buttonSpacing?: number;
+  /** Custom class names for the submit button */
+  submitButtonClassName?: string;
+  /** Custom class names for the cancel button */
+  cancelButtonClassName?: string;
+  /** Whether to reverse the order of submit and cancel buttons */
+  reverseButtonOrder?: boolean;
+  /** Whether to stack buttons vertically on mobile */
+  stackButtonsOnMobile?: boolean;
+  /** Fixed width for both buttons (in pixels or CSS units) */
+  buttonWidth?: string;
   fieldSpacing?: number;
   /** Layout mode: 'stack' (default) or 'grid' */
   layout?: 'stack' | 'grid';
@@ -333,6 +365,14 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
     showCancelButton = false,
     onCancel,
     formClassName = '',
+    formActionsClassName = '',
+    formActionsAlignment = 'between',
+    buttonSpacing = 16,
+    submitButtonClassName = '',
+    cancelButtonClassName = '',
+    reverseButtonOrder = false,
+    stackButtonsOnMobile = true,
+    buttonWidth,
     fieldSpacing = 2,
     layout = 'stack',
     gridColumns = 12,
@@ -395,14 +435,27 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
             })}
             {(showSubmitButton || showCancelButton) && (
               <div className="form-grid-item" style={{ gridColumn: 'span 12' }}>
-                <div className={cn('form-actions', submitButtonSize === 'small' && 'justify-end')}>
+                <div 
+                  className={cn(
+                    'form-actions',
+                    formActionsClassName,
+                    `justify-${formActionsAlignment}`,
+                    stackButtonsOnMobile && 'stack-on-mobile',
+                    submitButtonSize === 'small' && 'justify-end'
+                  )}
+                  style={{
+                    gap: buttonSpacing,
+                    flexDirection: reverseButtonOrder ? 'row-reverse' : 'row',
+                  }}
+                >
                   {showCancelButton && onCancel && (
                     <SecondaryBtn
                       type="button"
                       onClick={onCancel}
                       disabled={isSubmitting}
-                      className={getButtonClassName()}
+                      className={cn(getButtonClassName(), cancelButtonClassName)}
                       fullWidth={false}
+                      style={buttonWidth ? { width: buttonWidth } : undefined}
                     >
                       {cancelButtonText}
                     </SecondaryBtn>
@@ -413,7 +466,8 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                       loading={isSubmitting}
                       disabled={isSubmitting}
                       fullWidth={submitButtonSize !== 'small' && !showCancelButton}
-                      className={getButtonClassName()}
+                      className={cn(getButtonClassName(), submitButtonClassName)}
+                      style={buttonWidth ? { width: buttonWidth } : undefined}
                     >
                       {submitButtonText}
                     </PrimaryBtn>
@@ -434,14 +488,27 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
               </div>
             ))}
             {(showSubmitButton || showCancelButton) && (
-              <div className={cn('form-actions', submitButtonSize === 'small' && 'justify-end')}>
+              <div 
+                className={cn(
+                  'form-actions',
+                  formActionsClassName,
+                  `justify-${formActionsAlignment}`,
+                  stackButtonsOnMobile && 'stack-on-mobile',
+                  submitButtonSize === 'small' && 'justify-end'
+                )}
+                style={{
+                  gap: buttonSpacing,
+                  flexDirection: reverseButtonOrder ? 'row-reverse' : 'row',
+                }}
+              >
                 {showCancelButton && onCancel && (
                   <SecondaryBtn
                     type="button"
                     onClick={onCancel}
                     disabled={isSubmitting}
-                    className={getButtonClassName()}
+                    className={cn(getButtonClassName(), cancelButtonClassName)}
                     fullWidth={false}
+                    style={buttonWidth ? { width: buttonWidth } : undefined}
                   >
                     {cancelButtonText}
                   </SecondaryBtn>
@@ -452,7 +519,8 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                     loading={isSubmitting}
                     disabled={isSubmitting}
                     fullWidth={submitButtonSize !== 'small' && !showCancelButton}
-                    className={getButtonClassName()}
+                    className={cn(getButtonClassName(), submitButtonClassName)}
+                    style={buttonWidth ? { width: buttonWidth } : undefined}
                   >
                     {submitButtonText}
                   </PrimaryBtn>
@@ -526,14 +594,27 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
           })}
           {(showSubmitButton || showCancelButton) && (
             <div className="form-grid-item" style={{ gridColumn: 'span 12' }}>
-              <div className={cn('form-actions', submitButtonSize === 'small' && 'justify-end')}>
+              <div 
+                className={cn(
+                  'form-actions',
+                  formActionsClassName,
+                  `justify-${formActionsAlignment}`,
+                  stackButtonsOnMobile && 'stack-on-mobile',
+                  submitButtonSize === 'small' && 'justify-end'
+                )}
+                style={{
+                  gap: buttonSpacing,
+                  flexDirection: reverseButtonOrder ? 'row-reverse' : 'row',
+                }}
+              >
                 {showCancelButton && onCancel && (
                   <SecondaryBtn
                     type="button"
                     onClick={onCancel}
                     disabled={isSubmitting}
-                    className={getButtonClassName()}
+                    className={cn(getButtonClassName(), cancelButtonClassName)}
                     fullWidth={false}
+                    style={buttonWidth ? { width: buttonWidth } : undefined}
                   >
                     {cancelButtonText}
                   </SecondaryBtn>
@@ -544,7 +625,8 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                     loading={isSubmitting}
                     disabled={isSubmitting}
                     fullWidth={submitButtonSize !== 'small' && !showCancelButton}
-                    className={getButtonClassName()}
+                    className={cn(getButtonClassName(), submitButtonClassName)}
+                    style={buttonWidth ? { width: buttonWidth } : undefined}
                   >
                     {submitButtonText}
                   </PrimaryBtn>
@@ -572,28 +654,73 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
             </div>
           ))}
           {(showSubmitButton || showCancelButton) && (
-            <div className={cn('form-actions', submitButtonSize === 'small' && 'justify-end')}>
-              {showCancelButton && onCancel && (
-                <SecondaryBtn
-                  type="button"
-                  onClick={onCancel}
-                  disabled={isSubmitting}
-                  className={getButtonClassName()}
-                  fullWidth={false}
-                >
-                  {cancelButtonText}
-                </SecondaryBtn>
+            <div 
+              className={cn(
+                'form-actions',
+                formActionsClassName,
+                `justify-${formActionsAlignment}`,
+                stackButtonsOnMobile && 'stack-on-mobile',
+                submitButtonSize === 'small' && 'justify-end'
               )}
-              {showSubmitButton && (
-                <PrimaryBtn
-                  type="submit"
-                  loading={isSubmitting}
-                  disabled={isSubmitting}
-                  fullWidth={submitButtonSize !== 'small' && !showCancelButton}
-                  className={getButtonClassName()}
-                >
-                  {submitButtonText}
-                </PrimaryBtn>
+              style={{
+                gap: buttonSpacing,
+                flexDirection: reverseButtonOrder ? 'row-reverse' : 'row',
+              }}
+            >
+              {reverseButtonOrder ? (
+                <>
+                  {showSubmitButton && (
+                    <PrimaryBtn
+                      type="submit"
+                      loading={isSubmitting}
+                      disabled={isSubmitting}
+                      fullWidth={submitButtonSize !== 'small' && !showCancelButton}
+                      className={cn(getButtonClassName(), submitButtonClassName)}
+                      style={buttonWidth ? { width: buttonWidth } : undefined}
+                    >
+                      {submitButtonText}
+                    </PrimaryBtn>
+                  )}
+                  {showCancelButton && onCancel && (
+                    <SecondaryBtn
+                      type="button"
+                      onClick={onCancel}
+                      disabled={isSubmitting}
+                      className={cn(getButtonClassName(), cancelButtonClassName)}
+                      fullWidth={false}
+                      style={buttonWidth ? { width: buttonWidth } : undefined}
+                    >
+                      {cancelButtonText}
+                    </SecondaryBtn>
+                  )}
+                </>
+              ) : (
+                <>
+                  {showCancelButton && onCancel && (
+                    <SecondaryBtn
+                      type="button"
+                      onClick={onCancel}
+                      disabled={isSubmitting}
+                      className={cn(getButtonClassName(), cancelButtonClassName)}
+                      fullWidth={false}
+                      style={buttonWidth ? { width: buttonWidth } : undefined}
+                    >
+                      {cancelButtonText}
+                    </SecondaryBtn>
+                  )}
+                  {showSubmitButton && (
+                    <PrimaryBtn
+                      type="submit"
+                      loading={isSubmitting}
+                      disabled={isSubmitting}
+                      fullWidth={submitButtonSize !== 'small' && !showCancelButton}
+                      className={cn(getButtonClassName(), submitButtonClassName)}
+                      style={buttonWidth ? { width: buttonWidth } : undefined}
+                    >
+                      {submitButtonText}
+                    </PrimaryBtn>
+                  )}
+                </>
               )}
             </div>
           )}

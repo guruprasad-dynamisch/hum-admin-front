@@ -124,6 +124,7 @@ const UserModal: React.FC<UserModalProps> = ({
       centered
       backdrop="static"
       keyboard={!loading}
+      className='user-modal'
     >
       <DynamicForm
         mode="react-hook-form"
@@ -140,6 +141,7 @@ const UserModal: React.FC<UserModalProps> = ({
         cancelButtonText="Cancel"
         showCancelButton
         onCancel={onClose}
+        formActionsClassName='user-modal-actions'
       />
     </Modal>
   )

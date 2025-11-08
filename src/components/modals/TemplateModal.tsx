@@ -123,6 +123,7 @@ const TemplateModal: React.FC<TemplateModalProps> = ({
       centered
       backdrop="static"
       keyboard={!loading}
+      className='template-modal'
       dialogClassName='template-modal-dialog'
     >
       <DynamicForm
@@ -140,6 +141,7 @@ const TemplateModal: React.FC<TemplateModalProps> = ({
         cancelButtonText="Cancel"
         showCancelButton
         onCancel={onClose}
+        formActionsClassName='template-modal-actions'
       />
     </Modal>
   )

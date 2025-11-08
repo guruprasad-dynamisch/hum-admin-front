@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables' as *;
 
 // ============================================
 // Compact Grid Design
@@ -11,7 +11,6 @@
   border-radius: $border-radius-lg;
   transition: all 0.3s ease;
   cursor: pointer;
-  // overflow: visible;
   height: fit-content;
 
   &:hover {
@@ -23,19 +22,6 @@
   &.expanded {
     border-color: $primary-gold;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    // z-index: 100;
-    
-    // .compact-expanded-content {
-    //   position: absolute;
-    //   top: 100%;
-    //   left: 0;
-    //   right: 0;
-    //   background: $bg-secondary;
-    //   border: 1px solid $primary-gold;
-    //   border-top: none;
-    //   border-radius: 0 0 $border-radius-lg $border-radius-lg;
-    //   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    // }
   }
 }
 
@@ -493,14 +479,6 @@
 .header-content {
   flex: 1;
   min-width: 0;
-}
-
-.action-title {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  margin-bottom: $spacing-sm;
-  flex-wrap: wrap;
 }
 
 .action-text {
