@@ -25,5 +25,4 @@ export const authEndpoints = [
   AUTH_APIS.loginApi,
   AUTH_APIS.logoutApi,
   AUTH_APIS.refreshTokenApi,
-  AUTH_APIS.userInfoApi, // Don't trigger refresh on userInfo 401 (used for auth check)
 ];

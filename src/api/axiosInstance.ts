@@ -108,14 +108,20 @@ apiClient.interceptors.response.use(
         processQueue(error);
         isRefreshing = false;
 
-        logger.error('Token refresh failed, redirecting to login', refreshError);
+        logger.error('Token refresh failed', refreshError);
 
         // Clear all auth data (localStorage, sessionStorage, and Redux state)
         clearAuthData();
         store.dispatch(clearAuthState());
 
-        // Redirect to login page (full page reload to ensure clean state)
-        window.location.href = getRouteByKey('login');
+        // Only redirect if not already on login page to avoid redirect loops
+        const currentPath = window.location.pathname;
+        const loginPath = getRouteByKey('login');
+        if (currentPath !== loginPath) {
+          // Redirect to login page (full page reload to ensure clean state)
+          window.location.href = loginPath;
+        }
+
         return Promise.reject(refreshError);
       }
     }
