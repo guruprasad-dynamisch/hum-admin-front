@@ -1,0 +1,356 @@
+@use '../variables' as *;
+
+// ============================================
+// Custom Dialog/Popup Modal Styles
+// ============================================
+
+.custom-popup,
+.custom-dialog {
+  z-index: $z-index-modal + 10;
+
+  .modal-content {
+    background: $bg-secondary;
+    border: 1px solid $border-default;
+    border-radius: $border-radius-lg;
+    color: $text-primary;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.custom-popup-backdrop,
+.custom-dialog-backdrop {
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: $z-index-modal + 9;
+}
+
+.custom-popup-dialog,
+.custom-dialog-dialog {
+  max-width: 480px;
+
+  &.modal-sm {
+    max-width: 400px;
+  }
+
+  &.modal-lg {
+    max-width: 600px;
+  }
+
+  &.modal-xl {
+    max-width: 800px;
+  }
+}
+
+// ============================================
+// Header
+// ============================================
+
+.custom-popup-header,
+.custom-dialog-header {
+  background: transparent;
+  border-bottom: 1px solid $border-default;
+  padding: $spacing-lg $spacing-xl;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+
+  .btn-close {
+    background: none;
+    border: none;
+    color: $text-secondary;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.6;
+    padding: 0;
+    width: auto;
+    height: auto;
+    transition: $transition-fast;
+    
+    &:hover {
+      opacity: 1;
+      color: $primary-gold;
+    }
+
+    &::before {
+      content: '✖';
+    }
+  }
+}
+
+.custom-popup-title,
+.custom-dialog-title {
+  color: $primary-gold;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  flex: 1;
+}
+
+.custom-dialog-title-content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.custom-dialog-subtitle {
+  color: $text-secondary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+}
+
+.custom-popup-icon,
+.custom-dialog-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  &.dialog-icon-success,
+  &.popup-icon-success {
+    color: $status-success;
+  }
+
+  &.dialog-icon-error,
+  &.popup-icon-error {
+    color: $status-error;
+  }
+
+  &.dialog-icon-warning,
+  &.popup-icon-warning {
+    color: $status-warning;
+  }
+
+  &.dialog-icon-info,
+  &.popup-icon-info {
+    color: $status-info;
+  }
+}
+
+// ============================================
+// Body
+// ============================================
+
+.custom-popup-body,
+.custom-dialog-body {
+  padding: $spacing-xl;
+  text-align: center;
+  max-height: 60vh;
+  overflow-y: auto;
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-primary;
+    border-radius: $border-radius-sm;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $border-default;
+    border-radius: $border-radius-sm;
+
+    &:hover {
+      background: $primary-gold;
+    }
+  }
+}
+
+.custom-popup-message,
+.custom-dialog-message {
+  color: $text-primary;
+  font-size: $font-size-md;
+  line-height: 1.6;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+// ============================================
+// Footer (Buttons)
+// ============================================
+
+.custom-popup-footer,
+.custom-dialog-footer {
+  background: transparent;
+  border-top: 1px solid $border-default;
+  padding: $spacing-lg $spacing-xl;
+  display: flex;
+  gap: $spacing-md;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .hum-btn {
+    min-width: 100px;
+    flex: none;
+  }
+
+  &.custom-dialog-footer-custom {
+    justify-content: flex-start;
+  }
+}
+
+// ============================================
+// Loading Spinner in Dialog
+// ============================================
+
+.dialog-loading-spinner,
+.popup-loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+
+  .hum-btn-spinner {
+    width: 32px;
+    height: 32px;
+    border-width: 3px;
+  }
+}
+
+// ============================================
+// Button Variants
+// ============================================
+
+.hum-btn-success {
+  background: $status-success;
+  border-color: $status-success;
+  color: $bg-primary;
+
+  &:hover:not(:disabled) {
+    background: darken($status-success, 10%);
+    border-color: darken($status-success, 10%);
+  }
+
+  &:active:not(:disabled) {
+    background: darken($status-success, 15%);
+    border-color: darken($status-success, 15%);
+  }
+}
+
+.hum-btn-danger {
+  background: $danger-color;
+  border-color: $danger-color;
+  color: $text-primary;
+
+  &:hover:not(:disabled) {
+    background: darken($danger-color, 10%);
+    border-color: darken($danger-color, 10%);
+  }
+
+  &:active:not(:disabled) {
+    background: darken($danger-color, 15%);
+    border-color: darken($danger-color, 15%);
+  }
+}
+
+.hum-btn-warning {
+  background: $status-warning;
+  border-color: $status-warning;
+  color: $bg-primary;
+
+  &:hover:not(:disabled) {
+    background: darken($status-warning, 10%);
+    border-color: darken($status-warning, 10%);
+  }
+
+  &:active:not(:disabled) {
+    background: darken($status-warning, 15%);
+    border-color: darken($status-warning, 15%);
+  }
+}
+
+.hum-btn-info {
+  background: $status-info;
+  border-color: $status-info;
+  color: $text-primary;
+
+  &:hover:not(:disabled) {
+    background: darken($status-info, 10%);
+    border-color: darken($status-info, 10%);
+  }
+
+  &:active:not(:disabled) {
+    background: darken($status-info, 15%);
+    border-color: darken($status-info, 15%);
+  }
+}
+
+// ============================================
+// Responsive Design
+// ============================================
+
+@media (max-width: 576px) {
+  .custom-popup-dialog {
+    max-width: 95%;
+    margin: 10px auto;
+  }
+
+  .custom-popup-header,
+  .custom-popup-body,
+  .custom-popup-footer {
+    padding: $spacing-md;
+  }
+
+  .custom-popup-title {
+    font-size: $font-size-md;
+  }
+
+  .custom-popup-icon {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .custom-popup-footer {
+    flex-direction: column;
+
+    .hum-btn {
+      width: 100%;
+      min-width: unset;
+    }
+  }
+
+  .custom-popup-body {
+    max-height: 50vh;
+  }
+}
+
+// ============================================
+// Animation Enhancements
+// ============================================
+
+.custom-popup {
+  .modal-dialog {
+    transition: transform 0.3s ease-out;
+  }
+
+  &.show .modal-dialog {
+    transform: scale(1);
+  }
+}
+
+// ============================================
+// Z-Index Override for Nested Modals
+// ============================================
+
+.z-index-1055 {
+  z-index: 1055 !important;
+}
+
+.z-index-1060 {
+  z-index: 1060 !important;
+}
+
+.z-index-1070 {
+  z-index: 1070 !important;
+}
