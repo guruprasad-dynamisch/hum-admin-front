@@ -1,4 +1,5 @@
 @use '../variables' as *;
+@use 'sass:color';
 
 // ============================================
 // Custom Dialog/Popup Modal Styles
@@ -242,13 +243,13 @@
   color: $bg-primary;
 
   &:hover:not(:disabled) {
-    background: darken($status-success, 10%);
-    border-color: darken($status-success, 10%);
+    background: color.adjust($status-success, $lightness: -10%);
+    border-color: color.adjust($status-success, $lightness: -10%);
   }
 
   &:active:not(:disabled) {
-    background: darken($status-success, 15%);
-    border-color: darken($status-success, 15%);
+    background: color.adjust($status-success, $lightness: -15%);
+    border-color: color.adjust($status-success, $lightness: -15%);
   }
 }
 
@@ -258,13 +259,13 @@
   color: $text-primary;
 
   &:hover:not(:disabled) {
-    background: darken($danger-color, 10%);
-    border-color: darken($danger-color, 10%);
+    background: color.adjust($danger-color, $lightness: -10%);
+    border-color: color.adjust($danger-color, $lightness: -10%);
   }
 
   &:active:not(:disabled) {
-    background: darken($danger-color, 15%);
-    border-color: darken($danger-color, 15%);
+    background: color.adjust($danger-color, $lightness: -15%);
+    border-color: color.adjust($danger-color, $lightness: -15%);
   }
 }
 
@@ -274,13 +275,13 @@
   color: $bg-primary;
 
   &:hover:not(:disabled) {
-    background: darken($status-warning, 10%);
-    border-color: darken($status-warning, 10%);
+    background: color.adjust($status-warning, $lightness: -10%);
+    border-color: color.adjust($status-warning, $lightness: -10%);
   }
 
   &:active:not(:disabled) {
-    background: darken($status-warning, 15%);
-    border-color: darken($status-warning, 15%);
+    background: color.adjust($status-warning, $lightness: -15%);
+    border-color: color.adjust($status-warning, $lightness: -15%);
   }
 }
 
@@ -290,13 +291,13 @@
   color: $text-primary;
 
   &:hover:not(:disabled) {
-    background: darken($status-info, 10%);
-    border-color: darken($status-info, 10%);
+    background: color.adjust($status-info, $lightness: -10%);
+    border-color: color.adjust($status-info, $lightness: -10%);
   }
 
   &:active:not(:disabled) {
-    background: darken($status-info, 15%);
-    border-color: darken($status-info, 15%);
+    background: color.adjust($status-info, $lightness: -15%);
+    border-color: color.adjust($status-info, $lightness: -15%);
   }
 }
 
