@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { getRouteByKey } from '@utils/helpers'
 import '@styles/pages/not-found.scss'
+import { PrimaryBtn, SecondaryBtn } from '@components/buttons'
+import { useAppSelector } from '@redux/store'
+import { selectIsAuthenticated } from '@redux/slices/authSlice'
 
 export default function NotFound() {
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const navigate = useNavigate()
 
   return (
@@ -24,14 +27,12 @@ export default function NotFound() {
 
         {/* Action Buttons */}
         <div className="not-found-actions">
-          <Link to={getRouteByKey('dashboard')} className="not-found-btn">
-            <span>🏠</span>
-            <span>Go to Dashboard</span>
-          </Link>
-          <button onClick={() => navigate(-1)} className="not-found-btn secondary">
-            <span>←</span>
-            <span>Go Back</span>
-          </button>
+          <PrimaryBtn fullWidth={false} onClick={() => navigate(isAuthenticated ? getRouteByKey('dashboard') : getRouteByKey('login'))}>
+            🏠 Go to Dashboard
+          </PrimaryBtn>
+          <SecondaryBtn onClick={() => navigate(-1)}>
+            ← Go Back
+          </SecondaryBtn>
         </div>
       </div>
     </div>
