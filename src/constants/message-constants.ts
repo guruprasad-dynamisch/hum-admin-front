@@ -1,4 +1,5 @@
 export const SOMETHING_WENT_WRONG = `⚠️ Oops! Something went wrong. Please try again.`
+export const TOO_MANY_ATTEMPTS = `Too many attempts. Please try again in a few minutes.`
 
 export const VALIDATION_MESSAGE = {
     required: (field: string) => field ? `${field} is required!` : 'Required!',

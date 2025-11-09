@@ -24,13 +24,22 @@ export const useAuth = () => {
                     navigate(toPath, { replace: true })
                 }, 500);
             } else if (loginUser.rejected.match(result)) {
-                const errorMessage = result.payload?.message || SOMETHING_WENT_WRONG;
-                showError(errorMessage);
+                const errorPayload = result.payload;
+                if (errorPayload?.errors) {
+                    // Throw full error object with field-level validation errors
+                    throw {
+                        message: errorPayload.message,
+                        code: errorPayload.code,
+                        errors: errorPayload.errors
+                    };
+                } else {
+                    throw new Error(errorPayload?.message || SOMETHING_WENT_WRONG);
+                }
             }
         } catch (error: any) {
-            showError(error?.message || SOMETHING_WENT_WRONG);
+            throw error
         }
-    }, [dispatch, navigate, location, showError, showSuccess]);
+    }, [dispatch, navigate, location, showSuccess]);
 
     const handleLogout = useCallback(async () => {
         try {

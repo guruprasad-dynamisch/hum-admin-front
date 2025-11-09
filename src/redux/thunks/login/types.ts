@@ -13,4 +13,5 @@ export interface LoginCredentials {
 export interface LoginError {
   message: string;
   code?: string;
+  errors?: Record<string, string[]>;
 }

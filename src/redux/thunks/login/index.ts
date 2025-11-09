@@ -76,7 +76,8 @@ export const loginUser = createAsyncThunk<{ user: User }, LoginCredentials, { re
 
             return rejectWithValue({
                 message: errorMessage,
-                code: errorCode
+                code: errorCode,
+                errors: error.response?.data?.data?.errors || null,
             });
         }
     }
