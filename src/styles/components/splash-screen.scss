@@ -1,0 +1,49 @@
+@use '../variables' as *;
+
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $bg-primary, $bg-secondary);
+  z-index: $z-index-modal;
+
+  &__logo-container {
+    width: var(--logo-width, 180px);
+    height: var(--logo-height, auto);
+    animation: pulse var(--pulse-speed, 2s) ease-in-out infinite;
+    
+    @media (max-width: 768px) {
+      width: calc(var(--logo-width, 180px) * 0.8);
+    }
+
+    @media (max-width: 480px) {
+      width: calc(var(--logo-width, 180px) * 0.6);
+    }
+  }
+
+  &__logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba($primary-gold, 0));
+  }
+  50% {
+    transform: scale(1.10);
+    filter: drop-shadow(0 0 20px rgba($primary-gold, 0.5));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba($primary-gold, 0));
+  }
+}

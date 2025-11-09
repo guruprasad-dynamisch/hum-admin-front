@@ -1,19 +1,25 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useAppDispatch } from "../redux/store";
 import { setAuthState, clearAuthState } from "../redux/slices/authSlice";
-import PageLoader from "../components/PageLoader";
+import SplashScreen from "./SplashScreen";
 import { userInfoRequest } from "../api/auth";
 import { Role } from "../constants/roles";
 
 import { AuthInitProps } from '@models/auth.types';
 
+// Configuration for splash screen
+const SPLASH_DURATION = 2000; // 2 seconds
+
 const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const [isInitializing, setIsInitializing] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
   const hasInitialized = useRef(false);
   const isMountedRef = useRef(true);
 
   useEffect(() => {
+    let splashTimer: NodeJS.Timeout;
+
     const initializeAuth = async () => {
       // Prevent double initialization in React.StrictMode
       if (hasInitialized.current) {
@@ -21,6 +27,13 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
         return;
       }
       hasInitialized.current = true;
+
+      // Set up splash screen timer
+      splashTimer = setTimeout(() => {
+        if (isMountedRef.current) {
+          setShowSplash(false);
+        }
+      }, SPLASH_DURATION);
       try {
         const response = await userInfoRequest();
         if (response.data.success && response.data.data) {
@@ -68,12 +81,19 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
     return () => {
       if (!hasInitialized.current) {
         isMountedRef.current = false;
+        clearTimeout(splashTimer);
       }
     };
   }, [dispatch]);
 
-  if (isInitializing) {
-    return <PageLoader />;
+  if (showSplash) {
+    return (
+      <SplashScreen
+        duration={SPLASH_DURATION}
+        logoWidth="220px"
+        pulseSpeed={2.5}
+      />
+    );
   }
 
   return <>{children}</>;
