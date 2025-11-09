@@ -15,3 +15,10 @@ export const IS_DEVELOPMENT = import.meta.env.DEV;
 
 // Timeout configuration (longer in development for debugging)
 export const API_TIMEOUT = IS_PRODUCTION ? 10000 : 30000;
+
+/**
+ * Remember Me Duration Configuration
+ * Supported formats: 7d (7 days), 15d (15 days), 1m (1 month), 1y (1 year)
+ * Default: 7d (7 days)
+ */
+export const REMEMBER_ME_DURATION = import.meta.env.VITE_REMEMBER_ME_DURATION || '7d';

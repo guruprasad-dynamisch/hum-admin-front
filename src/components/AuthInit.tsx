@@ -4,6 +4,8 @@ import { setAuthState, clearAuthState } from "../redux/slices/authSlice";
 import SplashScreen from "./SplashScreen";
 import { userInfoRequest } from "../api/auth";
 import { Role } from "../constants/roles";
+import { isRememberMeSessionValid, clearAuthData } from "@utils/auth";
+import { logoutUser } from "@redux/thunks";
 
 import { AuthInitProps } from '@models/auth.types';
 
@@ -34,6 +36,21 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
           setShowSplash(false);
         }
       }, SPLASH_DURATION);
+
+      // Check remember me session validity before making API call
+      if (!isRememberMeSessionValid()) {
+        console.log('Remember me session expired or not found, logging out');
+        if (isMountedRef.current) {
+          // Clear auth data and state
+          clearAuthData();
+          dispatch(clearAuthState());
+          // Call logout to clear backend session
+          await dispatch(logoutUser());
+          setIsInitializing(false);
+        }
+        return;
+      }
+
       try {
         const response = await userInfoRequest();
         if (response.data.success && response.data.data) {

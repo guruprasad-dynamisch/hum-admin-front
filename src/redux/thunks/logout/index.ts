@@ -7,7 +7,7 @@ import { logoutRequest } from '@api/auth';
  * Logout user async thunk
  * 
  * SECURITY: Backend will clear httpOnly cookies containing tokens.
- * We only clear local user profile data.
+ * We clear local user profile data and remember me session.
  */
 export const logoutUser = createAsyncThunk<LogoutResponse, void, { rejectValue: LogoutError }>(
     'auth/logoutUser',

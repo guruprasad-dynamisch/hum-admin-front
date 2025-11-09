@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setUser } from '@utils/auth';
+import { setUser, setRememberMeSession } from '@utils/auth';
 import { LoginCredentials, LoginError } from './types';
 import { loginRequest, userInfoRequest } from '@api/auth';
 import { ApiResponse, UserInfoResponse } from '@models/api.types';
@@ -67,6 +67,9 @@ export const loginUser = createAsyncThunk<{ user: User }, LoginCredentials, { re
 
             // Store only user profile data (NOT tokens - they're in httpOnly cookies)
             setUser(user, credentials.rememberMe);
+
+            // Store remember me session with login timestamp
+            setRememberMeSession(credentials.rememberMe as boolean);
 
             // Return the user object wrapped for the authSlice
             return { user };

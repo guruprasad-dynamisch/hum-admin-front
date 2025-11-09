@@ -8,6 +8,9 @@
 // Storage key for user profile data (NOT tokens)
 export const USER_KEY = 'hum_user'
 
+// Storage key for remember me session data
+export const REMEMBER_ME_KEY = 'hum_remember_me'
+
 /**
  * Authentication API Endpoints
  * These are the source of truth for all auth-related endpoints
