@@ -10,6 +10,7 @@ import { LoginFormData, loginSchema } from "@validations/login-validations";
 import "@styles/pages/login.scss";
 import { getRouteByKey } from "@utils/helpers";
 import { NavLink } from "react-router-dom";
+import Logo from "@components/common/Logo";
 
 export default function Login() {
   const isLoading = useAppSelector(selectAuthLoading);
@@ -34,15 +35,7 @@ export default function Login() {
     <div className="login-page">
       <Container className="login-container">
         {/* Logo Section */}
-        <div className="logo-section">
-          <div className="login-logo-container">
-            <img
-              src="/assets/humanistics_logo_transparent.webp"
-              alt="Humanistics AI"
-              className="login-logo-image"
-            />
-          </div>
-        </div>
+        <Logo containerClassName='logo-section' wrapperClassName='login-logo-container' className='login-logo-image' />
 
         {/* Login Card */}
         <Card className="login-card">

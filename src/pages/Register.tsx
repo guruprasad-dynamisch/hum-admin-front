@@ -8,6 +8,7 @@ import { registerSchema, RegisterFormData } from "@validations/register-validati
 import "@styles/pages/register.scss";
 import { getRouteByKey } from "@utils/helpers";
 import { NavLink, useNavigate } from "react-router-dom";
+import Logo from "@components/common/Logo";
 
 /**
  * Production-ready Registration Page Component
@@ -126,15 +127,7 @@ const Register: React.FC = () => {
     <div className="register-page">
       <Container className="register-container">
         {/* Logo Section */}
-        <div className="logo-section">
-          <div className="register-logo-container">
-            <img
-              src="/assets/humanistics_logo_transparent.webp"
-              alt="Humanistics AI"
-              className="register-logo-image"
-            />
-          </div>
-        </div>
+        <Logo containerClassName='logo-section' wrapperClassName='register-logo-container' className='register-logo-image' />
 
         {/* Register Card */}
         <Card className="register-card">

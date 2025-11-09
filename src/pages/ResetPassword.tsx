@@ -7,7 +7,8 @@ import PrimaryBtn from "@components/buttons/PrimaryBtn";
 import { resetPasswordSchema, ResetPasswordFormData } from "@validations/password-validations";
 import "@styles/pages/reset-password.scss";
 import { getRouteByKey } from "@utils/helpers";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import Logo from "@components/common/Logo";
 
 /**
  * Reset Password Page Component
@@ -70,15 +71,7 @@ const ResetPassword: React.FC = () => {
     return (
       <div className="reset-password-page">
         <Container className="reset-password-container">
-          <div className="logo-section">
-            <div className="reset-password-logo-container">
-              <img
-                src="/assets/humanistics_logo_transparent.webp"
-                alt="Humanistics AI"
-                className="reset-password-logo-image"
-              />
-            </div>
-          </div>
+          <Logo containerClassName='logo-section' wrapperClassName='reset-password-logo-container' className='reset-password-logo-image' />
 
           <Card className="reset-password-card">
             <Card.Body>
@@ -100,15 +93,7 @@ const ResetPassword: React.FC = () => {
               </PrimaryBtn>
 
               <div className="back-link">
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate(getRouteByKey("login"));
-                  }}
-                >
-                  ← Back to Login
-                </a>
+                <NavLink to={getRouteByKey("login")}>← Back to Login</NavLink>
               </div>
             </Card.Body>
           </Card>
@@ -121,15 +106,7 @@ const ResetPassword: React.FC = () => {
     <div className="reset-password-page">
       <Container className="reset-password-container">
         {/* Logo Section */}
-        <div className="logo-section">
-          <div className="reset-password-logo-container">
-            <img
-              src="/assets/humanistics_logo_transparent.webp"
-              alt="Humanistics AI"
-              className="reset-password-logo-image"
-            />
-          </div>
-        </div>
+        <Logo containerClassName='logo-section' wrapperClassName='reset-password-logo-container' className='reset-password-logo-image' />
 
         {/* Reset Password Card */}
         <Card className="reset-password-card">
@@ -180,15 +157,7 @@ const ResetPassword: React.FC = () => {
 
                 {/* Back to Login Link */}
                 <div className="back-link">
-                  <a
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate(getRouteByKey("login"));
-                    }}
-                  >
-                    ← Back to Login
-                  </a>
+                  <NavLink to={getRouteByKey("login")}>← Back to Login</NavLink>
                 </div>
               </>
             ) : (

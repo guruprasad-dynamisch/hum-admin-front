@@ -7,7 +7,8 @@ import PrimaryBtn from "@components/buttons/PrimaryBtn";
 import { forgotPasswordSchema, ForgotPasswordFormData } from "@validations/password-validations";
 import "@styles/pages/forgot-password.scss";
 import { getRouteByKey } from "@utils/helpers";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import Logo from "@components/common/Logo";
 
 /**
  * Forgot Password Page Component
@@ -15,7 +16,6 @@ import { NavLink, useNavigate } from "react-router-dom";
  * Allows users to request a password reset link via email
  */
 const ForgotPassword: React.FC = () => {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
 
@@ -53,15 +53,7 @@ const ForgotPassword: React.FC = () => {
     <div className="forgot-password-page">
       <Container className="forgot-password-container">
         {/* Logo Section */}
-        <div className="logo-section">
-          <div className="forgot-password-logo-container">
-            <img
-              src="/assets/humanistics_logo_transparent.webp"
-              alt="Humanistics AI"
-              className="forgot-password-logo-image"
-            />
-          </div>
-        </div>
+        <Logo containerClassName='logo-section' wrapperClassName='forgot-password-logo-container' className='forgot-password-logo-image' />
 
         {/* Forgot Password Card */}
         <Card className="forgot-password-card">
