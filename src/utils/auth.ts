@@ -130,3 +130,28 @@ export function isRememberMeSessionValid(): boolean {
 export function clearRememberMeSession() {
   localStorage.removeItem(REMEMBER_ME_KEY);
 }
+
+/**
+ * Get user data from storage (checks localStorage first, then sessionStorage)
+ * @returns User object or null if not found
+ */
+export function getUser(): PublicUser | null {
+  try {
+    // Check localStorage first (remember me)
+    let data = localStorage.getItem(USER_KEY);
+    if (data) {
+      return JSON.parse(data) as PublicUser;
+    }
+    
+    // Check sessionStorage (non-remember me)
+    data = sessionStorage.getItem(USER_KEY);
+    if (data) {
+      return JSON.parse(data) as PublicUser;
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error parsing user data from storage:', error);
+    return null;
+  }
+}

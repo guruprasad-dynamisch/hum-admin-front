@@ -4,8 +4,7 @@ import { setAuthState, clearAuthState } from "../redux/slices/authSlice";
 import SplashScreen from "./SplashScreen";
 import { userInfoRequest } from "../api/auth";
 import { Role } from "../constants/roles";
-import { isRememberMeSessionValid, clearAuthData } from "@utils/auth";
-import { logoutUser } from "@redux/thunks";
+import { getUser, clearAuthData } from "@utils/auth";
 
 import { AuthInitProps } from '@models/auth.types';
 
@@ -37,25 +36,32 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
         }
       }, SPLASH_DURATION);
 
-      // Check remember me session validity before making API call
-      if (!isRememberMeSessionValid()) {
-        console.log('Remember me session expired or not found, logging out');
+      // Try to restore user from storage first
+      const storedUser = getUser();
+      
+      if (!storedUser) {
+        // No user in storage, clear everything and finish initialization
+        console.log('No user found in storage');
         if (isMountedRef.current) {
-          // Clear auth data and state
           clearAuthData();
           dispatch(clearAuthState());
-          // Call logout to clear backend session
-          await dispatch(logoutUser());
           setIsInitializing(false);
         }
         return;
       }
 
+      // User found in storage, restore to Redux state
+      console.log('User found in storage, restoring session');
+      if (isMountedRef.current) {
+        dispatch(setAuthState({ user: storedUser }));
+      }
+
+      // Validate session with backend by fetching fresh user info
       try {
         const response = await userInfoRequest();
         if (response.data.success && response.data.data) {
           if (isMountedRef.current) {
-            // Transform API response to User type
+            // Update Redux state with fresh data from backend
             const userData = response.data.data;
             dispatch(setAuthState({
               user: {
@@ -63,8 +69,7 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
                 fullName: userData.fullName,
                 email: userData.email,
                 isActive: userData.isActive,
-                role: userData.role as Role, // Convert string to Role enum
-                // Optional fields
+                role: userData.role as Role,
                 organizationId: userData.organizationId,
                 phone: userData.phone,
                 phoneVerified: userData.phoneVerified,
@@ -77,13 +82,18 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
             }));
           }
         } else {
+          // Backend validation failed, clear everything
+          console.log('Backend validation failed');
           if (isMountedRef.current) {
+            clearAuthData();
             dispatch(clearAuthState());
           }
         }
       } catch (error) {
-        console.error("Auth initialization error:", error);
+        // Backend validation error (e.g., 401), clear everything
+        console.error("Auth validation error:", error);
         if (isMountedRef.current) {
+          clearAuthData();
           dispatch(clearAuthState());
         }
       } finally {
