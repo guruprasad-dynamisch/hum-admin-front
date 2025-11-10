@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables' as *;
 
 .audit-page-content {
   padding: $spacing-xl $spacing-xxxl;

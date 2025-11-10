@@ -1,4 +1,4 @@
-@import '../variables';
+@use '../variables' as *;
 
 .live-badge {
   padding: 4px 10px;

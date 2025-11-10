@@ -1,4 +1,5 @@
 @use '../variables' as *;
+@use 'sass:color';
 
 // ============================================
 // Compact Grid Design
@@ -255,7 +256,7 @@
     border-radius: 3px;
 
     &:hover {
-      background: lighten($primary-gold, 10%);
+      background: color.adjust($primary-gold, $lightness: 10%);
     }
   }
 }
@@ -659,7 +660,7 @@
     border-radius: 4px;
 
     &:hover {
-      background: lighten($primary-gold, 10%);
+      background: color.adjust($primary-gold, $lightness: 10%);
     }
   }
 }
