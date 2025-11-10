@@ -1,10 +1,10 @@
+import React, { useMemo, useCallback } from 'react'
 import { useTable, useSortBy, usePagination, Column, TableInstance, Row, HeaderGroup, ColumnInstance, TableOptions, Cell } from 'react-table'
 import { cn } from '@utils/classNames'
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa'
 import Pagination from './Pagination'
 import Loader from './Loader'
 import NoData from './NoData'
-import '@styles/components/data-table.scss'
 
 /**
  * Props for the DataTable component
@@ -77,7 +77,7 @@ interface DataTableProps<T extends object> {
  *   usePagination={false}
  * />
  */
-export default function DataTable<T extends object>({
+function DataTable<T extends object>({
   columns,
   data,
   pageSize = 10,
@@ -144,53 +144,68 @@ export default function DataTable<T extends object>({
    * Handle page change for both manual and automatic pagination
    * @param page - The page number to navigate to (1-indexed)
    */
-  const handlePageChange = (page: number): void => {
+  const handlePageChange = useCallback((page: number): void => {
     if (manualPagination && onPageChange) {
       onPageChange(page)
     } else {
       gotoPage(page - 1)
     }
-  }
+  }, [manualPagination, onPageChange, gotoPage])
 
   /**
    * Handle next page navigation
    */
-  const handleNextPage = (): void => {
+  const handleNextPage = useCallback((): void => {
     if (manualPagination && onPageChange) {
       onPageChange(controlledCurrentPage + 1)
     } else {
       nextPage()
     }
-  }
+  }, [manualPagination, onPageChange, controlledCurrentPage, nextPage])
 
   /**
    * Handle previous page navigation
    */
-  const handlePreviousPage = (): void => {
+  const handlePreviousPage = useCallback((): void => {
     if (manualPagination && onPageChange) {
       onPageChange(controlledCurrentPage - 1)
     } else {
       previousPage()
     }
-  }
+  }, [manualPagination, onPageChange, controlledCurrentPage, previousPage])
 
   /**
    * Handle goto page (0-indexed)
    */
-  const handleGotoPage = (page: number): void => {
+  const handleGotoPage = useCallback((page: number): void => {
     if (manualPagination && onPageChange) {
       onPageChange(page + 1)
     } else {
       gotoPage(page)
     }
-  }
+  }, [manualPagination, onPageChange, gotoPage])
 
-  // Calculate display values
-  const displayPageIndex = manualPagination ? (controlledCurrentPage - 1) : pageIndex
-  const displayPageCount = manualPagination ? (controlledPageCount || 1) : pageCount
-  const displayTotalItems = totalItems || data.length
-  const displayCanNextPage = manualPagination ? (controlledCurrentPage < (controlledPageCount || 1)) : canNextPage
-  const displayCanPreviousPage = manualPagination ? (controlledCurrentPage > 1) : canPreviousPage
+  // Calculate display values - memoized to prevent recalculation on every render
+  const displayPageIndex = useMemo(() => 
+    manualPagination ? (controlledCurrentPage - 1) : pageIndex,
+    [manualPagination, controlledCurrentPage, pageIndex]
+  )
+  const displayPageCount = useMemo(() => 
+    manualPagination ? (controlledPageCount || 1) : pageCount,
+    [manualPagination, controlledPageCount, pageCount]
+  )
+  const displayTotalItems = useMemo(() => 
+    totalItems || data.length,
+    [totalItems, data.length]
+  )
+  const displayCanNextPage = useMemo(() => 
+    manualPagination ? (controlledCurrentPage < (controlledPageCount || 1)) : canNextPage,
+    [manualPagination, controlledCurrentPage, controlledPageCount, canNextPage]
+  )
+  const displayCanPreviousPage = useMemo(() => 
+    manualPagination ? (controlledCurrentPage > 1) : canPreviousPage,
+    [manualPagination, controlledCurrentPage, canPreviousPage]
+  )
 
   return (
     <div className={cn('data-table-wrapper', className)}>
@@ -289,3 +304,7 @@ export default function DataTable<T extends object>({
     </div>
   )
 }
+
+// Memoize the component to prevent unnecessary re-renders
+// Component will only re-render when props change
+export default React.memo(DataTable) as typeof DataTable

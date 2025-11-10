@@ -1,12 +1,16 @@
-import Logout from '@pages/Logout'
-import Dashboard from '@pages/Dashboard'
-import Users from '@pages/Users'
-import Templates from '@pages/Templates'
-import Audit from '@pages/Audit'
-import Costing from '@pages/Costing'
-import Settings from '@pages/Settings'
+import { lazy } from 'react'
 import { Role } from '@constants/roles'
 import { ProtectedRouteConfig } from './types'
+
+// Lazy load page components for code-splitting
+// Each page will be loaded on-demand, reducing initial bundle size
+const Dashboard = lazy(() => import('@pages/Dashboard'))
+const Users = lazy(() => import('@pages/Users'))
+const Templates = lazy(() => import('@pages/Templates'))
+const Audit = lazy(() => import('@pages/Audit'))
+const Costing = lazy(() => import('@pages/Costing'))
+const Settings = lazy(() => import('@pages/Settings'))
+const Logout = lazy(() => import('@pages/Logout'))
 
 export const protectedRoutes: ProtectedRouteConfig[] = [
   {

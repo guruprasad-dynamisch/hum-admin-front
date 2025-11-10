@@ -1,5 +1,5 @@
+import React from 'react'
 import { cn } from '@utils/classNames'
-import '@styles/components/stat-card.scss'
 
 interface StatCardProps {
   title: string
@@ -12,7 +12,7 @@ interface StatCardProps {
   className?: string
 }
 
-export default function StatCard({ title, value, change, icon, className }: StatCardProps) {
+function StatCard({ title, value, change, icon, className }: StatCardProps) {
   return (
     <div className={cn('stat-card', className)}>
       <div className="stat-header">
@@ -28,3 +28,6 @@ export default function StatCard({ title, value, change, icon, className }: Stat
     </div>
   )
 }
+
+// Memoize component to prevent unnecessary re-renders when parent re-renders
+export default React.memo(StatCard)

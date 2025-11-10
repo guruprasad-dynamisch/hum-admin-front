@@ -1,8 +1,11 @@
-import Login from "@pages/Login";
-import Register from "@pages/Register";
-import ForgotPassword from "@pages/ForgotPassword";
-import ResetPassword from "@pages/ResetPassword";
+import { lazy } from 'react'
 import { PublicRouteConfig } from './types'
+
+// Lazy load public page components for code-splitting
+const Login = lazy(() => import('@pages/Login'))
+const Register = lazy(() => import('@pages/Register'))
+const ForgotPassword = lazy(() => import('@pages/ForgotPassword'))
+const ResetPassword = lazy(() => import('@pages/ResetPassword'))
 
 export const publicRoutes: PublicRouteConfig[] = [
   {

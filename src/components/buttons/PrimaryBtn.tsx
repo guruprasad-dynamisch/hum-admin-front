@@ -1,56 +1,34 @@
 import React from 'react'
-import { cn } from '@utils/classNames'
-import '@styles/components/buttons.scss'
+import BaseButton, { BaseButtonProps } from './BaseButton'
 
-interface PrimaryBtnProps {
-    children: React.ReactNode;
-    onClick?: () => void;
-    disabled?: boolean;
-    type?: "button" | "submit" | "reset";
-    fullWidth?: boolean;
-    className?: string;
-    loading?: boolean;
+/**
+ * PrimaryBtn - Wrapper around BaseButton with primary variant
+ * Maintained for backward compatibility
+ */
+interface PrimaryBtnProps extends Omit<BaseButtonProps, 'variant'> {
+    /** Icon to display */
     icon?: React.ReactNode;
+    /** Icon position (start or end) */
     iconPosition?: "start" | "end";
-    style?: React.CSSProperties;
 }
 
 const PrimaryBtn = ({
     children,
-    onClick,
-    disabled = false,
-    type = "button",
-    fullWidth = true,
-    className = "",
-    loading = false,
     icon,
     iconPosition = "start",
-    style
+    fullWidth = true,
+    ...props
 }: PrimaryBtnProps) => {
     return (
-        <button
-            type={type}
-            className={cn(
-                'hum-btn',
-                'hum-btn-primary',
-                { 'hum-btn-full-width': fullWidth },
-                className
-            )}
-            onClick={onClick}
-            disabled={disabled || loading}
-            style={style}
+        <BaseButton
+            variant="primary"
+            fullWidth={fullWidth}
+            iconLeft={iconPosition === 'start' ? icon : undefined}
+            iconRight={iconPosition === 'end' ? icon : undefined}
+            {...props}
         >
-            <div className="hum-btn-content">
-                {loading && <span className="hum-btn-spinner" />}
-                {!loading && icon && iconPosition === 'start' && (
-                    <span className="hum-btn-icon-start">{icon}</span>
-                )}
-                {children}
-                {!loading && icon && iconPosition === 'end' && (
-                    <span className="hum-btn-icon-end">{icon}</span>
-                )}
-            </div>
-        </button>
+            {children}
+        </BaseButton>
     );
 };
 

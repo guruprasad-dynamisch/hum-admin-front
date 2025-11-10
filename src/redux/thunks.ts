@@ -1,11 +1,39 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setUser, setRememberMeSession } from '@utils/auth';
-import { LoginCredentials, LoginError } from './types';
-import { loginRequest, userInfoRequest } from '@api/auth';
+import { setUser, setRememberMeSession, clearAuthData } from '@utils/auth';
+import { loginRequest, userInfoRequest, logoutRequest } from '@api/auth';
 import { ApiResponse, UserInfoResponse } from '@models/api.types';
 import { Role } from '@constants/roles';
 import { AUTH_MESSAGES, ERROR_CODES } from '@constants/message-constants';
 import { User } from '@models/auth.types';
+
+// ============================================================================
+// TYPES
+// ============================================================================
+
+export interface LoginCredentials {
+  identifier: string;
+  password: string;
+  rememberMe?: boolean;
+}
+
+export interface LoginError {
+  message: string;
+  code?: string;
+  errors?: Record<string, string[]>;
+}
+
+export interface LogoutResponse {
+  success: boolean;
+}
+
+export interface LogoutError {
+  message: string;
+  code?: string;
+}
+
+// ============================================================================
+// LOGIN THUNK
+// ============================================================================
 
 /**
  * Login user async thunk
@@ -81,6 +109,43 @@ export const loginUser = createAsyncThunk<{ user: User }, LoginCredentials, { re
                 message: errorMessage,
                 code: errorCode,
                 errors: error.response?.data?.data?.errors || null,
+            });
+        }
+    }
+);
+
+// ============================================================================
+// LOGOUT THUNK
+// ============================================================================
+
+/**
+ * Logout user async thunk
+ * 
+ * SECURITY: Backend will clear httpOnly cookies containing tokens.
+ * We clear local user profile data and remember me session.
+ */
+export const logoutUser = createAsyncThunk<LogoutResponse, void, { rejectValue: LogoutError }>(
+    'auth/logoutUser',
+    async (_, { rejectWithValue }) => {
+        try {
+            // Call the logout API to invalidate tokens on the server
+            // Backend will clear httpOnly cookies
+            await logoutRequest();
+            
+            // Clear local user data after successful API call
+            clearAuthData();
+            
+            return { success: true };
+        } catch (error: any) {
+            // Even if the API call fails, clear local user data
+            clearAuthData();
+            
+            const errorMessage = error.response?.data?.message || error.message || 'Logout failed';
+            const errorCode = error.response?.data?.code || 'LOGOUT_ERROR';
+            
+            return rejectWithValue({
+                message: errorMessage,
+                code: errorCode
             });
         }
     }

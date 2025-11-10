@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import React, { useRef, useState, useMemo, useCallback } from 'react'
 import {
   Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement,
   BarElement, Title, Tooltip, Legend, Filler, ChartOptions
@@ -7,7 +7,6 @@ import { Line, Bar } from 'react-chartjs-2'
 import { cn } from '@utils/classNames'
 import { CHART_COLORS } from '@constants/chart-colors'
 import TextBtn from '@components/buttons/TextBtn'
-import '@styles/components/dashboard-chart.scss'
 
 // Register Chart.js components
 ChartJS.register(
@@ -41,7 +40,7 @@ interface DashboardChartProps {
   className?: string
 }
 
-export default function DashboardChart({
+function DashboardChart({
   title,
   filters = [],
   data,
@@ -52,9 +51,14 @@ export default function DashboardChart({
   const [activeFilter, setActiveFilter] = useState(defaultFilter || filters[0]?.value || 'daily')
   const chartRef = useRef(null)
 
-  const currentData = data[activeFilter] || { labels: [], values: [] }
+  // Memoize current data to prevent recalculation
+  const currentData = useMemo(() => 
+    data[activeFilter] || { labels: [], values: [] },
+    [data, activeFilter]
+  )
 
-  const chartData = {
+  // Memoize chart data configuration
+  const chartData = useMemo(() => ({
     labels: currentData.labels,
     datasets: [
       {
@@ -74,9 +78,10 @@ export default function DashboardChart({
         pointBorderWidth: 2
       }
     ]
-  }
+  }), [currentData, title, type])
 
-  const options: ChartOptions<'line' | 'bar'> = {
+  // Memoize chart options to prevent recreation on every render
+  const options: ChartOptions<'line' | 'bar'> = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: false,
     resizeDelay: 0,
@@ -139,7 +144,12 @@ export default function DashboardChart({
         beginAtZero: true
       }
     }
-  }
+  }), [])
+
+  // Stabilize filter change handler
+  const handleFilterChange = useCallback((filterValue: string) => {
+    setActiveFilter(filterValue)
+  }, [])
 
   return (
     <div className={cn('chart-card', className)}>
@@ -153,7 +163,7 @@ export default function DashboardChart({
                 className={cn('filter-btn', {
                   active: activeFilter === filter.value
                 })}
-                onClick={() => setActiveFilter(filter.value)}
+                onClick={() => handleFilterChange(filter.value)}
                 color="secondary"
               >
                 {filter.label}
@@ -172,3 +182,6 @@ export default function DashboardChart({
     </div>
   )
 }
+
+// Memoize component to prevent unnecessary re-renders
+export default React.memo(DashboardChart)

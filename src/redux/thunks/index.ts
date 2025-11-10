@@ -1,7 +1,5 @@
-// Export all async thunks
-export { loginUser } from './login';
-export { logoutUser } from './logout';
-
-// Export all types
-export * from './login/types';
-export * from './logout/types';
+// Re-export from flattened thunks file
+// This file maintained for backward compatibility
+// All thunks are now in ../thunks.ts
+export { loginUser, logoutUser } from '../thunks';
+export type { LoginCredentials, LoginError, LogoutResponse, LogoutError } from '../thunks';

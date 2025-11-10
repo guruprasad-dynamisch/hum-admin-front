@@ -73,12 +73,14 @@ export const router = createBrowserRouter([
     path: '/',
     element: <AuthInitWrapper />,
     children: [
-      // Public routes
+      // Public routes with Suspense for lazy loading
       ...publicRoutes.map(({ path, element: Element }) => ({
         path,
         element: (
           <PublicRouteWrapper>
-            <Element />
+            <Suspense fallback={<PageLoader />}>
+              <Element />
+            </Suspense>
           </PublicRouteWrapper>
         ),
       })),

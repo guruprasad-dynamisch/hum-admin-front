@@ -1,29 +1,24 @@
 import React from 'react'
+import BaseButton, { BaseButtonProps } from './BaseButton'
 import { cn } from '@utils/classNames'
-import '@styles/components/buttons.scss'
 
-interface TextBtnProps {
-    children: React.ReactNode;
-    onClick?: () => void;
-    disabled?: boolean;
-    type?: "button" | "submit" | "reset";
-    className?: string;
-    loading?: boolean;
+interface TextBtnProps extends Omit<BaseButtonProps, 'variant' | 'iconLeft' | 'iconRight'> {
     color?: "primary" | "secondary" | "error" | "warning";
     icon?: React.ReactNode;
     iconPosition?: "start" | "end";
 }
 
+/**
+ * TextBtn - Text-style button using BaseButton
+ * Backward compatible wrapper for existing code
+ */
 const TextBtn = ({
     children,
-    onClick,
-    disabled = false,
-    type = "button",
-    className = "",
-    loading = false,
     color = "primary",
     icon,
-    iconPosition = "start"
+    iconPosition = "start",
+    className,
+    ...props
 }: TextBtnProps) => {
     const getColorClass = () => {
         switch (color) {
@@ -39,28 +34,15 @@ const TextBtn = ({
     };
 
     return (
-        <button
-            type={type}
-            className={cn(
-                'hum-btn',
-                'hum-btn-text',
-                getColorClass(),
-                className
-            )}
-            onClick={onClick}
-            disabled={disabled || loading}
+        <BaseButton
+            variant="text"
+            iconLeft={iconPosition === 'start' ? icon : undefined}
+            iconRight={iconPosition === 'end' ? icon : undefined}
+            className={cn(getColorClass(), className)}
+            {...props}
         >
-            <div className="hum-btn-content">
-                {loading && <span className="hum-btn-spinner" />}
-                {!loading && icon && iconPosition === 'start' && (
-                    <span className="hum-btn-icon-start">{icon}</span>
-                )}
-                {children}
-                {!loading && icon && iconPosition === 'end' && (
-                    <span className="hum-btn-icon-end">{icon}</span>
-                )}
-            </div>
-        </button>
+            {children}
+        </BaseButton>
     );
 };
 

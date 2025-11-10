@@ -170,3 +170,36 @@ export function getUserInitials(name?: string, fallback: string = 'AU'): string 
 
     return name.trim().split(' ').filter(n => n.length > 0).map(n => n[0]).join('').toUpperCase().slice(0, 2);
 }
+
+/**
+ * Creates a debounced function that delays invoking func until after wait milliseconds
+ * have elapsed since the last time the debounced function was invoked.
+ * 
+ * @template T - The type of the function to debounce
+ * @param {T} func - The function to debounce
+ * @param {number} wait - The number of milliseconds to delay
+ * @returns {(...args: Parameters<T>) => void} The debounced function
+ * 
+ * @example
+ * const debouncedSearch = debounce((query: string) => {
+ *   console.log('Searching for:', query);
+ * }, 300);
+ * 
+ * debouncedSearch('hello'); // Will only execute after 300ms of no calls
+ */
+export function debounce<T extends (...args: any[]) => any>(
+    func: T,
+    wait: number
+): (...args: Parameters<T>) => void {
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+    return function debounced(...args: Parameters<T>) {
+        if (timeoutId !== null) {
+            clearTimeout(timeoutId);
+        }
+
+        timeoutId = setTimeout(() => {
+            func(...args);
+        }, wait);
+    };
+}

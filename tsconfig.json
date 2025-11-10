@@ -31,7 +31,8 @@
       "@validations/*": ["src/validations/*"],
       "@config/*": ["src/config/*"],
       "@models/*": ["src/models/*"],
-      "@types/*": ["src/types/*"]
+      "@types/*": ["src/types/*"],
+      "@services/*": ["src/services/*"]
     },
 
     "types": ["jest", "@testing-library/jest-dom", "node"]

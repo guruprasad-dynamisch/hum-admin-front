@@ -7,6 +7,7 @@ import { store } from '@redux/store';
 import { clearAuthState } from '@redux/slices/authSlice';
 import { authEndpoints } from '@constants/auth-constants';
 import { logger } from '@utils/logger';
+import { tokenRefreshService } from '@services/TokenRefreshService';
 
 /**
  * SECURITY: This API client uses httpOnly cookies for authentication.
@@ -26,28 +27,6 @@ const apiClient: AxiosInstance = axios.create({
   withCredentials: true, // Enable sending cookies with requests (CRITICAL for httpOnly cookies)
 });
 
-// Track if a token refresh is in progress to prevent multiple simultaneous refresh requests
-let isRefreshing = false;
-
-// Type-safe queue for failed requests during token refresh
-interface QueuedRequest {
-  resolve: (value?: unknown) => void;
-  reject: (reason?: unknown) => void;
-}
-
-let failedQueue: QueuedRequest[] = [];
-
-const processQueue = (error: Error | null = null) => {
-  failedQueue.forEach(promise => {
-    if (error) {
-      promise.reject(error);
-    } else {
-      promise.resolve();
-    }
-  });
-  failedQueue = [];
-};
-
 // Response interceptor for error handling and automatic token refresh
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
@@ -65,50 +44,22 @@ apiClient.interceptors.response.use(
         return Promise.reject(error);
       }
 
-      // If already refreshing, queue this request
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        })
-          .then(() => {
-            return apiClient(originalRequest);
-          })
-          .catch(err => {
-            return Promise.reject(err);
-          });
-      }
-
       // Mark this request as retried to prevent infinite loops
       originalRequest._retry = true;
-      isRefreshing = true;
 
       try {
-        // Attempt to refresh the token using apiClient to maintain consistency
-        // The refresh token is automatically sent via httpOnly cookie
-        // We create a new axios instance to avoid interceptor loops
-        const refreshClient = axios.create({
-          baseURL: API_URL,
-          timeout: API_TIMEOUT,
-          withCredentials: true,
-        });
+        // Use TokenRefreshService for concurrency-safe token refresh
+        // If multiple requests fail simultaneously, only one refresh will occur
+        await tokenRefreshService.refresh();
 
-        // Use constant for refresh token endpoint
-        const { AUTH_APIS } = await import('@constants/auth-constants');
-        await refreshClient.get(AUTH_APIS.refreshTokenApi);
-
-        // Refresh successful, process queued requests
-        processQueue();
-        isRefreshing = false;
-
-        // Retry the original request with new token (sent via cookie)
+        // Refresh successful, retry the original request with new token (sent via cookie)
         return apiClient(originalRequest);
       } catch (refreshError) {
         // Refresh failed, clear auth and redirect to login
-        const error = refreshError as Error;
-        processQueue(error);
-        isRefreshing = false;
-
         logger.error('Token refresh failed', refreshError);
+
+        // Reset the token refresh service
+        tokenRefreshService.reset();
 
         // Clear all auth data (localStorage, sessionStorage, and Redux state)
         clearAuthData();

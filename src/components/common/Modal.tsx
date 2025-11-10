@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { Modal as BootstrapModal } from 'react-bootstrap'
 import FocusLock from 'react-focus-lock'
 import { cn } from '@utils/classNames'
-import '@styles/components/modal.scss'
 
 export interface ModalProps {
   /** Show/hide modal */
@@ -61,24 +60,6 @@ const Modal: React.FC<ModalProps> = ({
   footer,
   header
 }) => {
-  // Store the element that had focus before modal opened
-  const previousFocusRef = useRef<HTMLElement | null>(null)
-
-  // Handle focus restoration
-  useEffect(() => {
-    if (show) {
-      // Save the currently focused element
-      previousFocusRef.current = document.activeElement as HTMLElement
-    } else {
-      // Restore focus when modal closes
-      if (previousFocusRef.current && previousFocusRef.current.focus) {
-        // Use setTimeout to ensure modal is fully closed before restoring focus
-        setTimeout(() => {
-          previousFocusRef.current?.focus()
-        }, 0)
-      }
-    }
-  }, [show])
   return (
     <BootstrapModal
       show={show}
@@ -89,12 +70,15 @@ const Modal: React.FC<ModalProps> = ({
       keyboard={keyboard}
       dialogClassName={cn('custom-modal-dialog', dialogClassName)}
       className={cn('custom-modal', className)}
+      aria-labelledby={title ? 'modal-title' : undefined}
+      aria-modal="true"
+      role="dialog"
     >
-      <FocusLock disabled={!show} returnFocus={false}>
+      <FocusLock disabled={!show} returnFocus>
         {(header || title) && (
           <BootstrapModal.Header closeButton={showCloseButton} className="custom-modal-header">
             {header || (
-              <BootstrapModal.Title className="custom-modal-title">
+              <BootstrapModal.Title id="modal-title" className="custom-modal-title">
                 {title}
               </BootstrapModal.Title>
             )}

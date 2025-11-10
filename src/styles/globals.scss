@@ -1,6 +1,73 @@
 /* Global Styles - Import SCSS variables and base styles */
 @use './variables' as *;
 
+/* ========================================
+   CSS CUSTOM PROPERTIES FOR THEME SWITCHING
+   ======================================== */
+
+:root,
+[data-theme="dark"] {
+  /* Primary Colors */
+  --color-primary: #{$primary-gold};
+  --color-primary-dark: #{$primary-gold-dark};
+  --color-primary-light: #{$primary-gold-light};
+  --color-primary-hover: #{$primary-gold-hover};
+  
+  /* Background Colors */
+  --bg-primary: #{$bg-primary};
+  --bg-secondary: #{$bg-secondary};
+  --bg-tertiary: #{$bg-tertiary};
+  --bg-input: #{$bg-input};
+  --bg-hover: #{$bg-hover};
+  
+  /* Text Colors */
+  --text-primary: #{$text-primary};
+  --text-secondary: #{$text-secondary};
+  --text-tertiary: #{$text-tertiary};
+  
+  /* Border Colors */
+  --border-default: #{$border-default};
+  --border-input: #{$border-input};
+  --border-hover: #{$border-hover};
+  
+  /* Status Colors */
+  --status-success: #{$status-success};
+  --status-error: #{$status-error};
+  --status-warning: #{$status-warning};
+  --status-info: #{$status-info};
+}
+
+[data-theme="light"] {
+  /* Primary Colors */
+  --color-primary: #c9a556;
+  --color-primary-dark: #b08f42;
+  --color-primary-light: rgba(201, 165, 86, 0.1);
+  --color-primary-hover: rgba(201, 165, 86, 0.05);
+  
+  /* Background Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e0e0e0;
+  --bg-input: #ffffff;
+  --bg-hover: rgba(201, 165, 86, 0.05);
+  
+  /* Text Colors */
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  
+  /* Border Colors */
+  --border-default: #e0e0e0;
+  --border-input: #cccccc;
+  --border-hover: #c9a556;
+  
+  /* Status Colors */
+  --status-success: #00cc00;
+  --status-error: #dd3333;
+  --status-warning: #ff9900;
+  --status-info: #0099dd;
+}
+
 /* Global reset and base styles */
 * {
   box-sizing: border-box;
@@ -15,9 +82,10 @@ body,
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, ui-sans-serif, system-ui, -apple-system, Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif;
-  background: $bg-primary;
-  color: $text-primary;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Links */
