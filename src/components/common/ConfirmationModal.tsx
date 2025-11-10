@@ -10,8 +10,8 @@ export interface ConfirmationModalProps {
   show: boolean
   /** Callback when modal should close */
   onClose: () => void
-  /** Callback when user confirms */
-  onConfirm: () => void
+  /** Callback when user confirms (can be async) */
+  onConfirm: () => void | Promise<void>
   /** Modal title */
   title?: string
   /** Confirmation message */
@@ -53,10 +53,16 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   loading = false,
   icon
 }) => {
-  const handleConfirm = () => {
-    onConfirm()
-    if (!loading) {
-      onClose()
+  const handleConfirm = async () => {
+    try {
+      await onConfirm()
+      if (!loading) {
+        onClose()
+      }
+    } catch (error) {
+      // Error is handled by the parent component
+      // Don't close modal if action fails
+      console.error('Confirmation action failed:', error)
     }
   }
 

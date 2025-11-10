@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react'
-import { useController } from 'react-hook-form'
+import { useController, Control, FieldValues, RegisterOptions } from 'react-hook-form'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { cn } from '@utils/classNames'
 import IconBtn from '@components/buttons/IconBtn'
@@ -17,9 +17,9 @@ interface InputFieldProps {
   /** Mode of operation */
   mode?: 'standalone' | 'react-hook-form'
   /** React Hook Form control */
-  control?: any
+  control?: Control<FieldValues>
   /** React Hook Form validation rules */
-  rules?: any
+  rules?: RegisterOptions
   /** Standalone mode value */
   value?: string | number
   /** Standalone mode onChange handler */
@@ -42,6 +42,8 @@ interface InputFieldProps {
   iconPosition?: 'start' | 'end'
   /** Helper text to display below the input */
   helperText?: string
+  /** Autocomplete attribute for better UX and security */
+  autoComplete?: string
   /** Additional HTML input props */
   [key: string]: any
 }
@@ -67,6 +69,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       icon,
       iconPosition = 'start',
       helperText,
+      autoComplete,
       ...props
     },
     ref
@@ -76,7 +79,12 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
 
     // Handle react-hook-form mode
     const isReactHookForm = mode === 'react-hook-form' && control && name
-    let fieldProps: any = {}
+    let fieldProps: {
+      ref?: React.Ref<HTMLInputElement>
+      value?: string | number
+      onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+      onBlur?: () => void
+    } = {}
     let error = null
 
     if (isReactHookForm) {
@@ -136,6 +144,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             type={actualType}
             placeholder={placeholder}
             disabled={disabled}
+            autoComplete={autoComplete}
             className={cn('custom-input', { 
               'has-error': !!error,
               'with-icon-start': icon && iconPosition === 'start',

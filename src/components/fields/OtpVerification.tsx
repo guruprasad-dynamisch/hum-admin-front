@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useForm, useController, Control } from 'react-hook-form';
+import { useForm, useController, Control, FieldValues } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import PrimaryBtn from '@components/buttons/PrimaryBtn';
 import { otpSchema, OtpFormData } from '@validations/register-validations';
@@ -11,7 +11,7 @@ interface OtpVerificationProps {
   /** Field name (required for react-hook-form mode) */
   name?: string;
   /** React Hook Form control (required for react-hook-form mode) */
-  control?: Control<any>;
+  control?: Control<FieldValues>;
   /** Phone number where OTP was sent (standalone mode) */
   phoneNumber?: string;
   /** Callback when OTP is verified successfully (standalone mode) */
@@ -69,8 +69,12 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
 
   // React Hook Form integration
   const isReactHookForm = mode === 'react-hook-form' && control;
-  let fieldProps: any = {};
-  let fieldError: any = null;
+  let fieldProps: {
+    value?: string
+    onChange?: (value: string) => void
+    onBlur?: () => void
+  } = {};
+  let fieldError: { message?: string } | undefined = undefined;
 
   if (isReactHookForm) {
     const {
@@ -133,7 +137,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
     setOtpValues(newOtpValues);
 
     // Update react-hook-form value if in that mode
-    if (isReactHookForm) {
+    if (isReactHookForm && fieldProps.onChange) {
       fieldProps.onChange(newOtpValues.join(''));
     }
 
@@ -189,7 +193,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
     setOtpValues(newOtpValues);
 
     // Update react-hook-form value if in that mode
-    if (isReactHookForm) {
+    if (isReactHookForm && fieldProps.onChange) {
       fieldProps.onChange(newOtpValues.join(''));
     }
 
@@ -220,7 +224,9 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
     if (isReactHookForm) {
       // In react-hook-form mode, just update the value
       // The parent form will handle submission
-      fieldProps.onChange(otp);
+      if (fieldProps.onChange) {
+        fieldProps.onChange(otp);
+      }
       return;
     }
 
@@ -255,7 +261,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
       setOtpValues(Array(length).fill(''));
       
       // Update react-hook-form value if in that mode
-      if (isReactHookForm) {
+      if (isReactHookForm && fieldProps.onChange) {
         fieldProps.onChange('');
       }
       

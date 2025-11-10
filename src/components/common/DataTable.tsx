@@ -1,4 +1,4 @@
-import { useTable, useSortBy, usePagination, Column, TableInstance, Row, HeaderGroup, ColumnInstance, TableOptions } from 'react-table'
+import { useTable, useSortBy, usePagination, Column, TableInstance, Row, HeaderGroup, ColumnInstance, TableOptions, Cell } from 'react-table'
 import { cn } from '@utils/classNames'
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa'
 import Pagination from './Pagination'
@@ -115,7 +115,7 @@ export default function DataTable<T extends object>({
       initialState: {
         pageIndex: manualPagination ? (controlledCurrentPage - 1) : 0,
         pageSize
-      } as any,
+      },
       manualPagination,
       ...(manualPagination && controlledPageCount ? { pageCount: controlledPageCount } : {})
     } as TableOptions<T>,
@@ -203,7 +203,8 @@ export default function DataTable<T extends object>({
             description={emptyMessage}
           />
         ) : (
-          <table {...getTableProps()} className="data-table">
+          <table {...getTableProps()} className="data-table" aria-label={emptyMessage || "Data table"}>
+            <caption className="sr-only">{emptyMessage || "Data table results"}</caption>
             <thead>
               {headerGroups.map((headerGroup: HeaderGroup<T>) => {
                 const { key: headerGroupKey, ...headerGroupProps } = headerGroup.getHeaderGroupProps();
@@ -225,6 +226,7 @@ export default function DataTable<T extends object>({
                             'sorted-asc': column.isSorted && !column.isSortedDesc,
                             'sorted-desc': column.isSorted && column.isSortedDesc
                           })}
+                          aria-sort={column.isSorted ? (column.isSortedDesc ? 'descending' : 'ascending') : 'none'}
                         >
                           <div className="th-content">
                             {column.render('Header')}
@@ -252,7 +254,7 @@ export default function DataTable<T extends object>({
                     onClick={() => onRowClick?.(row.original)}
                     className={cn({ 'clickable': !!onRowClick })}
                   >
-                    {row.cells.map((cell: any) => {
+                    {row.cells.map((cell: Cell<T>) => {
                       const { key: cellKey, ...cellProps } = cell.getCellProps();
                       return (
                         <td {...cellProps} key={cellKey ?? cell.column.id}>{cell.render('Cell')}</td>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useForm, Control, FieldValues, UseFormReturn } from 'react-hook-form'
+import { useForm, Control, FieldValues, UseFormReturn, FieldError } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { cn } from '@utils/classNames'
@@ -214,9 +214,9 @@ export type DynamicFormProps<T extends FieldValues = any> =
 interface FieldRendererProps {
   field: FieldConfig;
   mode: 'react-hook-form' | 'standalone';
-  control?: Control<any>;
-  value?: any;
-  onChange?: (value: any) => void;
+  control?: Control<FieldValues>;
+  value?: unknown;
+  onChange?: (value: unknown) => void;
   onBlur?: () => void;
   error?: string;
 }
@@ -267,7 +267,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
           defaultCountry={field.defaultCountry || 'US'}
           control={mode === 'react-hook-form' ? control : undefined}
           rules={mode === 'react-hook-form' ? { required: field.required } : undefined}
-          value={mode === 'standalone' ? value : undefined}
+          value={mode === 'standalone' ? (value as string) : undefined}
           onChange={mode === 'standalone' ? onChange : undefined}
           onBlur={mode === 'standalone' ? onBlur : undefined}
         />
@@ -280,7 +280,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
           rows={field.rows}
           maxLength={field.maxLength}
           helperText={field.helperText}
-          value={mode === 'standalone' ? value : undefined}
+          value={mode === 'standalone' ? (value as string) : undefined}
           onChange={mode === 'standalone' ? onChange : undefined}
           onBlur={mode === 'standalone' ? onBlur : undefined}
           error={error}
@@ -428,7 +428,7 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                   <FieldRenderer
                     field={field}
                     mode="react-hook-form"
-                    control={control}
+                    control={control as Control<FieldValues>}
                   />
                 </div>
               )
@@ -483,7 +483,7 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
                 <FieldRenderer
                   field={field}
                   mode="react-hook-form"
-                  control={control}
+                  control={control as Control<FieldValues>}
                 />
               </div>
             ))}

@@ -1,8 +1,10 @@
-import { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useAppSelector } from '@redux/store'
 import { selectUser } from '@redux/slices/authSlice'
 import { Role } from '@constants/roles'
 import { getAllNavigationForRole } from '@constants/navigation'
+import { useMediaQuery } from '@hooks/useMediaQuery'
+import { MEDIA_QUERIES } from '@constants/breakpoint-constants'
 import SidebarSection from './sidebar/SidebarSection'
 import SidebarItem from './sidebar/SidebarItem'
 import { cn } from '@utils/classNames'
@@ -14,25 +16,15 @@ interface SidebarProps {
   mobileOpen?: boolean
 }
 
-export default function Sidebar({ open: controlledOpen, onToggle, mobileOpen = false }: SidebarProps) {
+const Sidebar: React.FC<SidebarProps> = ({ open: controlledOpen, onToggle, mobileOpen = false }) => {
   const [internalOpen, setInternalOpen] = useState(true)
-  const [isMobile, setIsMobile] = useState(false)
   const user = useAppSelector(selectUser)
+  
+  // Use custom hook for media query
+  const isMobile = useMediaQuery(MEDIA_QUERIES.mobile)
 
   // Use controlled or internal state
   const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen
-
-  // Check if mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
 
   // Get user role, default to USER if not set
   const userRole = (user?.role as Role) || Role.USER
@@ -62,6 +54,12 @@ export default function Sidebar({ open: controlledOpen, onToggle, mobileOpen = f
             src="/assets/humanistics_logo_transparent.webp"
             alt="Humanistics AI"
             className="sidebar-logo-image"
+            loading="lazy"
+            onError={(e) => {
+              // Fallback to a default logo or hide if image fails to load
+              e.currentTarget.style.display = 'none'
+              console.error('Failed to load sidebar logo')
+            }}
           />}
         </div>
       </div>
@@ -88,3 +86,6 @@ export default function Sidebar({ open: controlledOpen, onToggle, mobileOpen = f
     </nav>
   )
 }
+
+// Memoize component to prevent unnecessary re-renders
+export default React.memo(Sidebar)

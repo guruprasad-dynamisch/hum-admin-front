@@ -3,8 +3,8 @@ import { SecondaryBtn } from '@components/buttons'
 import { cn } from '@utils/classNames'
 import '@styles/components/data-table.scss'
 
-interface PaginationProps {
-  data?: any[]
+interface PaginationProps<T = unknown> {
+  data?: T[]
   totalRows?: number
   pageIndex: number
   pageSize: number
@@ -60,6 +60,8 @@ const Pagination: React.FC<PaginationProps> = ({
               gotoPage(number)
             }}
             className={cn("pagination-btn", { active: number === pageIndex })}
+            aria-label={`Go to page ${number + 1}`}
+            aria-current={number === pageIndex ? 'page' : undefined}
           >
             {number + 1}
           </button>
@@ -79,11 +81,11 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <div className={cn('table-footer', className)}>
       {showInfo && (
-        <div className="table-info">
+        <div className="table-info" role="status" aria-live="polite">
           Showing {start} to {end} of {totalRecords} entries
         </div>
       )}
-      <div className="pagination-numbers">
+      <nav className="pagination-numbers" aria-label="Pagination navigation">
         <SecondaryBtn 
           onClick={() => {
             previousPage()
@@ -91,6 +93,7 @@ const Pagination: React.FC<PaginationProps> = ({
           className='pagination-btn' 
           disabled={!canPreviousPage} 
           fullWidth={false}
+          aria-label={`Go to previous page, currently on page ${pageIndex + 1} of ${pageCount}`}
         >
           ←
         </SecondaryBtn>
@@ -102,10 +105,11 @@ const Pagination: React.FC<PaginationProps> = ({
           className='pagination-btn' 
           disabled={!canNextPage} 
           fullWidth={false}
+          aria-label={`Go to next page, currently on page ${pageIndex + 1} of ${pageCount}`}
         >
           →
         </SecondaryBtn>
-      </div>
+      </nav>
     </div>
   )
 }

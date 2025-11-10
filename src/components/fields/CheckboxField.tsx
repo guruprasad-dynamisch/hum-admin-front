@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
-import { useController, Control, FieldValues, Path } from 'react-hook-form';
+import { useController, Control, FieldValues, Path, RegisterOptions } from 'react-hook-form';
 import { cn } from '@utils/classNames';
 import '@styles/fields/checkbox-field.scss';
 
@@ -22,7 +22,7 @@ interface CheckboxFieldProps<T extends FieldValues = FieldValues> {
   /** React Hook Form name */
   name?: Path<T>;
   /** React Hook Form rules */
-  rules?: any;
+  rules?: RegisterOptions;
   /** Checkbox ID */
   id?: string;
   /** Whether field is required */
@@ -44,7 +44,12 @@ function CheckboxField<T extends FieldValues = FieldValues>({
 }: CheckboxFieldProps<T>) {
   // React Hook Form integration
   const isReactHookForm = mode === 'react-hook-form' && control && name;
-  let fieldProps: any = {};
+  let fieldProps: {
+    ref?: React.Ref<HTMLInputElement>
+    checked?: boolean
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onBlur?: () => void
+  } = {};
   let error = null;
 
   if (isReactHookForm) {
@@ -53,7 +58,7 @@ function CheckboxField<T extends FieldValues = FieldValues>({
       fieldState: { error: fieldError },
     } = useController({
       name: name!,
-      control,
+      control: control as Control<FieldValues>,
       rules,
       defaultValue: false as any,
     });
@@ -68,7 +73,7 @@ function CheckboxField<T extends FieldValues = FieldValues>({
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (isReactHookForm) {
+    if (isReactHookForm && fieldProps.onChange) {
       fieldProps.onChange(event);
     } else {
       onChange?.(event.target.checked);

@@ -67,6 +67,7 @@ export default function Login() {
                   placeholder="you@example.com"
                   control={control}
                   required
+                  autoComplete="email"
                 />
               </div>
 
@@ -81,6 +82,7 @@ export default function Login() {
                   control={control}
                   required
                   showPasswordToggle={true}
+                  autoComplete="current-password"
                 />
               </div>
 

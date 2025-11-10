@@ -70,14 +70,25 @@ const Tabs: React.FC<TabsProps> = ({
   return (
     <div className={`tabs-container ${className}`}>
       {/* Tab Headers */}
-      <div className="tabs">
+      <div className="tabs" role="tablist">
         {items.map((item) => (
           <button
             key={item.key}
+            role="tab"
+            id={`tab-${item.key}`}
+            aria-controls={`panel-${item.key}`}
+            aria-selected={activeKey === item.key}
+            tabIndex={activeKey === item.key ? 0 : -1}
             className={`tab ${activeKey === item.key ? 'active' : ''} ${
               item.disabled ? 'disabled' : ''
             }`}
             onClick={() => handleTabClick(item.key, item.disabled)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                handleTabClick(item.key, item.disabled)
+              }
+            }}
             disabled={item.disabled}
           >
             {item.icon && <span className="tab-icon">{item.icon}</span>}
@@ -91,6 +102,11 @@ const Tabs: React.FC<TabsProps> = ({
         {items.map((item) => (
           <div
             key={item.key}
+            role="tabpanel"
+            id={`panel-${item.key}`}
+            aria-labelledby={`tab-${item.key}`}
+            hidden={activeKey !== item.key}
+            tabIndex={0}
             className={`tab-content ${activeKey === item.key ? 'active' : ''}`}
           >
             {item.content}

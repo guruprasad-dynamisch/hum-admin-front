@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { useController } from 'react-hook-form';
+import { useController, Control, FieldValues, RegisterOptions } from 'react-hook-form';
 import PhoneInput from 'react-phone-number-input';
 import { E164Number } from 'libphonenumber-js/core';
 import 'react-phone-number-input/style.css';
@@ -18,8 +18,8 @@ interface PhoneInputProps {
     onChange?: (value?: E164Number) => void;
     onBlur?: () => void;
     mode?: 'standalone' | 'react-hook-form';
-    control?: any;
-    rules?: any;
+    control?: Control<FieldValues>;
+    rules?: RegisterOptions;
     required?: boolean;
     international?: boolean;
     initialValueFormat?: 'national';
@@ -52,7 +52,15 @@ const CustomPhoneInput = forwardRef<any, PhoneInputProps>(
 
         // Handle react-hook-form mode
         const isReactHookForm = mode === 'react-hook-form' && control;
-        let fieldProps: any = {};
+        let fieldProps: {
+            ref?: React.Ref<any>
+            value?: E164Number | string
+            onChange: (value?: E164Number) => void
+            onBlur: () => void
+        } = {
+            onChange: noop,
+            onBlur: noop
+        };
         let error = null;
 
         if (isReactHookForm) {
@@ -87,8 +95,8 @@ const CustomPhoneInput = forwardRef<any, PhoneInputProps>(
             ...(isReactHookForm ? fieldProps : {
                 ref: ref,
                 value: value,
-                onChange: onChange || noop,
-                onBlur: onBlur,
+                onChange: onChange ?? noop,
+                onBlur: onBlur ?? noop,
             }),
         };
 

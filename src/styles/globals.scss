@@ -44,6 +44,19 @@ a {
   color: $status-error;
 }
 
+/* Screen reader only - hides content visually but keeps it accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* Autofill styles for all inputs */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -248,6 +261,26 @@ input:autofill {
     outline: 2px solid $primary-gold;
     outline-offset: 2px;
   }
+}
+
+/* Global focus-visible styles for accessibility */
+*:focus-visible {
+  outline: 2px solid $primary-gold;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Ensure all interactive elements have visible focus indicators */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+  outline: 2px solid $primary-gold;
+  outline-offset: 2px;
 }
 
 /* Loading spinner */

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { useController } from 'react-hook-form'
+import { useController, Control, FieldValues, RegisterOptions } from 'react-hook-form'
 import { cn } from '@utils/classNames'
 import '@styles/fields/select-field.scss'
 
@@ -20,9 +20,9 @@ interface SelectFieldProps {
   /** Mode of operation */
   mode?: 'standalone' | 'react-hook-form'
   /** React Hook Form control */
-  control?: any
+  control?: Control<FieldValues>
   /** React Hook Form validation rules */
-  rules?: any
+  rules?: RegisterOptions
   /** Standalone mode value */
   value?: string
   /** Standalone mode onChange handler */
@@ -64,7 +64,12 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
   ) => {
     // Handle react-hook-form mode
     const isReactHookForm = mode === 'react-hook-form' && control && name
-    let fieldProps: any = {}
+    let fieldProps: {
+      ref?: React.Ref<HTMLSelectElement>
+      value?: string
+      onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
+      onBlur?: () => void
+    } = {}
     let error = null
 
     if (isReactHookForm) {
