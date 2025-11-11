@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Modal } from 'react-bootstrap';
 import { cn } from './classNames';
+import { logger } from './logger';
 import '../styles/components/popup.scss';
 
 /**
@@ -266,7 +267,7 @@ const showDialog = (
           closeDialog();
         }
       } catch (error) {
-        console.error('Error in dialog button handler:', error);
+        logger.error('Error in dialog button handler', error);
         setButtonStates(prev => ({ ...prev, [index]: false }));
       }
     };

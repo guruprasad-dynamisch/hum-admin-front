@@ -12,6 +12,7 @@ import { USER_ROLE_OPTIONS, USER_STATUS_OPTIONS } from '@config/users/filterOpti
 import { UserFormData } from '@validations/user-validations'
 import { useModal } from '@hooks/index'
 import { exportToCSV } from '@utils/exportHelpers'
+import { logger } from '@utils/logger'
 import '@styles/components/user-table.scss'
 
 export default function Users() {
@@ -42,7 +43,7 @@ export default function Users() {
 
     // Export to CSV with date-stamped filename
     exportToCSV(exportData, `users_export_12_02_2025}`)
-    console.log(`Exported ${users.length} users to CSV`)
+    logger.info(`Exported ${users.length} users to CSV`)
   }
 
   const handleEditUser = (user: User) => {
@@ -74,7 +75,7 @@ export default function Users() {
 
   const handleInviteSubmit = async (emails: string[]) => {
     // TODO: Implement actual invite API call
-    console.log('Sending invites to:', emails)
+    logger.info('Sending invites to', emails)
     // For now, just close the modal
     inviteModal.close()
   }

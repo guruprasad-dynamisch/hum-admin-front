@@ -3,6 +3,7 @@ import { useForm, useController, Control, FieldValues } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import PrimaryBtn from '@components/buttons/PrimaryBtn';
 import { otpSchema, OtpFormData } from '@validations/register-validations';
+import { logger } from '@utils/logger';
 import '@styles/components/otp-verification.scss';
 
 interface OtpVerificationProps {
@@ -232,7 +233,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
 
     // Standalone mode - call onVerify callback
     if (!onVerify) {
-      console.error('onVerify callback is required in standalone mode');
+      logger.error('onVerify callback is required in standalone mode');
       return;
     }
 
@@ -268,7 +269,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({
       clearErrors('code');
       inputRefs.current[0]?.focus();
     } catch (error) {
-      console.error('Failed to resend OTP:', error);
+      logger.error('Failed to resend OTP', error);
       setError('code', { 
         message: error instanceof Error ? error.message : 'Failed to resend code. Please try again.' 
       });

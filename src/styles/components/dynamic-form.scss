@@ -14,32 +14,32 @@
   @media (max-width: $breakpoint-mobile) {
     grid-template-columns: 1fr;
     
-    .form-grid-item {
-      grid-column: span 1 !important;
+    .form-grid-item[style*="grid-column"] {
+      grid-column: span 1;
     }
   }
 
   @media (min-width: calc($breakpoint-mobile + 1px)) and (max-width: $breakpoint-tablet) {
-    .form-grid-item {
-      grid-column: span var(--sm-span, 12) !important;
+    .form-grid-item[style*="grid-column"] {
+      grid-column: span var(--sm-span, 12);
     }
   }
 
   @media (min-width: calc($breakpoint-tablet + 1px)) and (max-width: $breakpoint-desktop) {
-    .form-grid-item {
-      grid-column: span var(--md-span, 12) !important;
+    .form-grid-item[style*="grid-column"] {
+      grid-column: span var(--md-span, 12);
     }
   }
 
   @media (min-width: calc($breakpoint-desktop + 1px)) and (max-width: $breakpoint-large-desktop) {
-    .form-grid-item {
-      grid-column: span var(--lg-span, 12) !important;
+    .form-grid-item[style*="grid-column"] {
+      grid-column: span var(--lg-span, 12);
     }
   }
 
   @media (min-width: calc($breakpoint-large-desktop + 1px)) {
-    .form-grid-item {
-      grid-column: span var(--xl-span, 12) !important;
+    .form-grid-item[style*="grid-column"] {
+      grid-column: span var(--xl-span, 12);
     }
   }
 }

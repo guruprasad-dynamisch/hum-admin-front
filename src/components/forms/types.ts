@@ -25,18 +25,18 @@ export type {
  * Utility type to extract form data type from field config
  */
 export type FormDataFromFields<T extends readonly { name: string; type: string }[]> = {
-  [K in T[number]['name']]: any;
+  [K in T[number]['name']]: unknown;
 };
 
 /**
  * Utility type for field change handler
  */
-export type FieldChangeHandler = (name: string, value: any) => void;
+export type FieldChangeHandler = (name: string, value: unknown) => void;
 
 /**
  * Utility type for form submit handler
  */
-export type FormSubmitHandler<T = any> = (data: T) => void | Promise<void>;
+export type FormSubmitHandler<T = Record<string, unknown>> = (data: T) => void | Promise<void>;
 
 /**
  * Utility type for form errors
@@ -46,4 +46,4 @@ export type FormErrors = Record<string, string>;
 /**
  * Utility type for form values
  */
-export type FormValues = Record<string, any>;
+export type FormValues = Record<string, unknown>;

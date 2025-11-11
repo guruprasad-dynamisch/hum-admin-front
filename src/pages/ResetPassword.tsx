@@ -9,6 +9,7 @@ import "@styles/pages/reset-password.scss";
 import { getRouteByKey } from "@utils/helpers";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import Logo from "@components/common/Logo";
+import { logger } from "@utils/logger";
 
 /**
  * Reset Password Page Component
@@ -38,7 +39,7 @@ const ResetPassword: React.FC = () => {
    */
   const onSubmit: SubmitHandler<ResetPasswordFormData> = async (data) => {
     if (!token) {
-      console.error('Reset token is missing');
+      logger.error('Reset token is missing');
       // TODO: Show error toast/notification
       return;
     }
@@ -59,7 +60,7 @@ const ResetPassword: React.FC = () => {
         navigate(getRouteByKey('login'));
       }, 3000);
     } catch (error) {
-      console.error('Failed to reset password:', error);
+      logger.error('Failed to reset password', error);
       // TODO: Show error toast/notification
     } finally {
       setIsLoading(false);

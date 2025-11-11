@@ -1,12 +1,12 @@
 @use '../variables' as *;
 
 // Base button styles
-.hum-btn {
+.hum-btn:not(.custom-padding) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: $spacing-sm;
-  padding: $spacing-sm $spacing-lg !important;
+  padding: $spacing-sm $spacing-lg;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 600;

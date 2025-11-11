@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from '@redux/store'
 import { selectSidebarOpen, setSidebarOpen } from '@redux/slices/miscSlice'
 import { cn } from '@utils/classNames'
+import { BREAKPOINTS } from '@constants/breakpoint-constants'
+import { debounce } from '@utils/helpers'
 import Sidebar from './Sidebar'
 import '@styles/components/protected-layout.scss'
 
@@ -13,7 +15,7 @@ export default function ProtectedLayout() {
 
   // Set initial sidebar state based on screen size (only on mount)
   useEffect(() => {
-    const mobile = window.innerWidth <= 768
+    const mobile = window.innerWidth <= BREAKPOINTS.MOBILE
     setIsMobile(mobile)
 
     // Collapse sidebar initially if on mobile
@@ -24,8 +26,8 @@ export default function ProtectedLayout() {
 
   // Check if mobile on resize and auto-toggle sidebar based on screen size
   useEffect(() => {
-    const checkMobile = () => {
-      const mobile = window.innerWidth <= 768
+    const checkMobile = debounce(() => {
+      const mobile = window.innerWidth <= BREAKPOINTS.MOBILE
       const wasMobile = isMobile
 
       setIsMobile(mobile)
@@ -38,11 +40,14 @@ export default function ProtectedLayout() {
       else if (!mobile && wasMobile && !sidebarOpen) {
         dispatch(setSidebarOpen(true))
       }
-    }
+    }, 150)
 
     window.addEventListener('resize', checkMobile)
 
-    return () => window.removeEventListener('resize', checkMobile)
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+      checkMobile.flush()
+    }
   }, [isMobile, sidebarOpen, dispatch])
 
   const handleToggleSidebar = (open: boolean) => {

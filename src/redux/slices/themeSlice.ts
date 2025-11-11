@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
+import { logger } from '@utils/logger';
 
 export type Theme = 'light' | 'dark';
 
@@ -33,7 +34,7 @@ const themeSlice = createSlice({
       try {
         localStorage.setItem(THEME_STORAGE_KEY, action.payload);
       } catch (error) {
-        console.error('Failed to save theme to localStorage:', error);
+        logger.error('Failed to save theme to localStorage', error);
       }
       // Apply theme to document
       document.documentElement.setAttribute('data-theme', action.payload);
@@ -45,7 +46,7 @@ const themeSlice = createSlice({
       try {
         localStorage.setItem(THEME_STORAGE_KEY, newTheme);
       } catch (error) {
-        console.error('Failed to save theme to localStorage:', error);
+        logger.error('Failed to save theme to localStorage', error);
       }
       // Apply theme to document
       document.documentElement.setAttribute('data-theme', newTheme);

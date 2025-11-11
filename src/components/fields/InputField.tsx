@@ -145,6 +145,10 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             placeholder={placeholder}
             disabled={disabled}
             autoComplete={autoComplete}
+            aria-label={!showLabel && label ? label : undefined}
+            aria-required={required}
+            aria-invalid={!!error}
+            aria-describedby={error ? `${name}-error` : helperText ? `${name}-helper` : undefined}
             className={cn('custom-input', { 
               'has-error': !!error,
               'with-icon-start': icon && iconPosition === 'start',
@@ -171,11 +175,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         </div>
         
         {helperText && !error && (
-          <div className="helper-text">{helperText}</div>
+          <div id={`${name}-helper`} className="helper-text">{helperText}</div>
         )}
         
         {error && (
-          <span className="error-feedback">
+          <span id={`${name}-error`} className="error-feedback" role="alert">
             {error.message}
           </span>
         )}

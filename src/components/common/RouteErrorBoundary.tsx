@@ -1,5 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react'
 import { useNavigate, NavigateFunction } from 'react-router-dom'
+import { logger } from '@utils/logger'
 import '@styles/components/error-boundary.scss'
 
 interface Props {
@@ -35,7 +36,7 @@ class RouteErrorBoundaryClass extends Component<Props & { navigate: NavigateFunc
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error(`Route Error (${this.props.routeName || 'Unknown'}):`, error, errorInfo)
+    logger.error(`Route Error (${this.props.routeName || 'Unknown'})`, { error, errorInfo })
     
     // Log to error reporting service if needed
     // Example: logErrorToService(error, errorInfo, { route: this.props.routeName })

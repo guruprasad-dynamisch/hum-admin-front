@@ -144,11 +144,11 @@ export const cleanErrorMessage = (message: string): string => {
     return message.replace(/^"([^"]+)"/, (_: string, field: string) => ucFirstLetter(field));
 };
 
-export function isTruthyOrOne(value: any): boolean {
+export function isTruthyOrOne(value: unknown): boolean {
     return value === true || value == 1;
 }
 
-export function isFalsyOrZero(value: any): boolean {
+export function isFalsyOrZero(value: unknown): boolean {
     return value === false || value == 0;
 }
 

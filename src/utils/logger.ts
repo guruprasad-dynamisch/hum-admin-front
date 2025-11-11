@@ -9,7 +9,7 @@ import { IS_PRODUCTION } from '@config/config';
 type LogLevel = 'info' | 'warn' | 'error';
 
 class Logger {
-  private log(level: LogLevel, message: string, data?: any) {
+  private log(level: LogLevel, message: string, data?: unknown) {
     if (IS_PRODUCTION) {
       // In production, you would send to a logging service (e.g., Sentry, LogRocket)
       // For now, we'll suppress console output to avoid exposing internals
@@ -25,15 +25,15 @@ class Logger {
     }
   }
 
-  info(message: string, data?: any) {
+  info(message: string, data?: unknown) {
     this.log('info', message, data);
   }
 
-  warn(message: string, data?: any) {
+  warn(message: string, data?: unknown) {
     this.log('warn', message, data);
   }
 
-  error(message: string, data?: any) {
+  error(message: string, data?: unknown) {
     this.log('error', message, data);
   }
 }

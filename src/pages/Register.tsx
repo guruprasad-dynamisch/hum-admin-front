@@ -9,6 +9,7 @@ import "@styles/pages/register.scss";
 import { getRouteByKey } from "@utils/helpers";
 import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "@components/common/Logo";
+import { logger } from "@utils/logger";
 
 /**
  * Production-ready Registration Page Component
@@ -61,7 +62,7 @@ const Register: React.FC = () => {
       // setShowOtpSection(true);
       navigate(getRouteByKey('login'));
     } catch (error) {
-      console.error('Failed to send OTP:', error);
+      logger.error('Failed to send OTP', error);
       // TODO: Show error toast/notification
     } finally {
       setIsLoading(false);
@@ -118,7 +119,7 @@ const Register: React.FC = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
     } catch (error) {
-      console.error('Failed to resend OTP:', error);
+      logger.error('Failed to resend OTP', error);
       throw error;
     }
   };

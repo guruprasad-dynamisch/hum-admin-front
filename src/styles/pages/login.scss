@@ -1,4 +1,5 @@
 @use '../variables' as *;
+@use './_shared-auth-buttons' as *;
 
 // Login Page Styles - Based on login1.html design
 .login-page {
@@ -178,40 +179,7 @@
 
   // Login Button - Override PrimaryBtn styles
   .login-btn {
-    width: 100%;
-    padding: 14px !important;
-    background: $primary-gold !important;
-    color: $bg-primary !important;
-    border: none;
-    border-radius: $border-radius-sm !important;
-    font-size: 16px;
-    font-weight: $font-weight-semibold;
-    cursor: pointer;
-    transition: $transition-default;
-
-    &:hover:not(:disabled) {
-      background: $primary-gold-dark !important;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px $primary-gold-medium !important;
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-    }
-
-    &.Mui-disabled,
-    &:disabled {
-      background: #444 !important;
-      color: $text-secondary !important;
-      cursor: not-allowed;
-      transform: none;
-      opacity: 1 !important;
-    }
-
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px $primary-gold-light !important;
-    }
+    @include auth-submit-button;
   }
 
   // Divider

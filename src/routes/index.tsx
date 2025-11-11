@@ -51,11 +51,11 @@ const NotFoundWrapper = () => (
  * with role-based protection and error boundaries applied at each level
  */
 const convertToRouteObjects = (routes: ProtectedRouteConfig[]): RouteObject[] => {
-  return routes.map(({ path, element: Element, allowedRoles, children, title }) => {
+  return routes.map(({ path, element: Element, allowedRoles, children, title }, index) => {
     const routeObject: RouteObject = {
       path,
       element: (
-        <RouteErrorBoundary routeName={title}>
+        <RouteErrorBoundary key={`protected-${path}-${index}`} routeName={title}>
           <RoleBasedRoute allowedRoles={allowedRoles}>
             <Suspense fallback={<PageLoader />}>
               <Element />
@@ -78,16 +78,16 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <ErrorBoundary>
+      <ErrorBoundary key="root-error-boundary">
         <AuthInitWrapper />
       </ErrorBoundary>
     ),
     children: [
       // Public routes with Suspense and error boundaries
-      ...publicRoutes.map(({ path, element: Element, title }) => ({
+      ...publicRoutes.map(({ path, element: Element, title }, index) => ({
         path,
         element: (
-          <RouteErrorBoundary routeName={title}>
+          <RouteErrorBoundary key={`public-${path}-${index}`} routeName={title}>
             <PublicRouteWrapper>
               <Suspense fallback={<PageLoader />}>
                 <Element />
@@ -100,7 +100,7 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: (
-          <ErrorBoundary>
+          <ErrorBoundary key="protected-layout-error-boundary">
             <ProtectedLayoutWrapper />
           </ErrorBoundary>
         ),

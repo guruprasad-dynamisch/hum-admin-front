@@ -2,6 +2,7 @@ import { USER_KEY, REMEMBER_ME_KEY } from "@constants/auth-constants";
 import { User } from "@models/auth.types";
 import moment from 'moment';
 import { REMEMBER_ME_DURATION } from '@config/config';
+import { logger } from './logger';
 
 // Re-export User type as PublicUser for backward compatibility
 export type PublicUser = User;
@@ -23,7 +24,7 @@ function parseRememberMeDuration(duration: string): { amount: number; unit: mome
   const match = duration.match(/^(\d+)(d|m|y)$/);
   
   if (!match || !match[1]) {
-    console.warn(`Invalid REMEMBER_ME_DURATION format: ${duration}. Using default 7d.`);
+    logger.warn(`Invalid REMEMBER_ME_DURATION format: ${duration}. Using default 7d.`);
     return { amount: 7, unit: 'days' };
   }
 
@@ -84,7 +85,7 @@ export function getRememberMeSession(): RememberMeSession | null {
     if (!data) return null;
     return JSON.parse(data) as RememberMeSession;
   } catch (error) {
-    console.error('Error parsing remember me session:', error);
+    logger.error('Error parsing remember me session', error);
     return null;
   }
 }
@@ -114,12 +115,12 @@ export function isRememberMeSessionValid(): boolean {
     const isValid = currentDateTime.isBefore(expirationDateTime);
     
     if (!isValid) {
-      console.log('Remember me session expired');
+      logger.info('Remember me session expired');
     }
     
     return isValid;
   } catch (error) {
-    console.error('Error checking remember me session validity:', error);
+    logger.error('Error checking remember me session validity', error);
     return false;
   }
 }
@@ -151,7 +152,7 @@ export function getUser(): PublicUser | null {
     
     return null;
   } catch (error) {
-    console.error('Error parsing user data from storage:', error);
+    logger.error('Error parsing user data from storage', error);
     return null;
   }
 }

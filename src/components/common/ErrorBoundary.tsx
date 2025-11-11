@@ -1,4 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react'
+import { logger } from '@utils/logger'
 import '@styles/components/error-boundary.scss'
 
 interface Props {
@@ -37,8 +38,8 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // Log error to console in development
-    console.error('Error Boundary caught an error:', error, errorInfo)
+    // Log error using centralized logger
+    logger.error('Error Boundary caught an error', { error, errorInfo })
     
     // You can also log the error to an error reporting service here
     // Example: logErrorToService(error, errorInfo)

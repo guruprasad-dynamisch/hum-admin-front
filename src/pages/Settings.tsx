@@ -10,6 +10,7 @@ import '@styles/pages/settings.scss'
 import { useAppSelector, useAppDispatch } from '@redux/store'
 import { selectUser, updateAvatarUrl } from '@redux/slices/authSlice'
 import { getRoleDisplayName, Role } from '@constants/roles'
+import { logger } from '@utils/logger'
 
 export default function Settings() {
   const navigate = useNavigate()
@@ -31,17 +32,17 @@ export default function Settings() {
   }
 
   const handlePersonalInfoSubmit = (data: PersonalInfoFormData) => {
-    console.log('Personal info submitted:', data)
+    logger.info('Personal info submitted', data)
     alert('Profile updated successfully!')
   }
 
   const handlePasswordChange = (data: any) => {
-    console.log('Password changed:', data)
+    logger.info('Password changed', data)
     alert('Password updated successfully!')
   }
 
   const handleTwoFactorChange = (settings: any) => {
-    console.log('Two-factor settings changed:', settings)
+    logger.info('Two-factor settings changed', settings)
   }
 
   const handleDeleteAccount = () => {
@@ -51,7 +52,7 @@ export default function Settings() {
   }
 
   const handleNotificationsChange = (settings: any) => {
-    console.log('Notification settings changed:', settings)
+    logger.info('Notification settings changed', settings)
   }
 
   const handleRevokeSession = (sessionId: string) => {

@@ -5,6 +5,7 @@ import SplashScreen from "./SplashScreen";
 import { userInfoRequest } from "../api/auth";
 import { Role } from "../constants/roles";
 import { getUser, clearAuthData } from "@utils/auth";
+import { logger } from "@utils/logger";
 
 import { AuthInitProps } from '@models/auth.types';
 
@@ -41,7 +42,7 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
       
       if (!storedUser) {
         // No user in storage, clear everything and finish initialization
-        console.log('No user found in storage');
+        logger.info('No user found in storage');
         if (isMountedRef.current) {
           clearAuthData();
           dispatch(clearAuthState());
@@ -51,7 +52,7 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
       }
 
       // User found in storage, restore to Redux state
-      console.log('User found in storage, restoring session');
+      logger.info('User found in storage, restoring session');
       if (isMountedRef.current) {
         dispatch(setAuthState({ user: storedUser }));
       }
@@ -83,7 +84,7 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
           }
         } else {
           // Backend validation failed, clear everything
-          console.log('Backend validation failed');
+          logger.info('Backend validation failed');
           if (isMountedRef.current) {
             clearAuthData();
             dispatch(clearAuthState());
@@ -91,7 +92,7 @@ const AuthInit: React.FC<AuthInitProps> = ({ children }) => {
         }
       } catch (error) {
         // Backend validation error (e.g., 401), clear everything
-        console.error("Auth validation error:", error);
+        logger.error("Auth validation error", error);
         if (isMountedRef.current) {
           clearAuthData();
           dispatch(clearAuthState());
