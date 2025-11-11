@@ -305,7 +305,7 @@
 // Responsive Design
 // ============================================
 
-@media (max-width: 576px) {
+@media (max-width: $breakpoint-sm) {
   .custom-popup-dialog {
     max-width: 95%;
     margin: 10px auto;

@@ -7,6 +7,8 @@ import { Line, Bar } from 'react-chartjs-2'
 import { cn } from '@utils/classNames'
 import { CHART_COLORS } from '@constants/chart-colors'
 import TextBtn from '@components/buttons/TextBtn'
+import ChartErrorBoundary from '@components/common/ChartErrorBoundary'
+import '@styles/components/chart-error-boundary.scss'
 
 // Register Chart.js components
 ChartJS.register(
@@ -173,11 +175,13 @@ function DashboardChart({
         )}
       </div>
       <div className="chart-container">
-        {type === 'line' ? (
-          <Line ref={chartRef} data={chartData} options={options as ChartOptions<'line'>} />
-        ) : (
-          <Bar ref={chartRef} data={chartData} options={options as ChartOptions<'bar'>} />
-        )}
+        <ChartErrorBoundary>
+          {type === 'line' ? (
+            <Line ref={chartRef} data={chartData} options={options as ChartOptions<'line'>} />
+          ) : (
+            <Bar ref={chartRef} data={chartData} options={options as ChartOptions<'bar'>} />
+          )}
+        </ChartErrorBoundary>
       </div>
     </div>
   )

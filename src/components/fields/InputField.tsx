@@ -86,6 +86,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       onBlur?: () => void
     } = {}
     let error = null
+    let inputRef: React.Ref<HTMLInputElement> = ref
 
     if (isReactHookForm) {
       const {
@@ -99,12 +100,12 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       })
 
       fieldProps = {
-        ref: fieldRef,
         value: fieldValue || '',
         onChange: fieldOnChange,
         onBlur: fieldOnBlur,
       }
       error = fieldError
+      inputRef = fieldRef // Use react-hook-form's ref
     }
 
     // Determine the actual input type (handle password visibility)
@@ -112,7 +113,6 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
 
     // Standalone mode props
     const standaloneProps = !isReactHookForm ? {
-      ref: ref,
       value: value || '',
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = type === 'number' ? Number(e.target.value) : e.target.value
@@ -140,6 +140,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           <input
             {...props}
             {...(isReactHookForm ? fieldProps : standaloneProps)}
+            ref={inputRef}
             id={name}
             type={actualType}
             placeholder={placeholder}

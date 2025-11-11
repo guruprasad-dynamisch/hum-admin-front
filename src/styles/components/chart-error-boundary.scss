@@ -1,0 +1,89 @@
+@use '../variables' as *;
+
+.chart-error-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  background: $bg-secondary;
+  border: 1px solid $border-default;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+
+  .error-content {
+    text-align: center;
+    max-width: 400px;
+
+    .error-icon {
+      font-size: 48px;
+      margin-bottom: $spacing-lg;
+    }
+
+    .error-message {
+      margin-bottom: $spacing-lg;
+
+      h4 {
+        color: $status-error;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        margin-bottom: $spacing-sm;
+      }
+
+      p {
+        color: $text-secondary;
+        font-size: $font-size-sm;
+        line-height: 1.5;
+        margin-bottom: $spacing-md;
+      }
+
+      .error-details {
+        text-align: left;
+        margin-top: $spacing-md;
+        
+        summary {
+          color: $text-secondary;
+          font-size: $font-size-xs;
+          cursor: pointer;
+          margin-bottom: $spacing-sm;
+          
+          &:hover {
+            color: $primary-gold;
+          }
+        }
+
+        pre {
+          background: $bg-primary;
+          border: 1px solid $border-default;
+          border-radius: $border-radius-sm;
+          padding: $spacing-sm;
+          font-size: $font-size-xs;
+          color: $status-error;
+          overflow-x: auto;
+          white-space: pre-wrap;
+          word-break: break-word;
+        }
+      }
+    }
+
+    .retry-btn {
+      background: $primary-gold;
+      color: $bg-primary;
+      border: none;
+      border-radius: $border-radius-sm;
+      padding: $spacing-sm $spacing-lg;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: $transition-fast;
+
+      &:hover {
+        background: $primary-gold-dark;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}

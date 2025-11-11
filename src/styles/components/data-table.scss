@@ -219,7 +219,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .data-table {
     thead th,
     tbody td {

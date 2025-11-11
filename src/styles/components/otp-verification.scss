@@ -193,7 +193,7 @@
 }
 
 // Responsive Design
-@media (max-width: 576px) {
+@media (max-width: $breakpoint-sm) {
   .otp-verification {
     .otp-inputs {
       gap: 8px;

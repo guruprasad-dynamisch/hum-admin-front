@@ -15,11 +15,11 @@
     width: 100%;
 
     // Larger container for tablets and desktop
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-mobile) {
       max-width: 800px;
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: $breakpoint-tablet) {
       max-width: 900px;
     }
   }
@@ -69,7 +69,7 @@
     border: 1px solid $border-default;
 
     // Larger padding for tablets and desktop
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-mobile) {
       padding: 50px;
     }
 
@@ -95,7 +95,7 @@
     margin-bottom: 0;
 
     // 2 columns on larger screens with equal width
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-mobile) {
       grid-template-columns: repeat(2, 1fr); // Equal width columns
       gap: 24px; // Slightly larger gap for better spacing
     }

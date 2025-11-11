@@ -87,7 +87,7 @@
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: $breakpoint-xs) {
     flex-direction: column;
     
     button {

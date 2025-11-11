@@ -78,7 +78,7 @@
 }
 
 // Responsive
-@media (max-width: 1200px) { // Custom breakpoint for charts
+@media (max-width: $breakpoint-desktop) { // Custom breakpoint for charts
   .charts-grid {
     grid-template-columns: 1fr 1fr;
     gap: $spacing-lg;

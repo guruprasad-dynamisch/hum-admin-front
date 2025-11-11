@@ -2,7 +2,9 @@ import { useRef } from 'react'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions } from 'chart.js'
 import { Doughnut } from 'react-chartjs-2'
 import { CHART_COLORS } from '@constants/chart-colors'
+import ChartErrorBoundary from '@components/common/ChartErrorBoundary'
 import '@styles/components/pie-chart.scss'
+import '@styles/components/chart-error-boundary.scss'
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend)
@@ -76,7 +78,9 @@ export default function PieChart({
       </div>
       <div className="pie-chart-container">
         <div className="chart-wrapper">
-          <Doughnut ref={chartRef} data={chartData} options={options} />
+          <ChartErrorBoundary>
+            <Doughnut ref={chartRef} data={chartData} options={options} />
+          </ChartErrorBoundary>
         </div>
         {showLegend && (
           <div className="pie-legend">

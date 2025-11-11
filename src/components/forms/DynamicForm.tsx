@@ -293,11 +293,6 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
       }
     }, [formMethods, methods]);
 
-    const getButtonClassName = () => {
-      if (submitButtonSize === 'small') return 'btn-small'
-      if (submitButtonSize === 'large') return 'btn-large'
-      return ''
-    }
 
     return (
       <form
@@ -403,11 +398,6 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
     }
   };
 
-  const getButtonClassName = () => {
-    if (submitButtonSize === 'small') return 'btn-small'
-    if (submitButtonSize === 'large') return 'btn-large'
-    return ''
-  }
 
   return (
     <form
