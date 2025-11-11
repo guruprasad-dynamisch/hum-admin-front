@@ -14,24 +14,39 @@ export const store = configureStore({
   },
 })
 
-// Debounced localStorage sync to prevent excessive writes
-const syncAuthToStorage = debounce((state: RootState) => {
+// Synchronous localStorage sync for immediate writes (e.g., logout)
+const syncAuthToStorageImmediate = (state: RootState) => {
   const { user, isAuthenticated } = state.auth
   
   if (isAuthenticated && user) {
-    // Sync authenticated user to localStorage
-    // Note: rememberMe preference is handled during login
     setUser(user, true)
   } else {
-    // Clear storage when logged out
     clearAuthData()
   }
-}, 300)
+}
+
+// Debounced localStorage sync to prevent excessive writes during updates
+const syncAuthToStorage = debounce(syncAuthToStorageImmediate, 300)
+
+// Track previous auth state to detect logout events
+let previousIsAuthenticated = store.getState().auth.isAuthenticated
 
 // Subscribe to store changes and sync auth state to localStorage
 store.subscribe(() => {
   const state = store.getState()
-  syncAuthToStorage(state)
+  const currentIsAuthenticated = state.auth.isAuthenticated
+  
+  // Detect logout: transition from authenticated to unauthenticated
+  if (previousIsAuthenticated && !currentIsAuthenticated) {
+    // Flush any pending debounced writes and perform synchronous logout
+    syncAuthToStorage.flush()
+    syncAuthToStorageImmediate(state)
+  } else {
+    // Use debounced sync for regular updates
+    syncAuthToStorage(state)
+  }
+  
+  previousIsAuthenticated = currentIsAuthenticated
 })
 
 export type RootState = ReturnType<typeof store.getState>

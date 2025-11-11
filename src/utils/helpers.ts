@@ -178,7 +178,7 @@ export function getUserInitials(name?: string, fallback: string = 'AU'): string 
  * @template T - The type of the function to debounce
  * @param {T} func - The function to debounce
  * @param {number} wait - The number of milliseconds to delay
- * @returns {(...args: Parameters<T>) => void} The debounced function
+ * @returns {DebouncedFunction<T>} The debounced function with flush method
  * 
  * @example
  * const debouncedSearch = debounce((query: string) => {
@@ -186,20 +186,43 @@ export function getUserInitials(name?: string, fallback: string = 'AU'): string 
  * }, 300);
  * 
  * debouncedSearch('hello'); // Will only execute after 300ms of no calls
+ * debouncedSearch.flush(); // Execute immediately
  */
+export interface DebouncedFunction<T extends (...args: any[]) => any> {
+    (...args: Parameters<T>): void;
+    flush: () => void;
+}
+
 export function debounce<T extends (...args: any[]) => any>(
     func: T,
     wait: number
-): (...args: Parameters<T>) => void {
+): DebouncedFunction<T> {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    let lastArgs: Parameters<T> | null = null;
 
-    return function debounced(...args: Parameters<T>) {
+    const debounced = function(...args: Parameters<T>) {
+        lastArgs = args;
+        
         if (timeoutId !== null) {
             clearTimeout(timeoutId);
         }
 
         timeoutId = setTimeout(() => {
             func(...args);
+            lastArgs = null;
         }, wait);
+    } as DebouncedFunction<T>;
+
+    debounced.flush = function() {
+        if (timeoutId !== null) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+        }
+        if (lastArgs !== null) {
+            func(...lastArgs);
+            lastArgs = null;
+        }
     };
+
+    return debounced;
 }

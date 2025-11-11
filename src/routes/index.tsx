@@ -7,6 +7,8 @@ import ProtectedLayout from '../components/ProtectedLayout'
 import PageLoader from '../components/PageLoader'
 import PageTitle from '../components/PageTitle'
 import NotFound from '../pages/NotFound'
+import ErrorBoundary from '../components/common/ErrorBoundary'
+import RouteErrorBoundary from '../components/common/RouteErrorBoundary'
 import { publicRoutes } from './publicRoutes'
 import { protectedRoutes } from './protectedRoutes'
 import AuthInit from '../components/AuthInit'
@@ -44,18 +46,20 @@ const NotFoundWrapper = () => (
 
 /**
  * Recursively converts route configuration to React Router route objects
- * with role-based protection applied at each level
+ * with role-based protection and error boundaries applied at each level
  */
 const convertToRouteObjects = (routes: ProtectedRouteConfig[]): RouteObject[] => {
-  return routes.map(({ path, element: Element, allowedRoles, children }) => {
+  return routes.map(({ path, element: Element, allowedRoles, children, title }) => {
     const routeObject: RouteObject = {
       path,
       element: (
-        <RoleBasedRoute allowedRoles={allowedRoles}>
-          <Suspense fallback={<PageLoader />}>
-            <Element />
-          </Suspense>
-        </RoleBasedRoute>
+        <RouteErrorBoundary routeName={title}>
+          <RoleBasedRoute allowedRoles={allowedRoles}>
+            <Suspense fallback={<PageLoader />}>
+              <Element />
+            </Suspense>
+          </RoleBasedRoute>
+        </RouteErrorBoundary>
       ),
     }
 
@@ -71,23 +75,33 @@ const convertToRouteObjects = (routes: ProtectedRouteConfig[]): RouteObject[] =>
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <AuthInitWrapper />,
+    element: (
+      <ErrorBoundary>
+        <AuthInitWrapper />
+      </ErrorBoundary>
+    ),
     children: [
-      // Public routes with Suspense for lazy loading
-      ...publicRoutes.map(({ path, element: Element }) => ({
+      // Public routes with Suspense and error boundaries
+      ...publicRoutes.map(({ path, element: Element, title }) => ({
         path,
         element: (
-          <PublicRouteWrapper>
-            <Suspense fallback={<PageLoader />}>
-              <Element />
-            </Suspense>
-          </PublicRouteWrapper>
+          <RouteErrorBoundary routeName={title}>
+            <PublicRouteWrapper>
+              <Suspense fallback={<PageLoader />}>
+                <Element />
+              </Suspense>
+            </PublicRouteWrapper>
+          </RouteErrorBoundary>
         ),
       })),
-      // Protected routes
+      // Protected routes with layout error boundary
       {
         path: '/',
-        element: <ProtectedLayoutWrapper />,
+        element: (
+          <ErrorBoundary>
+            <ProtectedLayoutWrapper />
+          </ErrorBoundary>
+        ),
         children: [
           {
             index: true,
