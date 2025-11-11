@@ -51,6 +51,8 @@ export default function SidebarItem({ label, path, icon, onClick, collapsed = fa
           'active': isActive
         })}
         onClick={handleClick}
+        aria-label={label}
+        role="menuitem"
       >
         {buttonContent}
       </NavLink>
@@ -74,6 +76,8 @@ export default function SidebarItem({ label, path, icon, onClick, collapsed = fa
       className={cn('sidebar-nav-item', { 'collapsed': collapsed })}
       onClick={handleClick}
       type="button"
+      aria-label={label}
+      role="menuitem"
     >
       {buttonContent}
     </button>

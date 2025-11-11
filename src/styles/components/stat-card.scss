@@ -81,13 +81,13 @@
 }
 
 // Responsive
-@media (max-width: 1024px) {
+@media (max-width: $breakpoint-tablet) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .stats-grid {
     grid-template-columns: 1fr;
     padding: 0 $spacing-lg;
@@ -109,7 +109,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .stats-grid {
     padding: 0 $spacing-md;
   }

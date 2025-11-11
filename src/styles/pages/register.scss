@@ -277,7 +277,7 @@
   // OTP Section styles removed - now handled by OtpVerification component
 
   // Responsive Design
-  @media (max-width: 600px) {
+  @media (max-width: $breakpoint-auth) {
     padding: $spacing-md;
 
     .register-card {

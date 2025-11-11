@@ -19,15 +19,15 @@
   grid-auto-flow: dense;
   align-items: start;
   
-  @media (max-width: 1400px) {
+  @media (max-width: $breakpoint-lg) {
     // grid-template-columns: repeat(3, 1fr);
   }
   
-  @media (max-width: 1024px) {
+  @media (max-width: $breakpoint-tablet) {
     // grid-template-columns: repeat(2, 1fr);
   }
   
-  @media (max-width: 640px) {
+  @media (max-width: $breakpoint-small) {
     grid-template-columns: 1fr;
   }
 }
@@ -46,7 +46,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .audit-page-content {
     padding: $spacing-lg;
   }

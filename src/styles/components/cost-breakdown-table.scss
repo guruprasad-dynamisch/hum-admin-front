@@ -75,7 +75,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .cost-breakdown-table {
     table {
       min-width: 450px;
@@ -99,7 +99,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .cost-breakdown-table {
     table {
       min-width: 380px;

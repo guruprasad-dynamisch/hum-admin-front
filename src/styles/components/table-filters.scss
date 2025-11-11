@@ -30,7 +30,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .table-filters {
     flex-direction: column;
     align-items: stretch;

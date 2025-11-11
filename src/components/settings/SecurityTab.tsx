@@ -134,7 +134,7 @@ const SecurityTab: React.FC<SecurityTabProps> = ({
           </div>
           <PrimaryBtn
             onClick={onDeleteAccount}
-            className="btn-danger"
+            className="hum-btn-danger"
           >
             Delete Account
           </PrimaryBtn>

@@ -108,7 +108,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .tabs {
     gap: 4px;
   }
@@ -119,7 +119,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .tab {
     padding: 8px 12px;
     font-size: 12px;

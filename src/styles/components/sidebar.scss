@@ -139,7 +139,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .sidebar-logo-image {
     width: 120px;
   }

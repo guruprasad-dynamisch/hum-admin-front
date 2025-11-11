@@ -17,11 +17,11 @@
     height: var(--logo-height, auto);
     animation: pulse var(--pulse-speed, 2s) ease-in-out infinite;
     
-    @media (max-width: 768px) {
+    @media (max-width: $breakpoint-mobile) {
       width: calc(var(--logo-width, 180px) * 0.8);
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: $breakpoint-xs) {
       width: calc(var(--logo-width, 180px) * 0.6);
     }
   }

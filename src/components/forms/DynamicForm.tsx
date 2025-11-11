@@ -11,6 +11,9 @@ import PrimaryBtn from '../buttons/PrimaryBtn'
 import SecondaryBtn from '../buttons/SecondaryBtn'
 import '@styles/components/dynamic-form.scss'
 
+// Constants
+const FIELD_SPACING_MULTIPLIER = 8; // Converts spacing units to pixels (8px per unit)
+
 /**
  * Field configuration types
  */
@@ -477,7 +480,7 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
             )}
           </div>
         ) : (
-          <div className="form-stack" style={{ '--field-spacing': `${fieldSpacing * 8}px` } as React.CSSProperties}>
+          <div className="form-stack" style={{ '--field-spacing': `${fieldSpacing * FIELD_SPACING_MULTIPLIER}px` } as React.CSSProperties}>
             {fields.map((field) => (
               <div key={field.name} className="form-field">
                 <FieldRenderer
@@ -636,7 +639,7 @@ function DynamicForm<T extends FieldValues = any>(props: DynamicFormProps<T>) {
           )}
         </div>
       ) : (
-        <div className="form-stack" style={{ '--field-spacing': `${fieldSpacing * 8}px` } as React.CSSProperties}>
+        <div className="form-stack" style={{ '--field-spacing': `${fieldSpacing * FIELD_SPACING_MULTIPLIER}px` } as React.CSSProperties}>
           {fields.map((field) => (
             <div key={field.name} className="form-field">
               <FieldRenderer

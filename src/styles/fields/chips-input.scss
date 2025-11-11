@@ -155,7 +155,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .chip-item {
     max-width: 200px;
     font-size: 11px;
@@ -168,7 +168,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .chip-item {
     max-width: 150px;
     font-size: 10px;

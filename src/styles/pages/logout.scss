@@ -94,7 +94,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .logout-page {
     padding: $spacing-lg;
   }
@@ -118,7 +118,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .logout-page {
     padding: $spacing-md;
   }

@@ -53,7 +53,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .cost-stat-card {
     padding: $spacing-lg;
 

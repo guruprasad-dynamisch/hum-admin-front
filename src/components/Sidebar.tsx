@@ -46,19 +46,18 @@ const Sidebar: React.FC<SidebarProps> = ({ open: controlledOpen, onToggle, mobil
       'expanded': isOpen,
       'collapsed': !isOpen,
       'mobile-open': mobileOpen
-    })} aria-label="sidebar navigation">
+    })} aria-label="Main navigation" role="navigation">
       {/* Logo Section */}
       <div className="sidebar-logo-section">
         <div className="sidebar-logo-container">
           {isOpen && <img
             src="/assets/humanistics_logo_transparent.webp"
-            alt="Humanistics AI"
+            alt="Humanistics AI logo"
             className="sidebar-logo-image"
             loading="lazy"
             onError={(e) => {
               // Fallback to a default logo or hide if image fails to load
               e.currentTarget.style.display = 'none'
-              console.error('Failed to load sidebar logo')
             }}
           />}
         </div>
@@ -68,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open: controlledOpen, onToggle, mobil
       <div className={cn('sidebar-nav-menu', {
         'expanded': isOpen,
         'collapsed': !isOpen
-      })}>
+      })} role="menu" aria-label="Primary navigation menu">
         <SidebarSection collapsed={!isOpen}>
           {topNavItems.map((item) => (
             <SidebarItem

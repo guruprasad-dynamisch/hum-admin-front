@@ -47,7 +47,7 @@
   gap: $spacing-md;
 
   &.danger-zone {
-    .btn-danger {
+    .hum-btn-danger {
       width: auto;
     }
   }
@@ -77,7 +77,7 @@
 }
 
 // Responsive
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .security-item {
     padding: 12px;
   }

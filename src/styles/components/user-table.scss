@@ -132,7 +132,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .user-avatar {
     width: 36px;
     height: 36px;

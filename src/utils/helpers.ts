@@ -79,7 +79,11 @@ export function getRouteByKey(
     queryParams?: Record<string, string>
 ): string {
     // Flatten all routes including nested children
-    const allRoutes = [...flattenRoutes(publicRoutes as any[]), ...flattenRoutes(protectedRoutes as any[])] as any[];
+    type RouteConfig = PublicRouteConfig | ProtectedRouteConfig;
+    const allRoutes: RouteConfig[] = [
+        ...flattenRoutes(publicRoutes), 
+        ...flattenRoutes(protectedRoutes)
+    ];
     const item = findByKey(allRoutes, "key", value);
 
     if (!item?.path) return '/';

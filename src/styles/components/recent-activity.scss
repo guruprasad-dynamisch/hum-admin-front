@@ -64,7 +64,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .activity-item {
     padding: $spacing-md;
   }
@@ -84,7 +84,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .activity-list {
     gap: $spacing-md;
   }

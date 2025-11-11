@@ -78,14 +78,14 @@
 }
 
 // Responsive
-@media (max-width: 1200px) {
+@media (max-width: 1200px) { // Custom breakpoint for charts
   .charts-grid {
     grid-template-columns: 1fr 1fr;
     gap: $spacing-lg;
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: $breakpoint-tablet) {
   .charts-grid {
     grid-template-columns: 1fr;
   }
@@ -95,7 +95,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .charts-grid {
     padding: 0 $spacing-lg;
     gap: $spacing-md;
@@ -122,7 +122,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .charts-grid {
     padding: 0 $spacing-md;
   }

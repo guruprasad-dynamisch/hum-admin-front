@@ -281,7 +281,7 @@
 }
 
 // Responsive Design
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .templates-page {
     padding: 16px;
 
@@ -323,7 +323,7 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: $breakpoint-sm) {
   .templates-page {
     .template-grid {
       .template-card {

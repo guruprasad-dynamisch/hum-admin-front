@@ -185,7 +185,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .topbar {
     left: 0;
     height: auto;
@@ -229,7 +229,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .topbar {
     padding: $spacing-sm $spacing-md;
     min-height: 120px;

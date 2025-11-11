@@ -91,7 +91,7 @@
 }
 
 // Responsive
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .avatar-preview {
     width: 150px;
     height: 150px;

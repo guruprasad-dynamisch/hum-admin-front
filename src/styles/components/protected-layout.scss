@@ -28,7 +28,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .main-content {
     margin-left: 0;
     margin-top: 120px;
@@ -36,7 +36,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .main-content {
     margin-left: 0;
     margin-top: 120px;

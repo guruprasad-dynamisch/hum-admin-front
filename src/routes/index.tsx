@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { createBrowserRouter, Outlet, RouteObject, Navigate } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 import PublicRoute from './PublicRoute'
@@ -6,7 +6,6 @@ import RoleBasedRoute from './RoleBasedRoute'
 import ProtectedLayout from '../components/ProtectedLayout'
 import PageLoader from '../components/PageLoader'
 import PageTitle from '../components/PageTitle'
-import NotFound from '../pages/NotFound'
 import ErrorBoundary from '../components/common/ErrorBoundary'
 import RouteErrorBoundary from '../components/common/RouteErrorBoundary'
 import { publicRoutes } from './publicRoutes'
@@ -14,6 +13,9 @@ import { protectedRoutes } from './protectedRoutes'
 import AuthInit from '../components/AuthInit'
 import { ProtectedRouteConfig } from './types'
 import { getRouteByKey } from '../utils/helpers'
+
+// Lazy load NotFound page
+const NotFound = lazy(() => import('../pages/NotFound'))
 
 // AuthInit wrapper for router context with PageTitle
 const AuthInitWrapper = () => (

@@ -329,7 +329,7 @@
   }
 
   // Responsive Design
-  @media (max-width: 600px) {
+  @media (max-width: $breakpoint-auth) {
     padding: $spacing-md;
 
     .login-card {

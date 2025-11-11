@@ -167,7 +167,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .user-menu-info {
     display: none;
   }
@@ -181,7 +181,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .user-menu-avatar {
     width: 36px;
     height: 36px;

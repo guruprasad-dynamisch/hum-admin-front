@@ -8,6 +8,7 @@ import { clearAuthState } from '@redux/slices/authSlice';
 import { authEndpoints } from '@constants/auth-constants';
 import { logger } from '@utils/logger';
 import { tokenRefreshService } from '@services/TokenRefreshService';
+import { errorMessages, ErrorTypes, AXIOS_ERROR_CODES } from '@constants/errorHandling';
 
 /**
  * SECURITY: This API client uses httpOnly cookies for authentication.
@@ -79,9 +80,6 @@ apiClient.interceptors.response.use(
 
     // Handle network errors and timeouts
     if (!error.response) {
-      // Use error messages from errorHandling constants
-      const { errorMessages, ErrorTypes } = await import('@constants/errorHandling');
-      const { AXIOS_ERROR_CODES } = await import('@constants/errorHandling');
       if (error.code === AXIOS_ERROR_CODES.TIMEOUT) {
         logger.error('Request timeout', { url: originalRequest?.url, timeout: API_TIMEOUT });
         return Promise.reject(new Error(errorMessages[ErrorTypes.NETWORK_ERROR]));

@@ -74,7 +74,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .pie-chart-card {
     padding: $spacing-lg;
 
@@ -99,7 +99,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .pie-chart-card {
     padding: $spacing-md;
 

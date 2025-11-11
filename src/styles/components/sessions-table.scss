@@ -92,7 +92,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .sessions-table {
     thead th,
     tbody td {
@@ -110,7 +110,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .sessions-table {
     thead {
       display: none;

@@ -52,7 +52,7 @@
 }
 
 // Responsive
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .export-section {
     padding: $spacing-lg;
 
@@ -63,7 +63,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: $breakpoint-xs) {
   .export-section {
     .export-options {
       grid-template-columns: 1fr;
