@@ -20,7 +20,7 @@ interface SelectFieldProps {
   /** Mode of operation */
   mode?: 'standalone' | 'react-hook-form'
   /** React Hook Form control */
-  control?: Control<FieldValues>
+  control?: Control<any>
   /** React Hook Form validation rules */
   rules?: RegisterOptions
   /** Standalone mode value */

@@ -18,36 +18,34 @@ interface PhoneInputProps {
     onChange?: (value?: E164Number) => void;
     onBlur?: () => void;
     mode?: 'standalone' | 'react-hook-form';
-    control?: Control<FieldValues>;
+    control?: Control<any>;
     rules?: RegisterOptions;
     required?: boolean;
     international?: boolean;
     initialValueFormat?: 'national';
 }
 
-const CustomPhoneInput = forwardRef<any, PhoneInputProps>(
-    (
-        {
-            mode = 'standalone',
-            name = '',
-            label,
-            placeholder,
-            defaultCountry = 'US',
-            disabled = false,
-            className = '',
-            style,
-            value,
-            onChange,
-            onBlur,
-            control,
-            rules,
-            required = false,
-            international = true,
-            initialValueFormat,
-            ...props
-        },
-        ref
-    ) => {
+const CustomPhoneInput = (
+    {
+        mode = 'standalone',
+        name = '',
+        label,
+        placeholder,
+        defaultCountry = 'US',
+        disabled = false,
+        className = '',
+        style,
+        value,
+        onChange,
+        onBlur,
+        control,
+        rules,
+        required = false,
+        international = true,
+        initialValueFormat,
+        ...props
+    }: PhoneInputProps
+) => {
         const [countryPlaceholder, setCountryPlaceholder] = useState('');
 
         // Handle react-hook-form mode
@@ -68,9 +66,9 @@ const CustomPhoneInput = forwardRef<any, PhoneInputProps>(
                 field: { onChange: fieldOnChange, onBlur: fieldOnBlur, value: fieldValue, ref: fieldRef },
                 fieldState: { error: fieldError },
             } = useController({
-                name,
+                name: name as any,
                 control,
-                defaultValue: value || '',
+                defaultValue: (value || '') as any,
             });
 
             fieldProps = {
@@ -93,7 +91,7 @@ const CustomPhoneInput = forwardRef<any, PhoneInputProps>(
             initialValueFormat: initialValueFormat,
             className: `phone-input-field ${error ? 'phone-input-error' : ''}`,
             ...(isReactHookForm ? fieldProps : {
-                ref: ref,
+                // ref: ref, // removed ref since we're not using forwardRef
                 value: value,
                 onChange: onChange ?? noop,
                 onBlur: onBlur ?? noop,
@@ -113,8 +111,7 @@ const CustomPhoneInput = forwardRef<any, PhoneInputProps>(
                 )}
             </div>
         );
-    }
-);
+};
 
 CustomPhoneInput.displayName = 'CustomPhoneInput';
 

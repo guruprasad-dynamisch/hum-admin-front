@@ -4,7 +4,7 @@ import { useController, Control, FieldValues, Path, RegisterOptions } from 'reac
 import { cn } from '@utils/classNames';
 import '@styles/fields/checkbox-field.scss';
 
-interface CheckboxFieldProps<T extends FieldValues = FieldValues> {
+interface CheckboxFieldProps {
   /** Label text or React node for the checkbox */
   label?: React.ReactNode;
   /** Whether the checkbox is checked (standalone mode) */
@@ -18,9 +18,9 @@ interface CheckboxFieldProps<T extends FieldValues = FieldValues> {
   /** React Hook Form mode */
   mode?: 'standalone' | 'react-hook-form';
   /** React Hook Form control */
-  control?: Control<T>;
+  control?: Control<any>;
   /** React Hook Form name */
-  name?: Path<T>;
+  name?: string;
   /** React Hook Form rules */
   rules?: RegisterOptions;
   /** Checkbox ID */
@@ -29,7 +29,7 @@ interface CheckboxFieldProps<T extends FieldValues = FieldValues> {
   required?: boolean;
 }
 
-function CheckboxField<T extends FieldValues = FieldValues>({
+function CheckboxField({
   label,
   checked,
   onChange,
@@ -41,7 +41,7 @@ function CheckboxField<T extends FieldValues = FieldValues>({
   rules,
   id,
   required = false,
-}: CheckboxFieldProps<T>) {
+}: CheckboxFieldProps) {
   // React Hook Form integration
   const isReactHookForm = mode === 'react-hook-form' && control && name;
   let fieldProps: {
@@ -58,7 +58,7 @@ function CheckboxField<T extends FieldValues = FieldValues>({
       fieldState: { error: fieldError },
     } = useController({
       name: name!,
-      control: control as Control<FieldValues>,
+      control: control!,
       rules,
       defaultValue: false as any,
     });
