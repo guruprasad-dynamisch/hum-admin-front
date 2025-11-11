@@ -9,6 +9,7 @@ import "@styles/pages/forgot-password.scss";
 import { getRouteByKey } from "@utils/helpers";
 import { NavLink } from "react-router-dom";
 import Logo from "@components/common/Logo";
+import { logger } from "@utils/logger";
 
 /**
  * Forgot Password Page Component
@@ -42,7 +43,7 @@ const ForgotPassword: React.FC = () => {
 
       setEmailSent(true);
     } catch (error) {
-      console.error('Failed to send reset email:', error);
+      logger.error('Failed to send reset email:', error);
       // TODO: Show error toast/notification
     } finally {
       setIsLoading(false);

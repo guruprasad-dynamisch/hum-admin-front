@@ -3,6 +3,8 @@
  * Helper functions for exporting data to various formats
  */
 
+import { logger } from "./logger";
+
 /**
  * Export data to CSV format
  * @param data - Array of objects to export
@@ -15,7 +17,7 @@ export function exportToCSV<T extends Record<string, any>>(
   headers?: string[]
 ): void {
   if (!data || data.length === 0) {
-    console.warn('No data to export')
+    logger.warn('No data to export');
     return
   }
 
@@ -25,7 +27,7 @@ export function exportToCSV<T extends Record<string, any>>(
   // Create CSV rows
   const csvRows = [
     csvHeaders.join(','), // Header row
-    ...data.map(row => 
+    ...data.map(row =>
       csvHeaders.map(header => {
         const value = row[header]
         // Handle values with commas or quotes
@@ -73,7 +75,7 @@ function downloadFile(content: string, filename: string, mimeType: string): void
   a.href = url
   a.download = filename
   a.click()
-  
+
   // Clean up
   URL.revokeObjectURL(url)
 }

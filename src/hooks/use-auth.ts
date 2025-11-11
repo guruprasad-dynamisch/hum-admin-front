@@ -48,7 +48,6 @@ export const useAuth = () => {
             navigate(getRouteByKey('login'), { replace: true });
         } catch (error: any) {
             showError(error?.message || SOMETHING_WENT_WRONG);
-            console.error('Logout error:', error);
         }
     }, [dispatch, navigate, showError, showSuccess]);
 

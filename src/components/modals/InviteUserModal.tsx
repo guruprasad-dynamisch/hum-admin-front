@@ -56,7 +56,6 @@ const InviteUserModal: React.FC<InviteUserModalProps> = ({
       await onSubmit(emails)
       handleClose()
     } catch (err) {
-      console.error('Error sending invites:', err)
       setError('Failed to send invitations. Please try again.')
     }
   }

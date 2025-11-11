@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { logger } from './logger';
 
 // Date format constants for better maintainability
 export enum DateFormat {
@@ -71,7 +72,7 @@ export function parseDateTimeString(date: string | Date | null | undefined, type
     const formatter = formatMap[type];
     return formatter ? formatter() : String(date);
   } catch (error) {
-    console.error('Error formatting date:', error);
+    logger.error('Error formatting date:', error);
     return "";
   }
 }

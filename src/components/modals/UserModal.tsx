@@ -3,6 +3,7 @@ import Modal from '@components/common/Modal'
 import DynamicForm, { FieldConfig } from '@components/forms/DynamicForm'
 import { userSchema, UserFormData, userDefaultValues } from '@validations/user-validations'
 import { User } from '@constants/mock-users'
+import { logger } from '@utils/logger'
 
 export interface UserModalProps {
   /** Show/hide modal */
@@ -110,8 +111,7 @@ const UserModal: React.FC<UserModalProps> = ({
       await onSubmit(data)
       onClose()
     } catch (error) {
-      console.error('Error submitting user form:', error)
-      // Error handling can be added here (e.g., show toast notification)
+      logger.error('user update error', error);
     }
   }
 

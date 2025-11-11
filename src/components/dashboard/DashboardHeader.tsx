@@ -7,6 +7,7 @@ import MenuToggleButton from '@components/common/MenuToggleButton'
 import UserMenu from '@components/common/UserMenu'
 import InputField from '@components/fields/InputField'
 import '@styles/components/topbar.scss'
+import { logger } from '@utils/logger'
 
 export default function DashboardHeader() {
   const sidebarOpen = useAppSelector(selectSidebarOpen)
@@ -27,7 +28,7 @@ export default function DashboardHeader() {
   const handleSearch = () => {
     if (searchQuery.trim()) {
       // Implement search functionality
-      console.log('Searching for:', searchQuery)
+      logger.info('handleSearch');
     }
   }
 

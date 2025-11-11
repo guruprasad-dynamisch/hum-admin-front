@@ -3,6 +3,7 @@ import Modal from '@components/common/Modal'
 import DynamicForm, { FieldConfig } from '@components/forms/DynamicForm'
 import { templateSchema, TemplateFormData, templateDefaultValues } from '@validations/template-validations'
 import { Template } from '@constants/mock-templates'
+import { logger } from '@utils/logger'
 
 export interface TemplateModalProps {
   /** Show/hide modal */
@@ -109,8 +110,7 @@ const TemplateModal: React.FC<TemplateModalProps> = ({
       await onSubmit(data)
       onClose()
     } catch (error) {
-      console.error('Error submitting template form:', error)
-      // Error handling can be added here (e.g., show toast notification)
+      logger.error('Error submitting template form', error);
     }
   }
 

@@ -37,8 +37,6 @@ export default function Templates() {
   }
 
   const handleUseTemplate = (template: Template) => {
-    console.log('Using template:', template)
-    // TODO: Implement template usage functionality
     alert(`Using template: ${template.name}`)
   }
 
